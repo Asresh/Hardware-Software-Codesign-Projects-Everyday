@@ -16,6 +16,7 @@ Verification runs under **Icarus Verilog** (this environment has no Verilator/Yo
 
 | Day | Project | Domain | Microarchitecture | Interface | Summary |
 |---|---|---|---|---|---|
+| [2](day2%20-%20systolic_gemm_accelerator) | Systolic GEMM Accelerator | ML inference | output-stationary systolic array | Wishbone B4 | 8×8 INT8 MAC array with K-accumulate tiling, up to 64 MAC/cycle, **49.35× over scalar**; 273 jobs / 17,152 checked outputs, 0 mismatches |
 | [1](day1%20-%20fir_stream_accelerator) | Streaming FIR Accelerator | DSP | streaming dataflow w/ FIFO backpressure | AXI4-Lite + AXI4-Stream | Transposed-form FIR, 8 MAC/cycle, ~1 sample/clock, **7.88× over scalar**; 1354-sample differential test, 0 mismatches |
 
 ## Layout

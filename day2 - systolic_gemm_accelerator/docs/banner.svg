@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" font-family="Helvetica, Arial, sans-serif">
+  <!-- opaque background so the card reads on both light and dark themes -->
+  <rect x="0" y="0" width="1200" height="340" fill="#182430"/>
+  <!-- teal -> amber accent strip on the left edge -->
+  <rect x="0" y="0" width="10" height="170" fill="#1f8a8a"/>
+  <rect x="0" y="170" width="10" height="170" fill="#c9862b"/>
+
+  <!-- day badge -->
+  <rect x="48" y="42" width="118" height="42" rx="8" fill="#1f8a8a"/>
+  <text x="107" y="70" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">DAY 2</text>
+
+  <!-- title + subtitle -->
+  <text x="182" y="74" font-size="40" font-weight="bold" fill="#ffffff">Systolic GEMM Accelerator</text>
+  <text x="50" y="118" font-size="18" fill="#a7b6c4">Output-stationary 8x8 INT8 MAC array · Wishbone B4 control · K-accumulate tiling · self-checking differential verification</text>
+
+  <!-- 8x8 systolic-array motif with a diagonal wavefront -->
+  <g transform="translate(50,150)">
+    <text x="0" y="-8" font-size="14" fill="#7f93a6">8 x 8 processing elements — a diagonal wavefront of A (rows) and B (columns)</text>
+    <g>
+      <!-- rows i = 0..7, cols j = 0..7 ; colour the anti-diagonal to suggest the moving wavefront -->
+      <!-- row 0 --><rect x="0"   y="0"  width="20" height="20" rx="3" fill="#2f6f6f"/><rect x="24"  y="0"  width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="0"  width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="0"  width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="0"  width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="0"  width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="0"  width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="0"  width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 1 --><rect x="0"   y="24" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="24" width="20" height="20" rx="3" fill="#3a8a7a"/><rect x="48"  y="24" width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="24" width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="24" width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="24" width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="24" width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="24" width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 2 --><rect x="0"   y="48" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="48" width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="48" width="20" height="20" rx="3" fill="#54a862"/><rect x="72"  y="48" width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="48" width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="48" width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="48" width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="48" width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 3 --><rect x="0"   y="72" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="72" width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="72" width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="72" width="20" height="20" rx="3" fill="#78bd54"/><rect x="96"  y="72" width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="72" width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="72" width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="72" width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 4 --><rect x="0"   y="96" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="96" width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="96" width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="96" width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="96" width="20" height="20" rx="3" fill="#9ec94e"/><rect x="120" y="96" width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="96" width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="96" width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 5 --><rect x="0"   y="120" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="120" width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="120" width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="120" width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="120" width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="120" width="20" height="20" rx="3" fill="#c2c73f"/><rect x="144" y="120" width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="120" width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 6 --><rect x="0"   y="144" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="144" width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="144" width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="144" width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="144" width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="144" width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="144" width="20" height="20" rx="3" fill="#dcc236"/><rect x="168" y="144" width="20" height="20" rx="3" fill="#2b5563"/>
+      <!-- row 7 --><rect x="0"   y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="24"  y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="48"  y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="72"  y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="96"  y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="120" y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="144" y="168" width="20" height="20" rx="3" fill="#2b5563"/><rect x="168" y="168" width="20" height="20" rx="3" fill="#c9862b"/>
+    </g>
+  </g>
+
+  <!-- headline numbers on the right -->
+  <g transform="translate(720,150)">
+    <rect x="0" y="0" width="430" height="150" rx="10" fill="#20303d" stroke="#31465730" stroke-width="1"/>
+    <text x="24" y="40"  font-size="30" font-weight="bold" fill="#8fe0c6">49x</text>
+    <text x="90" y="40"  font-size="16" fill="#a7b6c4">peak vs. scalar CPU baseline</text>
+    <text x="24" y="80"  font-size="30" font-weight="bold" fill="#f0c674">64</text>
+    <text x="72" y="80"  font-size="16" fill="#a7b6c4">MAC/cycle at full utilization</text>
+    <text x="24" y="120" font-size="30" font-weight="bold" fill="#9ec9ff">0</text>
+    <text x="60" y="120" font-size="16" fill="#a7b6c4">mismatches over 17,152 checked outputs</text>
+  </g>
+</svg>

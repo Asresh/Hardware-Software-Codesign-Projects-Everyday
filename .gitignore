@@ -13,6 +13,7 @@ __pycache__/
 **/results/*.vcd
 **/results/*.vvp
 **/sw/fir_host
+**/sw/gemm_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
