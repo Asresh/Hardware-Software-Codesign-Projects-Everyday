@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" font-family="Helvetica, Arial, sans-serif">
+  <!-- opaque background -->
+  <rect x="0" y="0" width="1200" height="340" fill="#1f2a37"/>
+  <!-- blue -> violet accent strip on the left edge -->
+  <rect x="0" y="0" width="10" height="170" fill="#2f6db0"/>
+  <rect x="0" y="170" width="10" height="170" fill="#6a4c93"/>
+
+  <!-- day badge -->
+  <rect x="48" y="42" width="118" height="42" rx="8" fill="#6a4c93"/>
+  <text x="107" y="70" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">DAY 1</text>
+
+  <!-- title + subtitle -->
+  <text x="182" y="74" font-size="40" font-weight="bold" fill="#ffffff">Streaming FIR Accelerator</text>
+  <text x="50" y="118" font-size="18" fill="#aeb9c7">Parameterized transposed-form FIR · AXI4-Lite control + AXI4-Stream data · self-checking differential verification</text>
+
+  <!-- tag pills -->
+  <rect x="50"  y="140" width="118" height="30" rx="15" fill="#26374f"/>
+  <text x="109" y="160" font-size="14" fill="#cfe0f2" text-anchor="middle">DSP</text>
+  <rect x="180" y="140" width="196" height="30" rx="15" fill="#26374f"/>
+  <text x="278" y="160" font-size="14" fill="#cfe0f2" text-anchor="middle">streaming dataflow</text>
+  <rect x="388" y="140" width="150" height="30" rx="15" fill="#26374f"/>
+  <text x="463" y="160" font-size="14" fill="#cfe0f2" text-anchor="middle">AXI4 interface</text>
+  <rect x="550" y="140" width="170" height="30" rx="15" fill="#26374f"/>
+  <text x="635" y="160" font-size="14" fill="#cfe0f2" text-anchor="middle">Icarus Verilog</text>
+
+  <!-- ============ transposed-FIR pipeline motif ============ -->
+  <!-- sample broadcast rail -->
+  <text x="60" y="232" font-size="15" fill="#e0a96d">x[n]</text>
+  <line x1="150" y1="228" x2="1040" y2="228" stroke="#e0a96d" stroke-width="2"/>
+
+  <!-- input FIFO -->
+  <rect x="70" y="255" width="70" height="54" rx="6" fill="#6a4c93" stroke="#8a6bb5" stroke-width="1.5"/>
+  <text x="105" y="287" font-size="14" fill="#ffffff" text-anchor="middle">FIFO</text>
+  <line x1="140" y1="282" x2="176" y2="282" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="184,282 174,277 174,287" fill="#e07a3f"/>
+
+  <!-- three representative taps: multiplier (circle) + adder (circle) + register (square) -->
+  <!-- tap 0 -->
+  <line x1="200" y1="228" x2="200" y2="258" stroke="#e0a96d" stroke-width="2"/>
+  <circle cx="200" cy="270" r="15" fill="#2f6db0" stroke="#7fb0e0" stroke-width="1.5"/>
+  <text x="200" y="276" font-size="16" fill="#ffffff" text-anchor="middle">×</text>
+  <text x="200" y="252" font-size="12" fill="#9fc2e8" text-anchor="middle">h0</text>
+  <circle cx="248" cy="290" r="14" fill="#3d5a80" stroke="#6f8fb8" stroke-width="1.5"/>
+  <text x="248" y="296" font-size="16" fill="#ffffff" text-anchor="middle">+</text>
+  <rect x="278" y="277" width="26" height="26" rx="4" fill="#26374f" stroke="#6f8fb8" stroke-width="1.5"/>
+  <line x1="215" y1="278" x2="234" y2="286" stroke="#e07a3f" stroke-width="2.5"/>
+  <line x1="262" y1="290" x2="278" y2="290" stroke="#e07a3f" stroke-width="2.5"/>
+  <line x1="304" y1="290" x2="336" y2="290" stroke="#e07a3f" stroke-width="2.5"/>
+  <polygon points="344,290 334,285 334,295" fill="#e07a3f"/>
+
+  <!-- tap 1 -->
+  <line x1="360" y1="228" x2="360" y2="258" stroke="#e0a96d" stroke-width="2"/>
+  <circle cx="360" cy="270" r="15" fill="#2f6db0" stroke="#7fb0e0" stroke-width="1.5"/>
+  <text x="360" y="276" font-size="16" fill="#ffffff" text-anchor="middle">×</text>
+  <text x="360" y="252" font-size="12" fill="#9fc2e8" text-anchor="middle">h1</text>
+  <circle cx="408" cy="290" r="14" fill="#3d5a80" stroke="#6f8fb8" stroke-width="1.5"/>
+  <text x="408" y="296" font-size="16" fill="#ffffff" text-anchor="middle">+</text>
+  <rect x="438" y="277" width="26" height="26" rx="4" fill="#26374f" stroke="#6f8fb8" stroke-width="1.5"/>
+  <line x1="375" y1="278" x2="394" y2="286" stroke="#e07a3f" stroke-width="2.5"/>
+  <line x1="422" y1="290" x2="438" y2="290" stroke="#e07a3f" stroke-width="2.5"/>
+  <line x1="464" y1="290" x2="496" y2="290" stroke="#e07a3f" stroke-width="2.5"/>
+  <polygon points="504,290 494,285 494,295" fill="#e07a3f"/>
+
+  <!-- ellipsis -->
+  <text x="560" y="296" font-size="26" fill="#8a97a8" text-anchor="middle">· · ·</text>
+  <line x1="600" y1="290" x2="640" y2="290" stroke="#e07a3f" stroke-width="2.5"/>
+  <polygon points="648,290 638,285 638,295" fill="#e07a3f"/>
+
+  <!-- tap 7 -->
+  <line x1="700" y1="228" x2="700" y2="258" stroke="#e0a96d" stroke-width="2"/>
+  <circle cx="700" cy="270" r="15" fill="#2f6db0" stroke="#7fb0e0" stroke-width="1.5"/>
+  <text x="700" y="276" font-size="16" fill="#ffffff" text-anchor="middle">×</text>
+  <text x="700" y="252" font-size="12" fill="#9fc2e8" text-anchor="middle">h7</text>
+  <circle cx="748" cy="290" r="14" fill="#3d5a80" stroke="#6f8fb8" stroke-width="1.5"/>
+  <text x="748" y="296" font-size="16" fill="#ffffff" text-anchor="middle">+</text>
+  <rect x="778" y="277" width="26" height="26" rx="4" fill="#26374f" stroke="#6f8fb8" stroke-width="1.5"/>
+  <line x1="715" y1="278" x2="734" y2="286" stroke="#e07a3f" stroke-width="2.5"/>
+  <line x1="762" y1="290" x2="778" y2="290" stroke="#e07a3f" stroke-width="2.5"/>
+  <line x1="804" y1="290" x2="856" y2="290" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="864,290 854,285 854,295" fill="#e07a3f"/>
+
+  <!-- output FIFO -->
+  <rect x="866" y="263" width="70" height="54" rx="6" fill="#6a4c93" stroke="#8a6bb5" stroke-width="1.5"/>
+  <text x="901" y="295" font-size="14" fill="#ffffff" text-anchor="middle">FIFO</text>
+  <line x1="936" y1="290" x2="972" y2="290" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="980,290 970,285 970,295" fill="#e07a3f"/>
+  <text x="1035" y="295" font-size="15" fill="#e0a96d" text-anchor="middle">y[n]</text>
+
+  <!-- motif caption -->
+  <text x="1150" y="160" font-size="14" fill="#8a97a8" text-anchor="end">8-tap transposed chain · 1 sample / clock</text>
+</svg>

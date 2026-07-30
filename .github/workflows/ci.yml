@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog verilator build-essential python3
+
+      - name: Report versions
+        run: |
+          iverilog -V | head -1
+          cc --version | head -1
+          python3 --version
+
+      - name: Build and simulate every day
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          fail=0
+          for d in day*/; do
+            [ -f "$d/Makefile" ] || continue
+            echo "==================== $d ===================="
+            if make -C "$d" sim; then
+              echo "PASS: $d"
+            else
+              echo "FAIL: $d"
+              fail=1
+            fi
+          done
+          exit $fail

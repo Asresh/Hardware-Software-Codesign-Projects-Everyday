@@ -1,0 +1,14 @@
+{
+  "projects": [
+    {
+      "day": 1,
+      "name": "fir_stream_accelerator",
+      "domain": "digital signal processing",
+      "microarchitecture": "streaming dataflow with FIFO backpressure",
+      "interface": "AXI4-Lite control plus AXI4-Stream data",
+      "software_layer": "bare-metal C firmware",
+      "verification": "Icarus Verilog with SystemVerilog testbench and immediate assertions",
+      "summary": "Parameterized transposed-form FIR accelerator: 8 MAC/cycle, ~1 sample/clock, 7.88x over a scalar baseline; 1354-sample differential test, 0 mismatches."
+    }
+  ]
+}

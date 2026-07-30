@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 502" width="1150" height="502" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="1150" height="502" fill="#1f2a37"/>
+<text x="20" y="34" font-size="20" font-weight="bold" fill="#ffffff">FIR accelerator — one job (illustrative timing)</text>
+<line x1="196" y1="58" x2="196" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="262" y1="58" x2="262" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="328" y1="58" x2="328" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="394" y1="58" x2="394" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="460" y1="58" x2="460" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="526" y1="58" x2="526" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="592" y1="58" x2="592" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="658" y1="58" x2="658" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="724" y1="58" x2="724" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="790" y1="58" x2="790" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="856" y1="58" x2="856" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="922" y1="58" x2="922" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="988" y1="58" x2="988" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="1054" y1="58" x2="1054" y2="424" stroke="#2c3947" stroke-width="1"/>
+<line x1="1120" y1="58" x2="1120" y2="424" stroke="#2c3947" stroke-width="1"/>
+<text x="229" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">0</text>
+<text x="295" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">1</text>
+<text x="361" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">2</text>
+<text x="427" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">3</text>
+<text x="493" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">4</text>
+<text x="559" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">5</text>
+<text x="625" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">6</text>
+<text x="691" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">7</text>
+<text x="757" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">8</text>
+<text x="823" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">9</text>
+<text x="889" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">10</text>
+<text x="955" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">11</text>
+<text x="1021" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">12</text>
+<text x="1087" y="52" font-size="11" fill="#7b8a9b" text-anchor="middle">13</text>
+<text x="182" y="90" font-size="14" fill="#8fb7e0" text-anchor="end" font-family="monospace">clk</text>
+<path d="M 196,97 L 196,73 L 229,73 L 229,97 L 262,97 L 262,97 L 262,73 L 295,73 L 295,97 L 328,97 L 328,97 L 328,73 L 361,73 L 361,97 L 394,97 L 394,97 L 394,73 L 427,73 L 427,97 L 460,97 L 460,97 L 460,73 L 493,73 L 493,97 L 526,97 L 526,97 L 526,73 L 559,73 L 559,97 L 592,97 L 592,97 L 592,73 L 625,73 L 625,97 L 658,97 L 658,97 L 658,73 L 691,73 L 691,97 L 724,97 L 724,97 L 724,73 L 757,73 L 757,97 L 790,97 L 790,97 L 790,73 L 823,73 L 823,97 L 856,97 L 856,97 L 856,73 L 889,73 L 889,97 L 922,97 L 922,97 L 922,73 L 955,73 L 955,97 L 988,97 L 988,97 L 988,73 L 1021,73 L 1021,97 L 1054,97 L 1054,97 L 1054,73 L 1087,73 L 1087,97 L 1120,97" fill="none" stroke="#8fb7e0" stroke-width="2"/>
+<text x="182" y="136" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">s_axis_tvalid</text>
+<path d="M 196,143 L 196,143 L 262,143 L 262,119 L 328,119 L 328,119 L 394,119 L 394,119 L 460,119 L 460,119 L 526,119 L 526,119 L 592,119 L 592,119 L 658,119 L 658,143 L 724,143 L 724,143 L 790,143 L 790,143 L 856,143 L 856,143 L 922,143 L 922,143 L 988,143 L 988,143 L 1054,143 L 1054,143 L 1120,143" fill="none" stroke="#e07a3f" stroke-width="2.5"/>
+<text x="182" y="182" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">s_axis_tready</text>
+<path d="M 196,165 L 196,165 L 262,165 L 262,165 L 328,165 L 328,165 L 394,165 L 394,189 L 460,189 L 460,189 L 526,189 L 526,165 L 592,165 L 592,165 L 658,165 L 658,165 L 724,165 L 724,189 L 790,189 L 790,189 L 856,189 L 856,189 L 922,189 L 922,189 L 988,189 L 988,189 L 1054,189 L 1054,189 L 1120,189" fill="none" stroke="#e07a3f" stroke-width="2.5"/>
+<text x="182" y="228" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">s_axis_tdata</text>
+<line x1="196" y1="223" x2="262" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<polygon points="267,211 328,211 328,235 267,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="295" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x0</text>
+<polygon points="333,211 394,211 394,235 333,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="323" y1="211" x2="333" y2="235" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="323" y1="235" x2="333" y2="211" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="361" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x1</text>
+<polygon points="399,211 460,211 460,235 399,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="389" y1="211" x2="399" y2="235" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="389" y1="235" x2="399" y2="211" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="427" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x2</text>
+<polygon points="460,211 526,211 526,235 460,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="493" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x2</text>
+<polygon points="526,211 592,211 592,235 526,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="559" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x2</text>
+<polygon points="597,211 658,211 658,235 597,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="587" y1="211" x2="597" y2="235" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="587" y1="235" x2="597" y2="211" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="625" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x3</text>
+<polygon points="663,211 724,211 724,235 663,235" fill="#5a3b22" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="653" y1="211" x2="663" y2="235" stroke="#e07a3f" stroke-width="1.5"/>
+<line x1="653" y1="235" x2="663" y2="211" stroke="#e07a3f" stroke-width="1.5"/>
+<text x="691" y="229" font-size="13" fill="#eaf0f6" text-anchor="middle">x4</text>
+<line x1="724" y1="223" x2="790" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="790" y1="223" x2="856" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="856" y1="223" x2="922" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="922" y1="223" x2="988" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="988" y1="223" x2="1054" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="1054" y1="223" x2="1120" y2="223" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="182" y="274" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">m_axis_tvalid</text>
+<path d="M 196,281 L 196,281 L 262,281 L 262,281 L 328,281 L 328,281 L 394,281 L 394,257 L 460,257 L 460,257 L 526,257 L 526,257 L 592,257 L 592,257 L 658,257 L 658,257 L 724,257 L 724,257 L 790,257 L 790,257 L 856,257 L 856,257 L 922,257 L 922,257 L 988,257 L 988,281 L 1054,281 L 1054,281 L 1120,281" fill="none" stroke="#2fa39a" stroke-width="2.5"/>
+<text x="182" y="320" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">m_axis_tready</text>
+<path d="M 196,303 L 196,303 L 262,303 L 262,303 L 328,303 L 328,303 L 394,303 L 394,303 L 460,303 L 460,303 L 526,303 L 526,327 L 592,327 L 592,327 L 658,327 L 658,303 L 724,303 L 724,303 L 790,303 L 790,303 L 856,303 L 856,303 L 922,303 L 922,303 L 988,303 L 988,303 L 1054,303 L 1054,303 L 1120,303" fill="none" stroke="#2fa39a" stroke-width="2.5"/>
+<text x="182" y="412" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">irq</text>
+<path d="M 196,419 L 196,419 L 262,419 L 262,419 L 328,419 L 328,419 L 394,419 L 394,419 L 460,419 L 460,419 L 526,419 L 526,419 L 592,419 L 592,419 L 658,419 L 658,419 L 724,419 L 724,419 L 790,419 L 790,419 L 856,419 L 856,419 L 922,419 L 922,419 L 988,419 L 988,395 L 1054,395 L 1054,395 L 1120,395" fill="none" stroke="#d1495b" stroke-width="2.5"/>
+<text x="182" y="366" font-size="14" fill="#dfe7f0" text-anchor="end" font-family="monospace">m_axis_tdata</text>
+<line x1="196" y1="361" x2="262" y2="361" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="262" y1="361" x2="328" y2="361" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="328" y1="361" x2="394" y2="361" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<polygon points="399,349 460,349 460,373 399,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="427" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y0</text>
+<polygon points="465,349 526,349 526,373 465,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="455" y1="349" x2="465" y2="373" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="455" y1="373" x2="465" y2="349" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="493" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y1</text>
+<polygon points="531,349 592,349 592,373 531,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="521" y1="349" x2="531" y2="373" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="521" y1="373" x2="531" y2="349" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="559" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y2</text>
+<polygon points="592,349 658,349 658,373 592,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="625" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y2</text>
+<polygon points="658,349 724,349 724,373 658,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="691" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y2</text>
+<polygon points="729,349 790,349 790,373 729,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="719" y1="349" x2="729" y2="373" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="719" y1="373" x2="729" y2="349" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="757" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y3</text>
+<polygon points="795,349 856,349 856,373 795,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="785" y1="349" x2="795" y2="373" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="785" y1="373" x2="795" y2="349" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="823" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y4</text>
+<polygon points="861,349 922,349 922,373 861,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="851" y1="349" x2="861" y2="373" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="851" y1="373" x2="861" y2="349" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="889" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y5</text>
+<polygon points="927,349 988,349 988,373 927,373" fill="#1f4a45" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="917" y1="349" x2="927" y2="373" stroke="#2fa39a" stroke-width="1.5"/>
+<line x1="917" y1="373" x2="927" y2="349" stroke="#2fa39a" stroke-width="1.5"/>
+<text x="955" y="367" font-size="13" fill="#eaf0f6" text-anchor="middle">y6</text>
+<line x1="988" y1="361" x2="1054" y2="361" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="1054" y1="361" x2="1120" y2="361" stroke="#5b6b7d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<rect x="394" y="160" width="132" height="38" fill="none" stroke="#e0a96d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="460" y="456" font-size="12" font-weight="bold" fill="#e0a96d" text-anchor="middle">input backpressure: TREADY low, TDATA held</text>
+<line x1="398" y1="442" x2="522" y2="442" stroke="#e0a96d" stroke-width="1.5"/><polygon points="398,442 405,438 405,446" fill="#e0a96d"/><polygon points="522,442 515,438 515,446" fill="#e0a96d"/>
+<rect x="526" y="298" width="132" height="38" fill="none" stroke="#2fa39a" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="810" y="456" font-size="12" font-weight="bold" fill="#2fa39a" text-anchor="middle">consumer stall: TDATA stable, TVALID held</text>
+<line x1="266" y1="474" x2="390" y2="474" stroke="#9fc2e8" stroke-width="1.5"/><polygon points="266,474 273,470 273,478" fill="#9fc2e8"/><polygon points="390,474 383,470 383,478" fill="#9fc2e8"/>
+<text x="493" y="478" font-size="12" font-weight="bold" fill="#9fc2e8" text-anchor="start">3-cycle fill latency (first sample in → first result out)</text>
+<text x="1021" y="456" font-size="12" font-weight="bold" fill="#d1495b" text-anchor="middle">DONE → irq</text>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="Helvetica, Arial, sans-serif">
+  <!-- opaque background so the diagram is legible in both GitHub themes -->
+  <rect x="0" y="0" width="1120" height="640" fill="#eef2f7" stroke="#c7d1dd" stroke-width="2"/>
+  <text x="24" y="34" font-size="22" font-weight="bold" fill="#1b2733">Streaming FIR Accelerator — hardware/software partition</text>
+
+  <!-- accelerator boundary / clock domain -->
+  <rect x="300" y="48" width="790" height="528" fill="none" stroke="#94a3b5" stroke-width="1.5" stroke-dasharray="8,5"/>
+  <text x="700" y="82" font-size="14" fill="#5b6b7d" font-style="italic" text-anchor="middle">fir_accel_top — single clock domain (clk, 100 MHz in simulation)</text>
+
+  <!-- ================= boxes ================= -->
+  <!-- Host -->
+  <rect x="40" y="210" width="150" height="250" rx="8" fill="#33404f" stroke="#1c2530" stroke-width="2"/>
+  <text x="115" y="322" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">Host CPU</text>
+  <text x="115" y="344" font-size="13" fill="#cfd8e3" text-anchor="middle">firmware (sw/)</text>
+  <text x="115" y="366" font-size="11" fill="#aab7c6" text-anchor="middle">driver + golden</text>
+
+  <!-- Regfile -->
+  <rect x="330" y="100" width="180" height="90" rx="6" fill="#3d5a80" stroke="#26374f" stroke-width="2"/>
+  <text x="420" y="132" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">axi_lite_regfile</text>
+  <text x="420" y="152" font-size="12" fill="#d6deea" text-anchor="middle">AXI4-Lite CSR block</text>
+  <text x="420" y="170" font-size="11" fill="#b9c5d6" text-anchor="middle">CTRL/STATUS/LENGTH/COEF</text>
+
+  <!-- FSM -->
+  <rect x="590" y="100" width="180" height="90" rx="6" fill="#3d5a80" stroke="#26374f" stroke-width="2"/>
+  <text x="680" y="132" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">completion FSM</text>
+  <text x="680" y="152" font-size="12" fill="#d6deea" text-anchor="middle">LENGTH counter</text>
+  <text x="680" y="170" font-size="11" fill="#b9c5d6" text-anchor="middle">DONE / BUSY / irq</text>
+
+  <!-- Input FIFO -->
+  <rect x="330" y="360" width="150" height="90" rx="6" fill="#6a4c93" stroke="#46315f" stroke-width="2"/>
+  <text x="405" y="392" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">sync_fifo (in)</text>
+  <text x="405" y="412" font-size="12" fill="#e0d8ee" text-anchor="middle">DEPTH 16 x 16b</text>
+  <text x="405" y="430" font-size="11" fill="#cfc2e4" text-anchor="middle">FWFT, backpressure</text>
+
+  <!-- Datapath -->
+  <rect x="540" y="345" width="190" height="120" rx="6" fill="#2f6db0" stroke="#1c466f" stroke-width="2"/>
+  <text x="635" y="382" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">fir_datapath</text>
+  <text x="635" y="402" font-size="12" fill="#d5e4f4" text-anchor="middle">transposed FIR</text>
+  <text x="635" y="420" font-size="11" fill="#bcd2ec" text-anchor="middle">8 taps · 8 mult · 7 add</text>
+  <text x="635" y="438" font-size="11" fill="#bcd2ec" text-anchor="middle">acc chain 8 x 35b</text>
+
+  <!-- Output FIFO -->
+  <rect x="790" y="360" width="160" height="90" rx="6" fill="#6a4c93" stroke="#46315f" stroke-width="2"/>
+  <text x="870" y="392" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">sync_fifo (out)</text>
+  <text x="870" y="412" font-size="12" fill="#e0d8ee" text-anchor="middle">DEPTH 16 x 36b</text>
+  <text x="870" y="430" font-size="11" fill="#cfc2e4" text-anchor="middle">carries TLAST bit</text>
+
+  <!-- ================= data-plane arrows (orange, AXI4-Stream) ================= -->
+  <!-- Host -> input FIFO -->
+  <line x1="190" y1="405" x2="322" y2="405" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="330,405 320,400 320,410" fill="#e07a3f"/>
+  <text x="256" y="392" font-size="12" font-weight="bold" fill="#b95a20" text-anchor="middle">AXI4-Stream S</text>
+  <text x="256" y="425" font-size="10" fill="#7a5a3e" text-anchor="middle">TDATA[16] TVALID TREADY TLAST</text>
+
+  <!-- input FIFO -> datapath -->
+  <line x1="480" y1="405" x2="532" y2="405" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="540,405 530,400 530,410" fill="#e07a3f"/>
+
+  <!-- datapath -> output FIFO -->
+  <line x1="730" y1="405" x2="782" y2="405" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="790,405 780,400 780,410" fill="#e07a3f"/>
+  <text x="760" y="395" font-size="10" fill="#7a5a3e" text-anchor="middle">36b</text>
+
+  <!-- output FIFO -> host (return path, L-shaped along the bottom) -->
+  <polyline points="870,450 870,545 115,545 115,468" fill="none" stroke="#e07a3f" stroke-width="3"/>
+  <polygon points="115,460 110,470 120,470" fill="#e07a3f"/>
+  <text x="495" y="537" font-size="12" font-weight="bold" fill="#b95a20" text-anchor="middle">AXI4-Stream M  —  TDATA[36] TVALID TREADY TLAST</text>
+
+  <!-- ================= control-plane arrows (teal dashed, AXI4-Lite / CSR) ================= -->
+  <!-- Host -> regfile (AXI4-Lite) -->
+  <polyline points="190,250 260,250 260,145 322,145" fill="none" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="330,145 320,140 320,150" fill="#2a9d8f"/>
+  <text x="243" y="242" font-size="12" font-weight="bold" fill="#1f7a6f" text-anchor="middle">AXI4-Lite</text>
+  <text x="243" y="223" font-size="10" fill="#2f6b62" text-anchor="middle">AW W B AR R (32b)</text>
+
+  <!-- regfile -> datapath (coefficients / clear) -->
+  <polyline points="420,190 420,300 600,300 600,341" fill="none" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="600,349 595,339 605,339" fill="#2a9d8f"/>
+  <text x="505" y="292" font-size="11" fill="#1f7a6f" text-anchor="middle">coef_flat[8 x 16b], clr</text>
+
+  <!-- regfile -> FSM (start / length) -->
+  <line x1="510" y1="132" x2="582" y2="132" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="590,132 580,127 580,137" fill="#2a9d8f"/>
+  <text x="550" y="122" font-size="10" fill="#1f7a6f" text-anchor="middle">start, length, irq_en</text>
+
+  <!-- FSM -> regfile (status) -->
+  <line x1="590" y1="162" x2="518" y2="162" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="510,162 520,157 520,167" fill="#2a9d8f"/>
+  <text x="550" y="182" font-size="10" fill="#1f7a6f" text-anchor="middle">done, busy, samples_out</text>
+
+  <!-- datapath -> FSM (result committed) -->
+  <polyline points="700,345 700,198" fill="none" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="700,190 695,200 705,200" fill="#2a9d8f"/>
+  <text x="748" y="272" font-size="10" fill="#1f7a6f" text-anchor="middle">result_fire</text>
+
+  <!-- ================= interrupt path (red dashed) ================= -->
+  <polyline points="680,100 680,62 115,62 115,202" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="4,4"/>
+  <polygon points="115,210 110,200 120,200" fill="#d1495b"/>
+  <text x="230" y="54" font-size="12" font-weight="bold" fill="#b23347" text-anchor="middle">irq — completion interrupt</text>
+
+  <!-- backpressure note -->
+  <text x="405" y="480" font-size="10" fill="#7a5a3e" text-anchor="middle">m_axis stall → out FIFO fills → datapath stalls → in FIFO fills → s_axis_tready deasserts</text>
+
+  <!-- ================= legend ================= -->
+  <rect x="815" y="486" width="275" height="82" rx="6" fill="#ffffff" stroke="#c7d1dd" stroke-width="1.5"/>
+  <text x="828" y="504" font-size="12" font-weight="bold" fill="#1b2733">Legend</text>
+  <line x1="828" y1="520" x2="866" y2="520" stroke="#e07a3f" stroke-width="3"/>
+  <text x="874" y="524" font-size="11" fill="#24333f">data plane (AXI4-Stream)</text>
+  <line x1="828" y1="538" x2="866" y2="538" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="874" y="542" font-size="11" fill="#24333f">control (AXI4-Lite / CSR)</text>
+  <line x1="828" y1="556" x2="866" y2="556" stroke="#d1495b" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="874" y="560" font-size="11" fill="#24333f">interrupt (completion)</text>
+</svg>
