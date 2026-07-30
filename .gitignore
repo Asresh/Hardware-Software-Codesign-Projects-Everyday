@@ -14,6 +14,7 @@ __pycache__/
 **/results/*.vvp
 **/sw/fir_host
 **/sw/gemm_host
+**/sw/scan_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt

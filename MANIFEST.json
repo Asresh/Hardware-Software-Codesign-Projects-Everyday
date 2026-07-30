@@ -19,6 +19,16 @@
       "software_layer": "C firmware driver with tiled-GEMM host application",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
       "summary": "Parameterized 8x8 INT8 output-stationary systolic GEMM tile engine with K-accumulate tiling: up to 64 MAC/cycle, 49.35x peak over a scalar baseline; 273 jobs / 17152 checked outputs, 0 mismatches."
+    },
+    {
+      "day": 3,
+      "name": "scan_prefix_sum_engine",
+      "domain": "graph analytics / parallel primitives",
+      "microarchitecture": "parallel-prefix (Kogge-Stone) adder tree with cross-tile carry chaining",
+      "interface": "APB control plane plus descriptor-driven coalesced wide-DMA master with completion interrupt",
+      "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
+      "summary": "GPU-style parallel prefix-sum (scan) engine: 16-lane parallel-prefix tree streams one coalesced 512-bit beat/clock, 15.06 sustained words/cycle (16.0 ideal), 45.18x aggregate / 46.88x peak over a scalar baseline; 292 jobs / 257960 checked outputs, 0 mismatches."
     }
   ]
 }

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260" width="1000" height="260">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1000" height="260" fill="#243044"/>
+  <rect x="0" y="0" width="1000" height="10" fill="#4f7cff"/>
+  <rect x="0" y="250" width="1000" height="10" fill="#39c07a"/>
+
+  <!-- day badge -->
+  <rect x="40" y="48" width="150" height="150" rx="14" fill="#1c2636" stroke="#4f7cff" stroke-width="3"/>
+  <text x="115" y="112" font-family="Menlo,Consolas,monospace" font-size="26" fill="#9fb4d8" text-anchor="middle">DAY</text>
+  <text x="115" y="176" font-family="Menlo,Consolas,monospace" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle">3</text>
+
+  <!-- title -->
+  <text x="230" y="104" font-family="Helvetica,Arial,sans-serif" font-size="46" font-weight="bold" fill="#ffffff">Parallel Prefix-Sum (Scan) Engine</text>
+  <text x="232" y="146" font-family="Helvetica,Arial,sans-serif" font-size="22" fill="#9fb4d8">GPU stream-compaction primitive &#183; parallel-prefix adder tree</text>
+  <text x="232" y="176" font-family="Helvetica,Arial,sans-serif" font-size="22" fill="#9fb4d8">descriptor-driven wide DMA &#183; APB control plane &#183; 16 words/cycle</text>
+
+  <!-- prefix-tree motif: 8 leaves reducing across log-depth levels -->
+  <g stroke="#39c07a" stroke-width="3" fill="none">
+    <line x1="250" y1="228" x2="290" y2="210"/>
+    <line x1="330" y1="228" x2="290" y2="210"/>
+    <line x1="410" y1="228" x2="450" y2="210"/>
+    <line x1="490" y1="228" x2="450" y2="210"/>
+    <line x1="290" y1="210" x2="370" y2="196"/>
+    <line x1="450" y1="210" x2="370" y2="196"/>
+    <line x1="370" y1="196" x2="600" y2="196"/>
+  </g>
+  <g fill="#4f7cff">
+    <circle cx="250" cy="228" r="6"/><circle cx="330" cy="228" r="6"/>
+    <circle cx="410" cy="228" r="6"/><circle cx="490" cy="228" r="6"/>
+    <circle cx="570" cy="228" r="6"/><circle cx="650" cy="228" r="6"/>
+    <circle cx="730" cy="228" r="6"/><circle cx="810" cy="228" r="6"/>
+  </g>
+  <g fill="#39c07a">
+    <circle cx="290" cy="210" r="6"/><circle cx="450" cy="210" r="6"/>
+    <circle cx="610" cy="210" r="6"/><circle cx="770" cy="210" r="6"/>
+    <circle cx="370" cy="196" r="6"/><circle cx="690" cy="196" r="6"/>
+    <circle cx="600" cy="196" r="7"/>
+  </g>
+
+  <text x="960" y="238" font-family="Menlo,Consolas,monospace" font-size="16" fill="#7f93b8" text-anchor="end">scan_top &#183; SystemVerilog + C</text>
+</svg>

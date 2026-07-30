@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 680" width="1040" height="680">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1040" height="680" fill="#243044"/>
+  <text x="520" y="34" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">Parallel Prefix-Sum (Scan) Engine &#8212; block diagram</text>
+
+  <!-- legend -->
+  <line x1="700" y1="56" x2="740" y2="56" stroke="#7fd0ff" stroke-width="5"/>
+  <text x="746" y="61" font-family="Menlo,Consolas,monospace" font-size="13" fill="#cfe0ff">data</text>
+  <line x1="800" y1="56" x2="840" y2="56" stroke="#ffcf5c" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="846" y="61" font-family="Menlo,Consolas,monospace" font-size="13" fill="#ffe6a6">control</text>
+  <line x1="920" y1="56" x2="960" y2="56" stroke="#ff6b6b" stroke-width="2.5"/>
+  <text x="966" y="61" font-family="Menlo,Consolas,monospace" font-size="13" fill="#ffb3b3">irq</text>
+
+  <!-- ===================== HOST CPU ===================== -->
+  <rect x="40" y="90" width="200" height="120" rx="10" fill="#1c2636" stroke="#9fb4d8" stroke-width="2"/>
+  <text x="140" y="128" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">Host CPU</text>
+  <text x="140" y="154" font-family="Menlo,Consolas,monospace" font-size="12" fill="#9fb4d8" text-anchor="middle">scan_driver.c</text>
+  <text x="140" y="174" font-family="Menlo,Consolas,monospace" font-size="12" fill="#9fb4d8" text-anchor="middle">program descriptor</text>
+  <text x="140" y="192" font-family="Menlo,Consolas,monospace" font-size="12" fill="#9fb4d8" text-anchor="middle">START / wait IRQ</text>
+
+  <!-- APB control bus -->
+  <line x1="240" y1="150" x2="330" y2="150" stroke="#ffcf5c" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <polygon points="330,150 320,145 320,155" fill="#ffcf5c"/>
+  <text x="285" y="140" font-family="Menlo,Consolas,monospace" font-size="11" fill="#ffe6a6" text-anchor="middle">APB</text>
+  <text x="285" y="176" font-family="Menlo,Consolas,monospace" font-size="10" fill="#ffe6a6" text-anchor="middle">psel/penable</text>
+  <text x="285" y="190" font-family="Menlo,Consolas,monospace" font-size="10" fill="#ffe6a6" text-anchor="middle">pwrite/paddr</text>
+
+  <!-- irq path back to CPU -->
+  <path d="M 330 200 L 300 200 L 300 250 L 20 250 L 20 170 L 40 170" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+  <polygon points="40,170 30,165 30,175" fill="#ff6b6b"/>
+  <text x="150" y="266" font-family="Menlo,Consolas,monospace" font-size="11" fill="#ffb3b3" text-anchor="middle">irq (completion)</text>
+
+  <!-- ===================== scan_top ===================== -->
+  <rect x="330" y="90" width="470" height="470" rx="12" fill="#1a2333" stroke="#4f7cff" stroke-width="2.5"/>
+  <text x="345" y="112" font-family="Menlo,Consolas,monospace" font-size="14" font-weight="bold" fill="#8fb0ff">scan_top</text>
+
+  <!-- CSR / APB slave -->
+  <rect x="352" y="126" width="180" height="150" rx="8" fill="#243044" stroke="#ffcf5c" stroke-width="2"/>
+  <text x="442" y="148" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#ffe6a6" text-anchor="middle">APB CSR block</text>
+  <text x="362" y="172" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">0x00 IDENT</text>
+  <text x="362" y="190" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">0x04 CTRL  START/IRQ</text>
+  <text x="362" y="208" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">0x08 STATUS DONE/BUSY</text>
+  <text x="362" y="226" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">0x0C/10 SRC/DST</text>
+  <text x="362" y="244" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">0x14/18 LEN/MODE</text>
+  <text x="362" y="262" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">0x1C CYCLES</text>
+
+  <!-- dma_desc controller -->
+  <rect x="352" y="300" width="180" height="150" rx="8" fill="#243044" stroke="#ffcf5c" stroke-width="2"/>
+  <text x="442" y="322" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#ffe6a6" text-anchor="middle">dma_desc</text>
+  <text x="442" y="340" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">controller + addr-gen</text>
+  <text x="362" y="364" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">FSM IDLE/RUN/DONE</text>
+  <text x="362" y="382" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">nbeats=ceil(LEN/16)</text>
+  <text x="362" y="400" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">rd_idx / wr_idx</text>
+  <text x="362" y="418" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">r1 read-latency reg</text>
+  <text x="362" y="436" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea">CYCLES counter</text>
+
+  <!-- CTRL -> controller (control) -->
+  <line x1="442" y1="276" x2="442" y2="300" stroke="#ffcf5c" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <polygon points="442,300 437,290 447,290" fill="#ffcf5c"/>
+
+  <!-- scan_datapath -->
+  <rect x="560" y="126" width="216" height="150" rx="8" fill="#243044" stroke="#7fd0ff" stroke-width="2"/>
+  <text x="668" y="148" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#bfe4ff" text-anchor="middle">scan_datapath</text>
+  <text x="668" y="170" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">mask short tile &#8594; tree</text>
+  <text x="668" y="188" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">incl / excl select</text>
+  <text x="668" y="206" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">+ running carry_reg (W)</text>
+  <text x="668" y="230" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fe6c2" text-anchor="middle">1-beat pipeline reg</text>
+  <text x="668" y="248" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fe6c2" text-anchor="middle">out beat = 16 x 32b</text>
+  <text x="668" y="266" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fe6c2" text-anchor="middle">carry chains tiles</text>
+
+  <!-- prefix_tree -->
+  <rect x="560" y="300" width="216" height="150" rx="8" fill="#243044" stroke="#7fd0ff" stroke-width="2"/>
+  <text x="668" y="322" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#bfe4ff" text-anchor="middle">prefix_tree</text>
+  <text x="668" y="342" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">Kogge-Stone / Hillis-Steele</text>
+  <text x="668" y="360" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">inclusive scan, 16 lanes</text>
+  <text x="668" y="378" font-family="Menlo,Consolas,monospace" font-size="11" fill="#cbd6ea" text-anchor="middle">log2(16)=4 adder levels</text>
+  <!-- mini tree -->
+  <g stroke="#39c07a" stroke-width="2" fill="none">
+    <line x1="600" y1="430" x2="624" y2="414"/><line x1="648" y1="430" x2="624" y2="414"/>
+    <line x1="688" y1="430" x2="712" y2="414"/><line x1="736" y1="430" x2="712" y2="414"/>
+    <line x1="624" y1="414" x2="668" y2="400"/><line x1="712" y1="414" x2="668" y2="400"/>
+  </g>
+  <g fill="#4f7cff">
+    <circle cx="600" cy="430" r="4"/><circle cx="648" cy="430" r="4"/>
+    <circle cx="688" cy="430" r="4"/><circle cx="736" cy="430" r="4"/>
+  </g>
+  <g fill="#39c07a"><circle cx="624" cy="414" r="4"/><circle cx="712" cy="414" r="4"/><circle cx="668" cy="400" r="5"/></g>
+
+  <!-- datapath <-> tree -->
+  <line x1="668" y1="276" x2="668" y2="300" stroke="#7fd0ff" stroke-width="5"/>
+  <polygon points="668,300 662,289 674,289" fill="#7fd0ff"/>
+  <polygon points="668,276 662,287 674,287" fill="#7fd0ff"/>
+
+  <!-- controller -> datapath (control: valid/lanes/mode/clr_carry) -->
+  <line x1="532" y1="360" x2="560" y2="200" stroke="#ffcf5c" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <polygon points="560,200 549,203 555,211" fill="#ffcf5c"/>
+  <text x="548" y="288" font-family="Menlo,Consolas,monospace" font-size="10" fill="#ffe6a6" text-anchor="middle">valid/lanes</text>
+  <text x="548" y="301" font-family="Menlo,Consolas,monospace" font-size="10" fill="#ffe6a6" text-anchor="middle">mode/clr_carry</text>
+
+  <!-- ===================== DEVICE MEMORY ===================== -->
+  <rect x="850" y="150" width="160" height="360" rx="10" fill="#1c2636" stroke="#9fb4d8" stroke-width="2"/>
+  <text x="930" y="178" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">Device</text>
+  <text x="930" y="198" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">Memory</text>
+  <rect x="872" y="220" width="116" height="110" rx="6" fill="#243044" stroke="#7fd0ff" stroke-width="1.5"/>
+  <text x="930" y="242" font-family="Menlo,Consolas,monospace" font-size="11" fill="#bfe4ff" text-anchor="middle">SRC region</text>
+  <text x="930" y="262" font-family="Menlo,Consolas,monospace" font-size="10" fill="#cbd6ea" text-anchor="middle">input array</text>
+  <rect x="872" y="220" width="116" height="22" fill="none" stroke="#7fd0ff" stroke-width="0.8"/>
+  <rect x="872" y="242" width="116" height="22" fill="none" stroke="#7fd0ff" stroke-width="0.8"/>
+  <rect x="872" y="264" width="116" height="22" fill="none" stroke="#7fd0ff" stroke-width="0.8"/>
+  <rect x="872" y="286" width="116" height="22" fill="none" stroke="#7fd0ff" stroke-width="0.8"/>
+  <rect x="872" y="360" width="116" height="110" rx="6" fill="#243044" stroke="#39c07a" stroke-width="1.5"/>
+  <text x="930" y="382" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fe6c2" text-anchor="middle">DST region</text>
+  <text x="930" y="402" font-family="Menlo,Consolas,monospace" font-size="10" fill="#cbd6ea" text-anchor="middle">scan output</text>
+
+  <!-- wide DMA read: mem -> datapath -->
+  <path d="M 850 250 L 810 250 L 810 165 L 776 165" fill="none" stroke="#7fd0ff" stroke-width="6"/>
+  <polygon points="776,165 788,159 788,171" fill="#7fd0ff"/>
+  <text x="812" y="140" font-family="Menlo,Consolas,monospace" font-size="11" fill="#bfe4ff" text-anchor="middle">mem_rd_data</text>
+  <text x="812" y="126" font-family="Menlo,Consolas,monospace" font-size="10" fill="#bfe4ff" text-anchor="middle">512b beat (16x32)</text>
+
+  <!-- wide DMA write: datapath -> mem -->
+  <path d="M 776 240 L 828 240 L 828 400 L 850 400" fill="none" stroke="#39c07a" stroke-width="6"/>
+  <polygon points="850,400 838,394 838,406" fill="#39c07a"/>
+  <text x="812" y="470" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fe6c2" text-anchor="middle">mem_wr_data</text>
+  <text x="812" y="484" font-family="Menlo,Consolas,monospace" font-size="10" fill="#9fe6c2" text-anchor="middle">+ mem_wr_be mask</text>
+
+  <!-- read/write address (control) from controller to memory, routed below the submodules -->
+  <path d="M 532 430 L 544 430 L 544 462 L 838 462 L 838 340 L 850 340" fill="none" stroke="#ffcf5c" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <polygon points="850,340 839,336 839,344" fill="#ffcf5c"/>
+  <text x="690" y="457" font-family="Menlo,Consolas,monospace" font-size="10" fill="#ffe6a6" text-anchor="middle">mem_rd_addr / mem_wr_addr (coalesced, LANES-strided)</text>
+
+  <!-- pipeline caption -->
+  <rect x="352" y="474" width="424" height="72" rx="8" fill="#141b28" stroke="#3a4a63" stroke-width="1.5"/>
+  <text x="564" y="496" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">single-pass pipeline &#8212; 1 coalesced beat / clock</text>
+  <text x="564" y="518" font-family="Menlo,Consolas,monospace" font-size="12" fill="#9fb4d8" text-anchor="middle">read (addr-gen) &#8594; scan (tree + carry, 1 reg) &#8594; write (masked)</text>
+  <text x="564" y="536" font-family="Menlo,Consolas,monospace" font-size="12" fill="#9fe6c2" text-anchor="middle">steady state 16 words/cycle &#183; carry_reg stitches tiles into a device-wide scan</text>
+</svg>
