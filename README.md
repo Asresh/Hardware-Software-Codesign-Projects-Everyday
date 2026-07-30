@@ -16,6 +16,7 @@ Verification runs under **Icarus Verilog** (this environment has no Verilator/Yo
 
 | Day | Project | Domain | Microarchitecture | Interface | Summary |
 |---|---|---|---|---|---|
+| [4](day4%20-%20bitonic_sort_accelerator) | Tiled Bitonic Sort Accelerator | search acceleration / sorting | pipelined Batcher bitonic sorting network (compare-exchange lane array) | MMIO + coalesced wide-DMA master + IRQ | GPU block-sort primitive, 10-stage / 80-cell network retires one 16-key (512-bit) tile/clock, 13.18 sustained keys/cycle (16.0 ideal), **105.43× / 116.20× over scalar**; 286 jobs / 275,984 checked keys, 0 mismatches |
 | [3](day3%20-%20scan_prefix_sum_engine) | Parallel Prefix-Sum (Scan) Engine | graph analytics / parallel primitives | parallel-prefix (Kogge-Stone) tree w/ carry chaining | APB + descriptor-driven wide DMA | GPU scan primitive, 16-lane prefix tree, 15.06 sustained words/cycle (16.0 ideal), **45.18× over scalar**; 292 jobs / 257,960 checked outputs, 0 mismatches |
 | [2](day2%20-%20systolic_gemm_accelerator) | Systolic GEMM Accelerator | ML inference | output-stationary systolic array | Wishbone B4 | 8×8 INT8 MAC array with K-accumulate tiling, up to 64 MAC/cycle, **49.35× over scalar**; 273 jobs / 17,152 checked outputs, 0 mismatches |
 | [1](day1%20-%20fir_stream_accelerator) | Streaming FIR Accelerator | DSP | streaming dataflow w/ FIFO backpressure | AXI4-Lite + AXI4-Stream | Transposed-form FIR, 8 MAC/cycle, ~1 sample/clock, **7.88× over scalar**; 1354-sample differential test, 0 mismatches |

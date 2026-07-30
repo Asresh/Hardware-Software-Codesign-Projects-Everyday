@@ -29,6 +29,16 @@
       "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
       "summary": "GPU-style parallel prefix-sum (scan) engine: 16-lane parallel-prefix tree streams one coalesced 512-bit beat/clock, 15.06 sustained words/cycle (16.0 ideal), 45.18x aggregate / 46.88x peak over a scalar baseline; 292 jobs / 257960 checked outputs, 0 mismatches."
+    },
+    {
+      "day": 4,
+      "name": "bitonic_sort_accelerator",
+      "domain": "search acceleration / sorting",
+      "microarchitecture": "fully-pipelined Batcher bitonic sorting network (compare-exchange lane array)",
+      "interface": "MMIO register file plus a coalesced wide-DMA memory master with completion interrupt",
+      "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
+      "summary": "GPU-style tiled bitonic sort engine: 10-stage / 80-cell compare-exchange network retires one 16-key (512-bit) tile per clock, 13.18 sustained keys/cycle (16.0 ideal), 105.43x aggregate / 116.20x peak over a scalar baseline; 286 jobs / 275984 checked keys, 0 mismatches."
     }
   ]
 }

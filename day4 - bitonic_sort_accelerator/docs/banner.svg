@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320">
+  <!-- opaque mid-tone background so the card reads on light and dark themes -->
+  <rect x="0" y="0" width="1200" height="320" fill="#2b3648"/>
+  <rect x="0" y="0" width="1200" height="10" fill="#7dd3fc"/>
+  <rect x="0" y="310" width="1200" height="10" fill="#7dd3fc"/>
+
+  <!-- day tag -->
+  <rect x="60" y="60" width="150" height="54" rx="8" fill="#7dd3fc"/>
+  <text x="135" y="97" font-family="Verdana,Geneva,sans-serif" font-size="30" font-weight="bold" fill="#0b1220" text-anchor="middle">DAY 4</text>
+
+  <!-- title -->
+  <text x="60" y="185" font-family="Verdana,Geneva,sans-serif" font-size="62" font-weight="bold" fill="#f8fafc">Bitonic Sort Accelerator</text>
+  <text x="62" y="235" font-family="Verdana,Geneva,sans-serif" font-size="26" fill="#cbd5e1">Pipelined Batcher sorting network &#183; GPU-style tiled key sort</text>
+  <text x="62" y="272" font-family="Verdana,Geneva,sans-serif" font-size="21" fill="#94a3b8">80 compare-exchange cells &#183; 1 tile / clock &#183; 0 mismatches over 275,984 keys</text>
+
+  <!-- bitonic comparator motif on the right: crossing compare-exchange lines -->
+  <g stroke="#7dd3fc" stroke-width="3" fill="none" opacity="0.9">
+    <line x1="960" y1="70" x2="1140" y2="70"/>
+    <line x1="960" y1="110" x2="1140" y2="110"/>
+    <line x1="960" y1="150" x2="1140" y2="150"/>
+    <line x1="960" y1="190" x2="1140" y2="190"/>
+    <line x1="960" y1="230" x2="1140" y2="230"/>
+    <line x1="960" y1="270" x2="1140" y2="270"/>
+  </g>
+  <!-- compare-exchange connectors (arrowed = min/max routing) -->
+  <g stroke="#fbbf24" stroke-width="4" fill="#fbbf24">
+    <line x1="1000" y1="70"  x2="1000" y2="270"/>
+    <circle cx="1000" cy="70" r="6"/>
+    <circle cx="1000" cy="270" r="6"/>
+    <line x1="1050" y1="110" x2="1050" y2="230"/>
+    <circle cx="1050" cy="110" r="6"/>
+    <circle cx="1050" cy="230" r="6"/>
+    <line x1="1100" y1="150" x2="1100" y2="190"/>
+    <circle cx="1100" cy="150" r="6"/>
+    <circle cx="1100" cy="190" r="6"/>
+  </g>
+</svg>
