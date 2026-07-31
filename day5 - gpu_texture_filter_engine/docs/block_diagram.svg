@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 760" width="1160" height="760">
+  <!-- opaque mid-tone background reads on light and dark themes -->
+  <rect x="0" y="0" width="1160" height="760" fill="#26323f"/>
+
+  <!-- arrowhead markers: solid = datapath, hollow = control, red = interrupt -->
+  <defs>
+    <marker id="ad" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#8fd3b0"/>
+    </marker>
+    <marker id="ac" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#e0b95a"/>
+    </marker>
+    <marker id="ai" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#e06b6b"/>
+    </marker>
+  </defs>
+
+  <text x="580" y="38" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="27" font-weight="bold" text-anchor="middle">GPU Bilinear Texture-Filter Engine — datapath &amp; control</text>
+
+  <!-- ============================ HOST CPU ============================ -->
+  <rect x="40" y="70" width="210" height="120" rx="8" fill="#34506a" stroke="#6f93b3" stroke-width="2"/>
+  <text x="145" y="104" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" text-anchor="middle">HOST CPU</text>
+  <text x="145" y="130" fill="#cbd6e2" font-family="monospace" font-size="14" text-anchor="middle">tex_driver.c</text>
+  <text x="145" y="150" fill="#9fb3c6" font-family="monospace" font-size="12" text-anchor="middle">program mailbox,</text>
+  <text x="145" y="167" fill="#9fb3c6" font-family="monospace" font-size="12" text-anchor="middle">ring doorbell, wait irq</text>
+
+  <!-- ==================== tex_regfile (mailbox) ==================== -->
+  <rect x="40" y="300" width="210" height="300" rx="8" fill="#3a4a5c" stroke="#6f93b3" stroke-width="2"/>
+  <text x="145" y="328" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="17" font-weight="bold" text-anchor="middle">tex_regfile</text>
+  <text x="145" y="348" fill="#9fd0b0" font-family="monospace" font-size="12" text-anchor="middle">mailbox + doorbell</text>
+  <line x1="58" y1="360" x2="232" y2="360" stroke="#5a7089" stroke-width="1"/>
+  <text x="60" y="382" fill="#cbd6e2" font-family="monospace" font-size="13">0x00 IDENT</text>
+  <text x="60" y="404" fill="#e0b95a" font-family="monospace" font-size="13">0x04 CTRL / START</text>
+  <text x="60" y="426" fill="#e06b6b" font-family="monospace" font-size="13">0x08 STATUS / DONE</text>
+  <text x="60" y="448" fill="#cbd6e2" font-family="monospace" font-size="13">0x0C/10 SRC / DST</text>
+  <text x="60" y="470" fill="#cbd6e2" font-family="monospace" font-size="13">0x14-20 SRC/DST W,H</text>
+  <text x="60" y="492" fill="#cbd6e2" font-family="monospace" font-size="13">0x24/28 SCALE_X/Y</text>
+  <text x="60" y="514" fill="#cbd6e2" font-family="monospace" font-size="13">0x2C CYCLES</text>
+  <line x1="58" y1="528" x2="232" y2="528" stroke="#5a7089" stroke-width="1"/>
+  <text x="60" y="550" fill="#9fb3c6" font-family="monospace" font-size="12">Q16.16 scale = host</text>
+  <text x="60" y="568" fill="#9fb3c6" font-family="monospace" font-size="12">divide (no HW divider)</text>
+  <text x="60" y="588" fill="#9fb3c6" font-family="monospace" font-size="12">-> start pulse to ctrl</text>
+
+  <!-- MMIO bus host <-> regfile -->
+  <line x1="145" y1="190" x2="145" y2="300" stroke="#c3ccd6" stroke-width="2" marker-end="url(#ac)"/>
+  <text x="152" y="238" fill="#c3ccd6" font-family="monospace" font-size="12">mmio_addr</text>
+  <text x="152" y="254" fill="#c3ccd6" font-family="monospace" font-size="12">mmio_wdata</text>
+  <text x="152" y="270" fill="#c3ccd6" font-family="monospace" font-size="12">mmio_rdata</text>
+
+  <!-- interrupt path regfile -> host -->
+  <path d="M120,300 L120,190" fill="none" stroke="#e06b6b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <text x="18" y="248" fill="#e06b6b" font-family="monospace" font-size="12">irq</text>
+
+  <!-- ==================== tex_ctrl (sequencer) ==================== -->
+  <rect x="340" y="230" width="270" height="360" rx="8" fill="#2f6d54" stroke="#7fc9a3" stroke-width="2"/>
+  <text x="475" y="258" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="17" font-weight="bold" text-anchor="middle">tex_ctrl</text>
+  <text x="475" y="278" fill="#bfe6cf" font-family="monospace" font-size="12" text-anchor="middle">sequencer + memory master</text>
+  <line x1="358" y1="290" x2="592" y2="290" stroke="#4f9a78" stroke-width="1"/>
+  <text x="360" y="314" fill="#e6f2ea" font-family="monospace" font-size="13">FSM: S_ROW -></text>
+  <text x="360" y="332" fill="#e6f2ea" font-family="monospace" font-size="13">     S_LOAD -> S_PROC</text>
+  <text x="360" y="360" fill="#e6f2ea" font-family="monospace" font-size="13">ux += scale_x  (per px)</text>
+  <text x="360" y="378" fill="#e6f2ea" font-family="monospace" font-size="13">uy += scale_y  (per row)</text>
+  <text x="360" y="406" fill="#e6f2ea" font-family="monospace" font-size="13">addr = base + idx*stride</text>
+  <text x="360" y="434" fill="#e6f2ea" font-family="monospace" font-size="13">4-pixel word packer</text>
+  <text x="360" y="462" fill="#e6f2ea" font-family="monospace" font-size="13">cycle counter -> CYCLES</text>
+  <line x1="358" y1="480" x2="592" y2="480" stroke="#4f9a78" stroke-width="1"/>
+  <text x="360" y="504" fill="#bfe6cf" font-family="monospace" font-size="12">load: 1 word (4px)/clk</text>
+  <text x="360" y="524" fill="#bfe6cf" font-family="monospace" font-size="12">proc: 1 pixel/clk</text>
+  <text x="360" y="544" fill="#bfe6cf" font-family="monospace" font-size="12">store overlaps proc</text>
+  <text x="360" y="572" fill="#9fd0b0" font-family="monospace" font-size="12">read &amp; write share 1 port</text>
+
+  <!-- descriptor regfile -> ctrl (control) -->
+  <path d="M250,400 L340,400" fill="none" stroke="#e0b95a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ac)"/>
+  <text x="256" y="392" fill="#e0b95a" font-family="monospace" font-size="11">descriptor</text>
+  <!-- status ctrl -> regfile (control) -->
+  <path d="M340,455 L250,455" fill="none" stroke="#e0b95a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ac)"/>
+  <text x="256" y="472" fill="#e0b95a" font-family="monospace" font-size="11">busy/done/cyc</text>
+
+  <!-- ==================== coord_gen x / y ==================== -->
+  <rect x="690" y="90" width="200" height="66" rx="6" fill="#3d5a73" stroke="#6f93b3" stroke-width="2"/>
+  <text x="790" y="118" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">coord_gen (x)</text>
+  <text x="790" y="140" fill="#cbd6e2" font-family="monospace" font-size="12" text-anchor="middle">x0, x1, fx  (clamp)</text>
+
+  <rect x="690" y="172" width="200" height="66" rx="6" fill="#3d5a73" stroke="#6f93b3" stroke-width="2"/>
+  <text x="790" y="200" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">coord_gen (y)</text>
+  <text x="790" y="222" fill="#cbd6e2" font-family="monospace" font-size="12" text-anchor="middle">y0, y1, fy  (clamp)</text>
+
+  <!-- ==================== line_buffer ==================== -->
+  <rect x="690" y="270" width="240" height="150" rx="6" fill="#42607a" stroke="#6f93b3" stroke-width="2"/>
+  <text x="810" y="296" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">line_buffer</text>
+  <text x="810" y="316" fill="#9fd0b0" font-family="monospace" font-size="12" text-anchor="middle">2 rows x WMAX pixels</text>
+  <rect x="708" y="330" width="204" height="26" fill="#5a7fa0"/>
+  <text x="810" y="348" fill="#26323f" font-family="monospace" font-size="12" text-anchor="middle">top row  (source y0)</text>
+  <rect x="708" y="362" width="204" height="26" fill="#4f7a5e"/>
+  <text x="810" y="380" fill="#26323f" font-family="monospace" font-size="12" text-anchor="middle">bottom row  (source y0+1)</text>
+  <text x="810" y="408" fill="#cbd6e2" font-family="monospace" font-size="12" text-anchor="middle">2x2 gather: p00 p01 p10 p11</text>
+
+  <!-- ==================== bilinear_blend ==================== -->
+  <rect x="690" y="450" width="240" height="96" rx="6" fill="#5a4a73" stroke="#a08fc9" stroke-width="2"/>
+  <text x="810" y="478" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">bilinear_blend</text>
+  <text x="810" y="500" fill="#dcd2ec" font-family="monospace" font-size="12" text-anchor="middle">top=(1-fx)p00+fx·p01</text>
+  <text x="810" y="518" fill="#dcd2ec" font-family="monospace" font-size="12" text-anchor="middle">bot=(1-fx)p10+fx·p11</text>
+  <text x="810" y="536" fill="#dcd2ec" font-family="monospace" font-size="12" text-anchor="middle">out=(1-fy)top+fy·bot</text>
+
+  <!-- ==================== device memory ==================== -->
+  <rect x="980" y="270" width="150" height="276" rx="8" fill="#2f3e4d" stroke="#6f93b3" stroke-width="2"/>
+  <text x="1055" y="300" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">Device</text>
+  <text x="1055" y="320" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">memory</text>
+  <text x="1055" y="344" fill="#9fb3c6" font-family="monospace" font-size="11" text-anchor="middle">global, 32b</text>
+  <text x="1055" y="360" fill="#9fb3c6" font-family="monospace" font-size="11" text-anchor="middle">word = 4 px</text>
+  <line x1="996" y1="376" x2="1114" y2="376" stroke="#4a6076" stroke-width="1"/>
+  <text x="1055" y="400" fill="#8fd3b0" font-family="monospace" font-size="11" text-anchor="middle">source image</text>
+  <text x="1055" y="440" fill="#e0b95a" font-family="monospace" font-size="11" text-anchor="middle">dest image</text>
+
+  <!-- ==================== datapath arrows (solid green) ==================== -->
+  <!-- ux/uy from ctrl to coord_gens -->
+  <path d="M610,300 C650,300 650,123 690,123" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <path d="M610,320 C652,320 652,205 690,205" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="616" y="292" fill="#8fd3b0" font-family="monospace" font-size="11">ux</text>
+  <text x="616" y="340" fill="#8fd3b0" font-family="monospace" font-size="11">uy</text>
+
+  <!-- coord_x x0,x1 -> line_buffer -->
+  <path d="M810,156 C810,200 810,240 810,270" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="816" y="256" fill="#8fd3b0" font-family="monospace" font-size="11">x0,x1</text>
+  <!-- coord_x/y fx,fy -> blend -->
+  <path d="M888,150 C930,150 930,470 872,470" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="934" y="300" fill="#8fd3b0" font-family="monospace" font-size="11">fx,fy</text>
+
+  <!-- line_buffer texels -> blend -->
+  <path d="M810,420 L810,450" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="816" y="440" fill="#8fd3b0" font-family="monospace" font-size="11">p00..p11</text>
+
+  <!-- blend pout -> ctrl (packer) -->
+  <path d="M690,520 C640,520 640,540 610,540" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="612" y="560" fill="#8fd3b0" font-family="monospace" font-size="11">pout</text>
+
+  <!-- memory master: ctrl <-> memory (loads/stores), routed below datapath -->
+  <path d="M610,576 C800,616 940,612 1055,548" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="662" y="606" fill="#8fd3b0" font-family="monospace" font-size="11">mem_rd/wr_addr, wr_data</text>
+  <path d="M1035,546 C880,600 760,600 610,560" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="905" y="584" fill="#8fd3b0" font-family="monospace" font-size="11">mem_rd_data</text>
+
+  <!-- ctrl loads line buffer -->
+  <path d="M610,340 C640,340 660,345 688,345" fill="none" stroke="#8fd3b0" stroke-width="2" marker-end="url(#ad)"/>
+  <text x="614" y="326" fill="#8fd3b0" font-family="monospace" font-size="11">lb_wr (load)</text>
+
+  <!-- ==================== legend ==================== -->
+  <rect x="40" y="650" width="1090" height="80" rx="6" fill="#2f3e4d" stroke="#4a6076" stroke-width="1"/>
+  <text x="58" y="676" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold">Legend</text>
+  <line x1="150" y1="672" x2="200" y2="672" stroke="#8fd3b0" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="210" y="676" fill="#cbd6e2" font-family="monospace" font-size="13">datapath (pixels / words)</text>
+  <line x1="470" y1="672" x2="520" y2="672" stroke="#e0b95a" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#ac)"/>
+  <text x="530" y="676" fill="#cbd6e2" font-family="monospace" font-size="13">control / descriptor / status</text>
+  <line x1="820" y1="672" x2="870" y2="672" stroke="#e06b6b" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#ai)"/>
+  <text x="880" y="676" fill="#cbd6e2" font-family="monospace" font-size="13">completion interrupt</text>
+  <text x="58" y="708" fill="#9fb3c6" font-family="monospace" font-size="12">Steady state: one bilinear pixel retired per clock; source streamed past a two-row window (line-buffer reuse across output rows).</text>
+</svg>

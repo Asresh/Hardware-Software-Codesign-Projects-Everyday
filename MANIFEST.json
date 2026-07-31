@@ -39,6 +39,16 @@
       "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
       "summary": "GPU-style tiled bitonic sort engine: 10-stage / 80-cell compare-exchange network retires one 16-key (512-bit) tile per clock, 13.18 sustained keys/cycle (16.0 ideal), 105.43x aggregate / 116.20x peak over a scalar baseline; 286 jobs / 275984 checked keys, 0 mismatches."
+    },
+    {
+      "day": 5,
+      "name": "gpu_texture_filter_engine",
+      "domain": "image / video processing",
+      "microarchitecture": "line-buffer window with 2x2 texel gather and a fixed-point bilinear blend datapath",
+      "interface": "mailbox + doorbell registers with completion interrupt plus a coalesced wide memory master",
+      "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
+      "summary": "GPU-style bilinear texture-filter (image resampler): a two-row line-buffer window feeds a 2x2 texel gather and a Q16.16 bilinear blend datapath that retires one filtered pixel per clock; 0.67 sustained / 0.97 peak pixels/cycle (1.0 ideal), 22.49x aggregate / 32.35x peak over a scalar baseline; 290 jobs / 314316 output pixels / 78579 checked words, 0 mismatches."
     }
   ]
 }

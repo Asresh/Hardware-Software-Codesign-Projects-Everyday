@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1000" height="300" fill="#26323f"/>
+  <rect x="0" y="0" width="1000" height="300" fill="none" stroke="#4a6076" stroke-width="4"/>
+
+  <!-- decorative 2x2 bilinear texel gather motif -->
+  <g transform="translate(60,70)">
+    <rect x="0"   y="0"   width="70" height="70" fill="#3d5a73"/>
+    <rect x="70"  y="0"   width="70" height="70" fill="#5a7fa0"/>
+    <rect x="0"   y="70"  width="70" height="70" fill="#4f7a5e"/>
+    <rect x="70"  y="70"  width="70" height="70" fill="#c9a24b"/>
+    <circle cx="88" cy="52" r="9" fill="#f2f2f2" stroke="#26323f" stroke-width="3"/>
+    <line x1="0" y1="70" x2="140" y2="70" stroke="#26323f" stroke-width="2"/>
+    <line x1="70" y1="0" x2="70" y2="140" stroke="#26323f" stroke-width="2"/>
+    <text x="70" y="172" fill="#aebccb" font-family="monospace" font-size="16" text-anchor="middle">2x2 gather</text>
+  </g>
+
+  <text x="230" y="118" fill="#f4f6f8" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="bold">Bilinear Texture-Filter Engine</text>
+  <text x="232" y="162" fill="#9fd0b0" font-family="Helvetica,Arial,sans-serif" font-size="26">GPU-style line-buffer image resampler</text>
+
+  <line x1="230" y1="186" x2="928" y2="186" stroke="#4a6076" stroke-width="2"/>
+
+  <text x="230" y="228" fill="#cbd6e2" font-family="monospace" font-size="19">line buffer  |  2x2 texel gather  |  Q16.16 lerp  |  1 pixel / clock</text>
+
+  <!-- day badge -->
+  <rect x="820" y="212" width="118" height="52" rx="8" fill="#c9a24b"/>
+  <text x="879" y="247" fill="#26323f" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="bold" text-anchor="middle">DAY 5</text>
+
+  <text x="230" y="262" fill="#7f93a6" font-family="monospace" font-size="15">mailbox + doorbell + completion interrupt  ::  wide coalesced memory master</text>
+</svg>

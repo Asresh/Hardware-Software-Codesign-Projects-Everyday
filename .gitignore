@@ -16,6 +16,7 @@ __pycache__/
 **/sw/gemm_host
 **/sw/scan_host
 **/sw/sort_host
+**/sw/tex_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
