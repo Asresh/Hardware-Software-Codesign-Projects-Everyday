@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 880" width="1320" height="880">
+  <!-- opaque mid-tone background: readable on light and dark themes -->
+  <rect x="0" y="0" width="1320" height="880" fill="#242a3c"/>
+
+  <!-- arrowhead markers: datapath (amber) vs control (cyan) vs irq (red) -->
+  <defs>
+    <marker id="ad" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#f2b45f"/>
+    </marker>
+    <marker id="ac" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#67c1f5"/>
+    </marker>
+    <marker id="ai" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#f2665f"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="46" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="bold" fill="#ffffff">Day 7 &#8212; GPU CORDIC SFU Engine &#8212; block diagram</text>
+  <text x="40" y="76" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#a7b2d6">A ring-buffer-driven SIMD array of iterative CORDIC lanes evaluates sin/cos/exp/ln/sqrt/atan2; requests and results move over gather/scatter memory masters.</text>
+
+  <!-- ================= legend ================= -->
+  <g font-family="Menlo,Consolas,monospace" font-size="13">
+    <line x1="880" y1="60" x2="920" y2="60" stroke="#f2b45f" stroke-width="3" marker-end="url(#ad)"/>
+    <text x="926" y="65" fill="#f2c98a">datapath</text>
+    <line x1="1010" y1="60" x2="1050" y2="60" stroke="#67c1f5" stroke-width="3" marker-end="url(#ac)"/>
+    <text x="1056" y="65" fill="#8fbfe0">control</text>
+    <line x1="1140" y1="60" x2="1180" y2="60" stroke="#f2665f" stroke-width="3" marker-end="url(#ai)"/>
+    <text x="1186" y="65" fill="#f0a09a">irq</text>
+  </g>
+
+  <!-- ===================== HOST CPU ===================== -->
+  <rect x="40" y="120" width="220" height="150" rx="10" fill="#2d4a2f" stroke="#8fd694" stroke-width="2.5"/>
+  <text x="150" y="152" font-family="Helvetica,Arial,sans-serif" font-size="21" font-weight="bold" fill="#dff2e0" text-anchor="middle">Host CPU</text>
+  <text x="150" y="180" font-family="Menlo,Consolas,monospace" font-size="13" fill="#bfe6c2" text-anchor="middle">sfu_driver.c</text>
+  <text x="150" y="204" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#bfe6c2" text-anchor="middle">fill request ring,</text>
+  <text x="150" y="222" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#bfe6c2" text-anchor="middle">program descriptor,</text>
+  <text x="150" y="240" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#bfe6c2" text-anchor="middle">ring doorbell, wait IRQ</text>
+
+  <!-- ===================== MMIO BUS ===================== -->
+  <text x="300" y="138" font-family="Menlo,Consolas,monospace" font-size="13" fill="#67c1f5">MMIO 32-bit</text>
+  <text x="300" y="156" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">mmio_sel / _write</text>
+  <text x="300" y="172" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">mmio_addr[7:0]</text>
+  <text x="300" y="188" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">mmio_wdata/_rdata</text>
+  <line x1="260" y1="200" x2="470" y2="200" stroke="#67c1f5" stroke-width="2.5" marker-end="url(#ac)"/>
+
+  <!-- ===================== REGFILE ===================== -->
+  <rect x="470" y="120" width="270" height="150" rx="10" fill="#123a5e" stroke="#67c1f5" stroke-width="2.5"/>
+  <text x="605" y="150" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#dbeeff" text-anchor="middle">sfu_regfile</text>
+  <text x="605" y="174" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#aacff0" text-anchor="middle">MMIO mailbox / CSR</text>
+  <text x="605" y="196" font-family="Menlo,Consolas,monospace" font-size="11.5" fill="#aacff0" text-anchor="middle">REQ_BASE RES_BASE RING_CAP</text>
+  <text x="605" y="212" font-family="Menlo,Consolas,monospace" font-size="11.5" fill="#aacff0" text-anchor="middle">REQ_HEAD RES_HEAD COUNT</text>
+  <text x="605" y="234" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#aacff0" text-anchor="middle">doorbell &#8594; start pulse</text>
+  <text x="605" y="252" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#aacff0" text-anchor="middle">CTRL / STATUS &#183; done/busy/irq</text>
+
+  <!-- descriptor (control) regfile -> sequencer -->
+  <line x1="605" y1="270" x2="605" y2="332" stroke="#67c1f5" stroke-width="2.5" marker-end="url(#ac)"/>
+  <text x="612" y="306" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">descriptor</text>
+
+  <!-- irq regfile -> host -->
+  <path d="M470,250 L360,250 L360,300 L150,300 L150,272" fill="none" stroke="#f2665f" stroke-width="2.5" marker-end="url(#ai)"/>
+  <text x="366" y="292" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f0a09a">irq</text>
+
+  <!-- ===================== SEQUENCER ===================== -->
+  <rect x="360" y="332" width="520" height="158" rx="10" fill="#3a2f5e" stroke="#b79ff0" stroke-width="2.5"/>
+  <text x="620" y="362" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#e7ddff" text-anchor="middle">sfu_ring_seq</text>
+  <text x="620" y="388" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">ring-buffer consumer/producer &#183; walks COUNT requests in waves of LANES</text>
+  <text x="620" y="408" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">per-lane wrapped addr: (head + wave&#183;LANES + l) &amp; (RING_CAP&#8722;1)</text>
+  <text x="620" y="428" font-family="Menlo,Consolas,monospace" font-size="12" fill="#c9b9f0" text-anchor="middle">FSM: READ &#8594; RDWAIT &#8594; START &#8594; COMPUTE &#8594; WRITE</text>
+  <text x="620" y="448" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">dispatch (op,a,b) to lanes, collect (r0,r1), cycle counter, completion</text>
+  <text x="620" y="470" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a99fd0" text-anchor="middle">completion &#8594; done_pulse / cycles</text>
+
+  <!-- completion pulse seq -> regfile -->
+  <line x1="740" y1="332" x2="740" y2="270" stroke="#67c1f5" stroke-width="2.5" marker-end="url(#ac)"/>
+  <text x="752" y="306" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">done / cycles</text>
+
+  <!-- ===================== RD MASTER ===================== -->
+  <rect x="60" y="360" width="230" height="110" rx="10" fill="#5e4a12" stroke="#f2b45f" stroke-width="2.5"/>
+  <text x="175" y="392" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffe6b8" text-anchor="middle">rd_master</text>
+  <text x="175" y="416" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#f2d59a" text-anchor="middle">coalesced gather read</text>
+  <text x="175" y="436" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2d59a" text-anchor="middle">LANES&#215;128b line</text>
+  <text x="175" y="454" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#f2d59a" text-anchor="middle">unpack &#8594; op,a,b</text>
+
+  <!-- rd_master <-> sequencer -->
+  <line x1="290" y1="400" x2="360" y2="400" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="300" y="384" font-family="Menlo,Consolas,monospace" font-size="11" fill="#f2c98a">op/a/b</text>
+  <path d="M360,430 L320,430 L320,470" fill="none" stroke="#67c1f5" stroke-width="2.2" marker-end="url(#ac)"/>
+  <text x="120" y="352" font-family="Menlo,Consolas,monospace" font-size="11" fill="#8fbfe0">rd_addr[L*AW] / rd_mask[L]</text>
+
+  <!-- ===================== WR MASTER ===================== -->
+  <rect x="950" y="360" width="230" height="110" rx="10" fill="#5e4a12" stroke="#f2b45f" stroke-width="2.5"/>
+  <text x="1065" y="392" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffe6b8" text-anchor="middle">wr_master</text>
+  <text x="1065" y="416" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#f2d59a" text-anchor="middle">coalesced scatter write</text>
+  <text x="1065" y="436" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2d59a" text-anchor="middle">pack op,r0,r1,0</text>
+  <text x="1065" y="454" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#f2d59a" text-anchor="middle">per-lane wr mask</text>
+
+  <!-- sequencer -> wr_master -->
+  <line x1="880" y1="400" x2="950" y2="400" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="884" y="384" font-family="Menlo,Consolas,monospace" font-size="11" fill="#f2c98a">r0/r1</text>
+
+  <!-- ===================== SIMD LANE ARRAY ===================== -->
+  <rect x="360" y="540" width="520" height="196" rx="10" fill="#1f4d3e" stroke="#7ee0b8" stroke-width="2.5"/>
+  <text x="620" y="568" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" fill="#d6f5e6" text-anchor="middle">SIMD lane array &#215; LANES</text>
+  <text x="620" y="590" font-family="Menlo,Consolas,monospace" font-size="12.5" fill="#bfe6d6" text-anchor="middle">each lane: sfu_decode + cordic_core</text>
+
+  <!-- individual lanes -->
+  <g font-family="Menlo,Consolas,monospace" font-size="11.5">
+    <rect x="380" y="606" width="115" height="112" rx="7" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.8"/>
+    <rect x="505" y="606" width="115" height="112" rx="7" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.8"/>
+    <rect x="630" y="606" width="115" height="112" rx="7" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.8"/>
+    <rect x="755" y="606" width="105" height="112" rx="7" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.8"/>
+    <text x="437" y="628" fill="#cfeede" text-anchor="middle">lane 0</text>
+    <text x="562" y="628" fill="#cfeede" text-anchor="middle">lane 1</text>
+    <text x="687" y="628" fill="#cfeede" text-anchor="middle">lane 2</text>
+    <text x="807" y="628" fill="#cfeede" text-anchor="middle">lane 3</text>
+  </g>
+  <!-- lane detail (shown once, applies to all) -->
+  <g font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#a7e3cc">
+    <text x="437" y="648" text-anchor="middle">sfu_decode</text>
+    <text x="437" y="664" text-anchor="middle">pre-scale 1/K</text>
+    <text x="437" y="684" text-anchor="middle">cordic_core</text>
+    <text x="437" y="700" text-anchor="middle">x,y,z 40b</text>
+    <text x="437" y="714" text-anchor="middle">NC=28/NH=29</text>
+  </g>
+  <g font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#a7e3cc">
+    <text x="562" y="648" text-anchor="middle">decode</text>
+    <text x="562" y="686" text-anchor="middle">iterative</text>
+    <text x="562" y="702" text-anchor="middle">shift+add</text>
+    <text x="687" y="648" text-anchor="middle">decode</text>
+    <text x="687" y="686" text-anchor="middle">iterative</text>
+    <text x="687" y="702" text-anchor="middle">shift+add</text>
+    <text x="807" y="648" text-anchor="middle">decode</text>
+    <text x="807" y="686" text-anchor="middle">iterative</text>
+    <text x="807" y="702" text-anchor="middle">shift+add</text>
+  </g>
+
+  <!-- sequencer <-> lanes datapath -->
+  <path d="M470,490 L470,606" fill="none" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="300" y="522" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">op,a,b &#8594; x0,y0,z0 (start)</text>
+  <path d="M770,606 L770,490" fill="none" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="782" y="522" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">xo,yo,zo &#8594; r0,r1 (done)</text>
+
+  <!-- ===================== CORDIC ROM ===================== -->
+  <rect x="920" y="560" width="250" height="120" rx="10" fill="#3a2f5e" stroke="#b79ff0" stroke-width="2.2"/>
+  <text x="1045" y="588" font-family="Helvetica,Arial,sans-serif" font-size="17" font-weight="bold" fill="#e7ddff" text-anchor="middle">cordic_rom</text>
+  <text x="1045" y="610" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#c9b9f0" text-anchor="middle">micro-rotation schedule</text>
+  <text x="1045" y="630" font-family="Menlo,Consolas,monospace" font-size="11.5" fill="#c9b9f0" text-anchor="middle">shift[i], atan/atanh(2^-i)</text>
+  <text x="1045" y="650" font-family="Menlo,Consolas,monospace" font-size="11.5" fill="#c9b9f0" text-anchor="middle">NROM=57 entries, Q4.28</text>
+  <text x="1045" y="670" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#a99fd0" text-anchor="middle">$readmemh, bit-exact vs SW</text>
+  <line x1="920" y1="640" x2="862" y2="662" stroke="#b79ff0" stroke-width="2.2" marker-end="url(#ac)"/>
+
+  <!-- ===================== DEVICE MEMORY ===================== -->
+  <rect x="60" y="770" width="1120" height="88" rx="10" fill="#33384d" stroke="#9aa4c4" stroke-width="2.5"/>
+  <text x="90" y="800" font-family="Helvetica,Arial,sans-serif" font-size="17" font-weight="bold" fill="#e6ebf7">Shared device memory</text>
+  <text x="90" y="822" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#c2cae0">4-word entries &#183; RING_CAP power of two</text>
+
+  <!-- request ring -->
+  <rect x="330" y="784" width="330" height="58" rx="7" fill="#5e4a12" stroke="#f2b45f" stroke-width="2"/>
+  <text x="495" y="808" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#ffe6b8" text-anchor="middle">request ring (submission)</text>
+  <text x="495" y="828" font-family="Menlo,Consolas,monospace" font-size="11.5" fill="#f2d59a" text-anchor="middle">[op, a, b, &#8212;]  @ REQ_BASE, REQ_HEAD</text>
+
+  <!-- result ring -->
+  <rect x="700" y="784" width="330" height="58" rx="7" fill="#1f4d3e" stroke="#7ee0b8" stroke-width="2"/>
+  <text x="865" y="808" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#d6f5e6" text-anchor="middle">result ring (completion)</text>
+  <text x="865" y="828" font-family="Menlo,Consolas,monospace" font-size="11.5" fill="#bfe6d6" text-anchor="middle">[op, r0, r1, 0]  @ RES_BASE, RES_HEAD</text>
+
+  <!-- request ring <-> rd_master (gather) -->
+  <path d="M330,800 L175,800 L175,470" fill="none" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="182" y="758" font-family="Menlo,Consolas,monospace" font-size="11" fill="#f2c98a">mem_rd_data[L*128]</text>
+
+  <!-- wr_master -> result ring (scatter) -->
+  <path d="M1065,470 L1065,800 L1030,800" fill="none" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="1072" y="720" font-family="Menlo,Consolas,monospace" font-size="11" fill="#f2c98a">mem_wr_data[L*128]</text>
+
+  <!-- host fills request ring (control) -->
+  <path d="M150,270 L150,740 L400,740 L400,784" fill="none" stroke="#67c1f5" stroke-width="2.2" marker-end="url(#ac)"/>
+  <text x="156" y="726" font-family="Menlo,Consolas,monospace" font-size="11" fill="#8fbfe0">host writes requests</text>
+</svg>

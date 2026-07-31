@@ -18,10 +18,12 @@ __pycache__/
 **/sw/sort_host
 **/sw/tex_host
 **/sw/philox_host
+**/sw/sfu_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
 **/tb/vectors/params.vh
+**/tb/vectors/sfu_const.vh
 
 # --- OS / editor cruft ---
 .DS_Store

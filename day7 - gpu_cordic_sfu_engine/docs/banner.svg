@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1200" height="320" fill="#26283f"/>
+  <rect x="0" y="0" width="1200" height="320" fill="none" stroke="#4a4d78" stroke-width="4"/>
+
+  <!-- day badge -->
+  <rect x="48" y="48" width="150" height="150" rx="16" fill="#3a2a63"/>
+  <rect x="48" y="48" width="150" height="150" rx="16" fill="none" stroke="#b79ff0" stroke-width="3"/>
+  <text x="123" y="118" font-family="Menlo,Consolas,monospace" font-size="34" fill="#d6c6ff" text-anchor="middle">DAY</text>
+  <text x="123" y="180" font-family="Menlo,Consolas,monospace" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle">07</text>
+
+  <!-- title -->
+  <text x="240" y="112" font-family="Helvetica,Arial,sans-serif" font-size="50" font-weight="bold" fill="#ffffff">GPU CORDIC SFU Engine</text>
+  <text x="242" y="154" font-family="Helvetica,Arial,sans-serif" font-size="24" fill="#a7b2d6">Special Function Unit: sin / cos / exp / ln / sqrt / atan2</text>
+  <text x="242" y="186" font-family="Helvetica,Arial,sans-serif" font-size="24" fill="#a7b2d6">iterative CORDIC &#183; SIMD lanes &#183; shared ring buffer + IRQ</text>
+
+  <!-- function motif -->
+  <g font-family="Menlo,Consolas,monospace" font-size="19" fill="#7ee0b8">
+    <text x="242" y="242">sin(x)  cos(x)  exp(x)  cosh(x)  sinh(x)</text>
+    <text x="242" y="270" fill="#f2b45f">atan2(y,x)  hypot(x,y)  ln(w)  sqrt(w)</text>
+  </g>
+
+  <!-- CORDIC lane stack on the right -->
+  <g>
+    <rect x="980" y="60"  width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <rect x="980" y="98"  width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <rect x="980" y="136" width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <rect x="980" y="174" width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <text x="1068" y="80"  font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">cordic lane 0</text>
+    <text x="1068" y="118" font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">cordic lane 1</text>
+    <text x="1068" y="156" font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">cordic lane 2</text>
+    <text x="1068" y="194" font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">cordic lane 3</text>
+    <text x="1068" y="232" font-family="Menlo,Consolas,monospace" font-size="14" fill="#a7b2d6" text-anchor="middle">shift-and-add, no mult</text>
+  </g>
+</svg>

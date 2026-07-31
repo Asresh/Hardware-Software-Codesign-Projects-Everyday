@@ -59,6 +59,16 @@
       "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model, anchored to the published Random123 known-answer vectors",
       "summary": "GPU-style Philox-4x32-10 counter-based parallel RNG: a 4-lane SIMD array of fully-pipelined 10-round Philox cores retires one 128-bit random block per lane per clock (512 random bits/clock), 3.40 sustained / 3.71 peak draws/cycle (4.0 ideal), 441.95x aggregate / 481.76x peak over a scalar baseline; 294 jobs / 276808 checked words, 0 mismatches."
+    },
+    {
+      "day": 7,
+      "name": "gpu_cordic_sfu_engine",
+      "domain": "physics kernels / transcendental math",
+      "microarchitecture": "unified iterative CORDIC engine (circular + hyperbolic, rotation + vectoring) with parallel SIMD lanes",
+      "interface": "MMIO mailbox descriptor + shared submission/completion ring buffer in device memory over coalesced gather-read and scatter-write masters with completion interrupt",
+      "software_layer": "bare-metal C driver, software golden model, and independent scalar CORDIC baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), anchored to IEEE double libm for accuracy",
+      "summary": "GPU-style CORDIC Special Function Unit: a SIMD array of iterative shift-and-add CORDIC lanes evaluates sin/cos/exp/cosh/sinh/atan2/hypot/ln/sqrt (no multiplier in the iteration), dispatched from a shared ring buffer; ~9 cycles/function amortised over a 4-lane wave, 34.47x aggregate / 35.58x peak over a scalar CORDIC baseline, 1.15e-7 max abs error vs libm (~23 bits); 264 jobs / 13253 requests / 39759 checked words, 0 mismatches."
     }
   ]
 }
