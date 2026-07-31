@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820">
+  <!-- opaque mid-tone background: readable on light and dark themes -->
+  <rect x="0" y="0" width="1280" height="820" fill="#22303f"/>
+
+  <!-- arrowhead markers: datapath (amber) vs control (cyan) vs irq (red) -->
+  <defs>
+    <marker id="ad" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#f2b45f"/>
+    </marker>
+    <marker id="ac" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#67c1f5"/>
+    </marker>
+    <marker id="ai" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#f2665f"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="48" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="bold" fill="#ffffff">Day 6 &#8212; GPU Philox RNG Engine &#8212; block diagram</text>
+  <text x="40" y="78" font-family="Helvetica,Arial,sans-serif" font-size="17" fill="#9fb6cc">Counter-based Philox-4x32-10: SIMD lanes stream one keyed 128-bit block/lane/clock into a coalesced wide masked write master.</text>
+
+  <!-- ===================== HOST CPU ===================== -->
+  <rect x="40" y="120" width="220" height="150" rx="10" fill="#2d4a2f" stroke="#8fd694" stroke-width="2.5"/>
+  <text x="150" y="152" font-family="Helvetica,Arial,sans-serif" font-size="21" font-weight="bold" fill="#dff2e0" text-anchor="middle">Host CPU</text>
+  <text x="150" y="182" font-family="Menlo,Consolas,monospace" font-size="13" fill="#bfe6c2" text-anchor="middle">philox_driver.c</text>
+  <text x="150" y="206" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#bfe6c2" text-anchor="middle">program descriptor,</text>
+  <text x="150" y="224" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#bfe6c2" text-anchor="middle">ring doorbell, wait IRQ,</text>
+  <text x="150" y="242" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#bfe6c2" text-anchor="middle">consume random stream</text>
+
+  <!-- ===================== MMIO BUS ===================== -->
+  <text x="300" y="140" font-family="Menlo,Consolas,monospace" font-size="13" fill="#67c1f5">MMIO 32-bit</text>
+  <text x="300" y="158" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">mmio_sel / _write</text>
+  <text x="300" y="174" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">mmio_addr[7:0]</text>
+  <text x="300" y="190" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">mmio_wdata/_rdata</text>
+  <!-- control arrow host -> regfile -->
+  <line x1="260" y1="205" x2="470" y2="205" stroke="#67c1f5" stroke-width="2.5" marker-end="url(#ac)"/>
+
+  <!-- ===================== REGFILE ===================== -->
+  <rect x="470" y="120" width="250" height="150" rx="10" fill="#123a5e" stroke="#67c1f5" stroke-width="2.5"/>
+  <text x="595" y="150" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#dbeeff" text-anchor="middle">philox_regfile</text>
+  <text x="595" y="174" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#aacff0" text-anchor="middle">MMIO mailbox / CSR</text>
+  <text x="595" y="198" font-family="Menlo,Consolas,monospace" font-size="12" fill="#aacff0" text-anchor="middle">DST NDRAWS KEY0/1</text>
+  <text x="595" y="216" font-family="Menlo,Consolas,monospace" font-size="12" fill="#aacff0" text-anchor="middle">CTR0..3  CTRL/STATUS</text>
+  <text x="595" y="240" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#aacff0" text-anchor="middle">doorbell &#8594; start pulse</text>
+  <text x="595" y="258" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#aacff0" text-anchor="middle">done / busy / irq</text>
+
+  <!-- descriptor (control) regfile -> sequencer -->
+  <line x1="595" y1="270" x2="595" y2="330" stroke="#67c1f5" stroke-width="2.5" marker-end="url(#ac)"/>
+  <text x="610" y="305" font-family="Menlo,Consolas,monospace" font-size="12" fill="#8fbfe0">descriptor + start</text>
+
+  <!-- ===================== SEQUENCER ===================== -->
+  <rect x="360" y="330" width="470" height="150" rx="10" fill="#3a2f5e" stroke="#b79ff0" stroke-width="2.5"/>
+  <text x="595" y="360" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#e7ddff" text-anchor="middle">rng_sequencer</text>
+  <text x="595" y="386" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">128-bit base counter += LANES/beat (full carry chain)</text>
+  <text x="595" y="406" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">issues LANES counters base+0 .. base+L&#8722;1 per clock</text>
+  <text x="595" y="430" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">context delay line: {wr_addr, lane mask}  depth = ROUNDS (10)</text>
+  <text x="595" y="452" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c9b9f0" text-anchor="middle">cycle counter, completion detect</text>
+
+  <!-- datapath: sequencer -> lanes (counters) -->
+  <path d="M360,455 L300,455 L300,540" fill="none" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="150" y="450" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">lane_in_ctr[L*128]</text>
+  <text x="150" y="468" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">issue_valid</text>
+
+  <!-- ===================== LANE ARRAY ===================== -->
+  <rect x="70" y="540" width="500" height="210" rx="10" fill="#1f3a30" stroke="#7ee0b8" stroke-width="2.5"/>
+  <text x="320" y="568" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" fill="#d6f5e6" text-anchor="middle">SIMD lane array &#8212; LANES &#215; philox_lane</text>
+
+  <!-- four lane pipelines -->
+  <g font-family="Menlo,Consolas,monospace" font-size="11" fill="#0f2a20">
+    <rect x="92" y="586" width="456" height="34" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.5"/>
+    <rect x="92" y="626" width="456" height="34" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.5"/>
+    <rect x="92" y="666" width="456" height="34" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.5"/>
+    <rect x="92" y="706" width="456" height="34" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="1.5"/>
+  </g>
+  <g font-family="Menlo,Consolas,monospace" font-size="12" fill="#d6f5e6">
+    <text x="104" y="608">lane0:  round0 &#9642; round1 &#9642; &#8230; &#9642; round9   (10 pipelined philox_round)</text>
+    <text x="104" y="648">lane1:  round0 &#9642; round1 &#9642; &#8230; &#9642; round9</text>
+    <text x="104" y="688">lane2:  round0 &#9642; round1 &#9642; &#8230; &#9642; round9</text>
+    <text x="104" y="728">lane3:  round0 &#9642; round1 &#9642; &#8230; &#9642; round9</text>
+  </g>
+  <text x="320" y="762" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#9fc9b6" text-anchor="middle">each round: 2&#215;(32&#215;32&#8594;64) multiply + XOR permute + Weyl key bump &#183; one 128-bit block / lane / clock</text>
+
+  <!-- datapath: lanes -> wr_master -->
+  <path d="M570,645 L660,645" fill="none" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="590" y="632" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">lane_out_ctr[L*128]</text>
+
+  <!-- ===================== WRITE MASTER ===================== -->
+  <rect x="660" y="560" width="260" height="170" rx="10" fill="#5e3a2f" stroke="#f2b45f" stroke-width="2.5"/>
+  <text x="790" y="590" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#ffe6cf" text-anchor="middle">wr_master</text>
+  <text x="790" y="616" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#f0cdb0" text-anchor="middle">pack LANES blocks &#8594;</text>
+  <text x="790" y="634" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#f0cdb0" text-anchor="middle">one L&#215;128-bit beat</text>
+  <text x="790" y="660" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#f0cdb0" text-anchor="middle">per-word write strobe</text>
+  <text x="790" y="678" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#f0cdb0" text-anchor="middle">(partial final beat)</text>
+  <text x="790" y="704" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f0cdb0" text-anchor="middle">context aligns addr+mask</text>
+
+  <!-- datapath: wr_master -> memory -->
+  <line x1="920" y1="645" x2="1050" y2="645" stroke="#f2b45f" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="928" y="632" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">mem_wr_en</text>
+  <text x="928" y="618" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">mem_wr_addr</text>
+  <text x="928" y="662" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">mem_wr_data[L*128]</text>
+  <text x="928" y="676" font-family="Menlo,Consolas,monospace" font-size="12" fill="#f2c98a">mem_wr_mask[L*4]</text>
+
+  <!-- ===================== DEVICE MEMORY ===================== -->
+  <rect x="1050" y="560" width="190" height="170" rx="10" fill="#33404f" stroke="#9fb6cc" stroke-width="2.5"/>
+  <text x="1145" y="600" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" fill="#e6eef6" text-anchor="middle">Device</text>
+  <text x="1145" y="624" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" fill="#e6eef6" text-anchor="middle">memory</text>
+  <text x="1145" y="656" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#c2d2e2" text-anchor="middle">random stream</text>
+  <text x="1145" y="676" font-family="Menlo,Consolas,monospace" font-size="12" fill="#c2d2e2" text-anchor="middle">dst + d*4 + j</text>
+  <text x="1145" y="702" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#c2d2e2" text-anchor="middle">16 B / draw</text>
+
+  <!-- ===================== IRQ path ===================== -->
+  <!-- irq from regfile back up to host (control/interrupt, red dashed) -->
+  <path d="M470,150 L360,150 L360,120 L150,120 L150,120" fill="none" stroke="#f2665f" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ai)"/>
+  <text x="300" y="112" font-family="Menlo,Consolas,monospace" font-size="13" fill="#f2948f">irq (completion)</text>
+
+  <!-- top module label -->
+  <rect x="40" y="118" width="1200" height="640" rx="14" fill="none" stroke="#4a5c70" stroke-width="1.5" stroke-dasharray="3,4"/>
+  <text x="1232" y="748" font-family="Menlo,Consolas,monospace" font-size="13" fill="#7d90a6" text-anchor="end">philox_top</text>
+
+  <!-- ===================== legend ===================== -->
+  <rect x="40" y="775" width="1200" height="34" rx="7" fill="#1b2733" stroke="#3d5570" stroke-width="1.5"/>
+  <line x1="60" y1="792" x2="100" y2="792" stroke="#f2b45f" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="110" y="797" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#f2c98a">datapath (counters / random blocks / write beat)</text>
+  <line x1="470" y1="792" x2="510" y2="792" stroke="#67c1f5" stroke-width="3" marker-end="url(#ac)"/>
+  <text x="520" y="797" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#8fbfe0">control (MMIO / descriptor / doorbell)</text>
+  <line x1="850" y1="792" x2="890" y2="792" stroke="#f2665f" stroke-width="3" stroke-dasharray="7,4" marker-end="url(#ai)"/>
+  <text x="900" y="797" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#f2948f">interrupt (completion)</text>
+</svg>

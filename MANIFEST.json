@@ -49,6 +49,16 @@
       "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model",
       "summary": "GPU-style bilinear texture-filter (image resampler): a two-row line-buffer window feeds a 2x2 texel gather and a Q16.16 bilinear blend datapath that retires one filtered pixel per clock; 0.67 sustained / 0.97 peak pixels/cycle (1.0 ideal), 22.49x aggregate / 32.35x peak over a scalar baseline; 290 jobs / 314316 output pixels / 78579 checked words, 0 mismatches."
+    },
+    {
+      "day": 6,
+      "name": "gpu_philox_rng_engine",
+      "domain": "cryptography / Monte-Carlo random number generation",
+      "microarchitecture": "fully-pipelined counter-based (Philox) multi-round datapath with parallel SIMD lanes",
+      "interface": "MMIO mailbox descriptor + doorbell with a coalesced wide masked write-only DMA master and completion interrupt",
+      "software_layer": "bare-metal C driver, software golden model, and scalar baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model, anchored to the published Random123 known-answer vectors",
+      "summary": "GPU-style Philox-4x32-10 counter-based parallel RNG: a 4-lane SIMD array of fully-pipelined 10-round Philox cores retires one 128-bit random block per lane per clock (512 random bits/clock), 3.40 sustained / 3.71 peak draws/cycle (4.0 ideal), 441.95x aggregate / 481.76x peak over a scalar baseline; 294 jobs / 276808 checked words, 0 mismatches."
     }
   ]
 }

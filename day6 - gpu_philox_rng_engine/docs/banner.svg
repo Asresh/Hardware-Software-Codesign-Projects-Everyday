@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1200" height="320" fill="#243447"/>
+  <rect x="0" y="0" width="1200" height="320" fill="none" stroke="#3d5570" stroke-width="4"/>
+
+  <!-- day badge -->
+  <rect x="48" y="48" width="150" height="150" rx="16" fill="#12406b"/>
+  <rect x="48" y="48" width="150" height="150" rx="16" fill="none" stroke="#67c1f5" stroke-width="3"/>
+  <text x="123" y="118" font-family="Menlo,Consolas,monospace" font-size="34" fill="#9fd8ff" text-anchor="middle">DAY</text>
+  <text x="123" y="180" font-family="Menlo,Consolas,monospace" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle">06</text>
+
+  <!-- title -->
+  <text x="240" y="118" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="bold" fill="#ffffff">GPU Philox RNG Engine</text>
+  <text x="242" y="162" font-family="Helvetica,Arial,sans-serif" font-size="25" fill="#9fb6cc">Counter-based Philox-4x32-10 parallel random generator</text>
+  <text x="242" y="196" font-family="Helvetica,Arial,sans-serif" font-size="25" fill="#9fb6cc">SIMD lanes &#183; fully-pipelined &#183; coalesced wide DMA + IRQ</text>
+
+  <!-- a little "random word stream" motif -->
+  <g font-family="Menlo,Consolas,monospace" font-size="19" fill="#7ee0b8">
+    <text x="242" y="250">6627e8d5  e169c58d  bc57ac4c  9b00dbd8</text>
+    <text x="242" y="278" fill="#f2b45f">408f276d  41c83b0e  a20bc7c6  6d5451fd</text>
+  </g>
+
+  <!-- lane stack motif on the right -->
+  <g>
+    <rect x="980" y="60"  width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <rect x="980" y="98"  width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <rect x="980" y="136" width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <rect x="980" y="174" width="176" height="30" rx="5" fill="#2f5d4a" stroke="#7ee0b8" stroke-width="2"/>
+    <text x="1068" y="80"  font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">philox lane 0</text>
+    <text x="1068" y="118" font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">philox lane 1</text>
+    <text x="1068" y="156" font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">philox lane 2</text>
+    <text x="1068" y="194" font-family="Menlo,Consolas,monospace" font-size="15" fill="#cfeede" text-anchor="middle">philox lane 3</text>
+    <text x="1068" y="232" font-family="Menlo,Consolas,monospace" font-size="14" fill="#9fb6cc" text-anchor="middle">10-round pipeline</text>
+  </g>
+</svg>
