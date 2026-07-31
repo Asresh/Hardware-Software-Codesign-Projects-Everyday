@@ -79,6 +79,16 @@
       "software_layer": "bare-metal C feed-handler driver, a slot-exact golden order book, and a scalar linear-scan baseline cost model",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised AXI-Stream backpressure and at full rate",
       "summary": "GPU/FPGA-style CAM limit-order-book / BBO engine: a 32-level content-addressable price map does a single-cycle parallel (side,price) match + update, and two log-depth comparator trees pick best-bid (max) and best-ask (min) simultaneously, republishing the top of book 2 cycles after every message at a sustained 1 message/clock (0.939 msgs/clock incl. drain); 39.61x aggregate / 200.00x peak over a scalar linear-scan baseline; 266 streams / 8214 messages / 16428 checked BBO records, 0 mismatches."
+    },
+    {
+      "day": 9,
+      "name": "gpu_alpha_signal_engine",
+      "domain": "quantitative finance / real-time streaming trading signals (HFT)",
+      "microarchitecture": "deeply-pipelined fixed-point streaming datapath with a single-cycle read-modify-write per-symbol state loop and unrolled integer sqrt + divider pipelines",
+      "interface": "AXI4-Stream tick ingress + AXI4-Stream signal egress + AXI4-Lite control/status register file with an alert interrupt",
+      "software_layer": "bare-metal C feed-handler driver, a bit-exact fixed-point golden model, and a documented scalar cost-model baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised ingress gaps + egress backpressure and again at full rate, plus control-plane counter/IRQ checks",
+      "summary": "GPU/FPGA-style real-time alpha-signal engine: per-symbol fast/slow EWMA + rolling variance in a single-cycle read-modify-write symbol RAM feed a deep feed-forward tail (32-stage integer sqrt then 48-stage divider) that emits a z-score / momentum / alert signal record every tick at a sustained 1.000 ticks/clock with a deterministic 84-cycle latency; 54.73x aggregate / 83.00x peak over a scalar baseline; 264 streams / 57959 ticks / 115918 checked records, 0 mismatches."
     }
   ]
 }

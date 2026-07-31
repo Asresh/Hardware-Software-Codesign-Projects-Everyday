@@ -20,12 +20,14 @@ __pycache__/
 **/sw/philox_host
 **/sw/sfu_host
 **/sw/lob_host
+**/sw/asig_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
 **/tb/vectors/params.vh
 **/tb/vectors/sfu_const.vh
 **/tb/vectors/lob_const.vh
+**/tb/vectors/asig_const.vh
 
 # --- OS / editor cruft ---
 .DS_Store

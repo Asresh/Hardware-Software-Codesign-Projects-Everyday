@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 660" width="1060" height="660">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1060" height="660" fill="#38414f"/>
+  <rect x="0" y="0" width="1060" height="660" fill="none" stroke="#20262f" stroke-width="4"/>
+
+  <!-- arrowheads -->
+  <defs>
+    <marker id="ad" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8fbcbb"/>
+    </marker>
+    <marker id="ac" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#ebcb8b"/>
+    </marker>
+  </defs>
+
+  <text x="530" y="34" fill="#eceff4" font-family="monospace" font-size="22"
+        font-weight="bold" text-anchor="middle">alpha_signal_engine — HFT streaming signal accelerator</text>
+  <text x="530" y="56" fill="#a3b3c9" font-family="monospace" font-size="13"
+        text-anchor="middle">solid = datapath        dashed = control / status        Q16.16 fixed-point</text>
+
+  <!-- ================= Host CPU ================= -->
+  <rect x="40" y="120" width="170" height="150" rx="8" fill="#4c566a" stroke="#88c0d0" stroke-width="2"/>
+  <text x="125" y="150" fill="#eceff4" font-family="monospace" font-size="15" font-weight="bold" text-anchor="middle">Host / soft-core</text>
+  <text x="125" y="172" fill="#d8dee9" font-family="monospace" font-size="12" text-anchor="middle">asig_driver.c</text>
+  <text x="125" y="198" fill="#a3b3c9" font-family="monospace" font-size="11" text-anchor="middle">configure()</text>
+  <text x="125" y="214" fill="#a3b3c9" font-family="monospace" font-size="11" text-anchor="middle">isr() / ack</text>
+  <text x="125" y="240" fill="#a3b3c9" font-family="monospace" font-size="11" text-anchor="middle">drain records</text>
+
+  <!-- Market-data source -->
+  <rect x="40" y="330" width="170" height="90" rx="8" fill="#434c5e" stroke="#81a1c1" stroke-width="2"/>
+  <text x="125" y="362" fill="#eceff4" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle">Market data</text>
+  <text x="125" y="382" fill="#d8dee9" font-family="monospace" font-size="11" text-anchor="middle">tick feed / DMA</text>
+  <text x="125" y="402" fill="#a3b3c9" font-family="monospace" font-size="11" text-anchor="middle">{sym, price}</text>
+
+  <!-- ================= Engine boundary ================= -->
+  <rect x="270" y="90" width="620" height="500" rx="10" fill="#2f3743" stroke="#5e81ac" stroke-width="2"/>
+  <text x="580" y="112" fill="#88c0d0" font-family="monospace" font-size="13" text-anchor="middle">alpha_signal_engine (top)</text>
+
+  <!-- as_regfile -->
+  <rect x="300" y="130" width="180" height="110" rx="6" fill="#4c566a" stroke="#b48ead" stroke-width="2"/>
+  <text x="390" y="156" fill="#eceff4" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">as_regfile</text>
+  <text x="390" y="176" fill="#d8dee9" font-family="monospace" font-size="10" text-anchor="middle">AXI4-Lite slave</text>
+  <text x="390" y="194" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">ALPHA/BETA/GAMMA</text>
+  <text x="390" y="210" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">ZTHRESH/WARMUP</text>
+  <text x="390" y="226" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">counters + IRQ</text>
+
+  <!-- Symbol state RAM -->
+  <rect x="300" y="300" width="180" height="90" rx="6" fill="#4c566a" stroke="#a3be8c" stroke-width="2"/>
+  <text x="390" y="330" fill="#eceff4" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">symbol state RAM</text>
+  <text x="390" y="350" fill="#d8dee9" font-family="monospace" font-size="10" text-anchor="middle">64 × 144b</text>
+  <text x="390" y="368" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">ewma_f/ewma_s/var/cnt</text>
+
+  <!-- as_stat_update -->
+  <rect x="300" y="430" width="180" height="110" rx="6" fill="#4c566a" stroke="#a3be8c" stroke-width="2"/>
+  <text x="390" y="456" fill="#eceff4" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">as_stat_update</text>
+  <text x="390" y="476" fill="#d8dee9" font-family="monospace" font-size="10" text-anchor="middle">EWMA + variance</text>
+  <text x="390" y="494" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">single-cycle RMW</text>
+  <text x="390" y="512" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">1 tick/clock, no hazard</text>
+
+  <!-- as_isqrt -->
+  <rect x="540" y="300" width="150" height="110" rx="6" fill="#4c566a" stroke="#ebcb8b" stroke-width="2"/>
+  <text x="615" y="330" fill="#eceff4" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">as_isqrt</text>
+  <text x="615" y="352" fill="#d8dee9" font-family="monospace" font-size="10" text-anchor="middle">std = √var</text>
+  <text x="615" y="372" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">32-stage pipe</text>
+  <text x="615" y="390" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">digit-by-digit</text>
+
+  <!-- as_divide -->
+  <rect x="710" y="300" width="150" height="110" rx="6" fill="#4c566a" stroke="#ebcb8b" stroke-width="2"/>
+  <text x="785" y="330" fill="#eceff4" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">as_divide</text>
+  <text x="785" y="352" fill="#d8dee9" font-family="monospace" font-size="10" text-anchor="middle">z = dev/std</text>
+  <text x="785" y="372" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">48-stage pipe</text>
+  <text x="785" y="390" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">restoring div</text>
+
+  <!-- signal format / flags -->
+  <rect x="600" y="440" width="260" height="100" rx="6" fill="#4c566a" stroke="#88c0d0" stroke-width="2"/>
+  <text x="730" y="466" fill="#eceff4" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">signal format + flags</text>
+  <text x="730" y="486" fill="#d8dee9" font-family="monospace" font-size="10" text-anchor="middle">z saturate · momentum · alert</text>
+  <text x="730" y="504" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">8×32b record · IRQ set</text>
+  <text x="730" y="522" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">global clock-enable (backpressure)</text>
+
+  <!-- ================= Egress consumer ================= -->
+  <rect x="920" y="300" width="110" height="150" rx="8" fill="#434c5e" stroke="#81a1c1" stroke-width="2"/>
+  <text x="975" y="342" fill="#eceff4" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">signal</text>
+  <text x="975" y="360" fill="#eceff4" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">consumer</text>
+  <text x="975" y="384" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">strategy /</text>
+  <text x="975" y="400" fill="#a3b3c9" font-family="monospace" font-size="10" text-anchor="middle">risk gate</text>
+
+  <!-- ============ AXI4-Lite control (dashed) ============ -->
+  <line x1="210" y1="180" x2="300" y2="180" stroke="#ebcb8b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ac)"/>
+  <text x="255" y="170" fill="#ebcb8b" font-family="monospace" font-size="9" text-anchor="middle">AXI4-Lite</text>
+  <text x="255" y="200" fill="#ebcb8b" font-family="monospace" font-size="8" text-anchor="middle">AW/W/B/AR/R</text>
+
+  <!-- config fan-out (dashed control) -->
+  <line x1="390" y1="240" x2="390" y2="300" stroke="#ebcb8b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ac)"/>
+  <line x1="480" y1="200" x2="615" y2="300" stroke="#ebcb8b" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ac)"/>
+  <line x1="480" y1="215" x2="730" y2="440" stroke="#ebcb8b" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ac)"/>
+
+  <!-- IRQ path (dashed control) -->
+  <path d="M600,455 L540,455 L540,250 L125,250 L125,270" fill="none" stroke="#bf616a" stroke-width="2.5" stroke-dasharray="7 4" marker-end="url(#ac)"/>
+  <text x="330" y="243" fill="#bf616a" font-family="monospace" font-size="10" text-anchor="middle">irq (alert)</text>
+
+  <!-- ============ datapath (solid) ============ -->
+  <!-- market data -> stat_update (AXIS ingress) -->
+  <path d="M210,375 L250,375 L250,485 L300,485" fill="none" stroke="#8fbcbb" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="235" y="420" fill="#8fbcbb" font-family="monospace" font-size="9" text-anchor="middle">AXI4-Stream</text>
+  <text x="235" y="470" fill="#8fbcbb" font-family="monospace" font-size="8" text-anchor="middle">TVALID/TREADY</text>
+  <text x="250" y="360" fill="#8fbcbb" font-family="monospace" font-size="8" text-anchor="middle">TDATA{sym,price}·TLAST</text>
+
+  <!-- RAM <-> stat_update read/modify/write -->
+  <line x1="390" y1="430" x2="390" y2="390" stroke="#a3be8c" stroke-width="3" marker-end="url(#ad)"/>
+  <line x1="420" y1="390" x2="420" y2="430" stroke="#a3be8c" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="470" y="415" fill="#a3be8c" font-family="monospace" font-size="9" text-anchor="middle">read / write</text>
+
+  <!-- stat_update -> isqrt (var) -->
+  <path d="M480,470 L512,470 L512,355 L540,355" fill="none" stroke="#8fbcbb" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="512" y="430" fill="#8fbcbb" font-family="monospace" font-size="9" text-anchor="middle">var, dev</text>
+
+  <!-- isqrt -> divide -->
+  <line x1="690" y1="355" x2="710" y2="355" stroke="#8fbcbb" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="700" y="345" fill="#8fbcbb" font-family="monospace" font-size="9" text-anchor="middle">std</text>
+
+  <!-- divide -> format -->
+  <path d="M785,410 L785,440" fill="none" stroke="#8fbcbb" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="815" y="428" fill="#8fbcbb" font-family="monospace" font-size="9" text-anchor="middle">z</text>
+
+  <!-- format -> egress -->
+  <path d="M860,470 L890,470 L890,375 L920,375" fill="none" stroke="#8fbcbb" stroke-width="3" marker-end="url(#ad)"/>
+  <text x="895" y="360" fill="#8fbcbb" font-family="monospace" font-size="8" text-anchor="middle">record[255:0]</text>
+
+  <!-- legend of pipeline depth -->
+  <text x="580" y="618" fill="#a3b3c9" font-family="monospace" font-size="11" text-anchor="middle">deterministic latency ≈ 84 cycles  (RMW 1 + isqrt 33 + divide 49 + egress 1)   ·   sustained 1 tick / clock</text>
+</svg>

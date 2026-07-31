@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+  <!-- opaque mid-tone background, readable on light and dark themes -->
+  <rect x="0" y="0" width="1000" height="300" fill="#2e3440"/>
+  <rect x="6" y="6" width="988" height="288" rx="14" fill="#374050" stroke="#5e81ac" stroke-width="3"/>
+
+  <!-- day badge -->
+  <rect x="40" y="70" width="150" height="160" rx="12" fill="#4c566a" stroke="#88c0d0" stroke-width="3"/>
+  <text x="115" y="140" fill="#88c0d0" font-family="monospace" font-size="26" font-weight="bold" text-anchor="middle">DAY</text>
+  <text x="115" y="205" fill="#eceff4" font-family="monospace" font-size="72" font-weight="bold" text-anchor="middle">9</text>
+
+  <!-- title -->
+  <text x="230" y="120" fill="#eceff4" font-family="monospace" font-size="46" font-weight="bold">Alpha-Signal Engine</text>
+  <text x="232" y="162" fill="#a3be8c" font-family="monospace" font-size="20">real-time HFT streaming z-score · EWMA · momentum</text>
+
+  <!-- feature chips -->
+  <rect x="232" y="188" width="200" height="34" rx="17" fill="#3b4252" stroke="#81a1c1" stroke-width="1.5"/>
+  <text x="332" y="211" fill="#d8dee9" font-family="monospace" font-size="13" text-anchor="middle">pipelined fixed-point</text>
+  <rect x="444" y="188" width="188" height="34" rx="17" fill="#3b4252" stroke="#81a1c1" stroke-width="1.5"/>
+  <text x="538" y="211" fill="#d8dee9" font-family="monospace" font-size="13" text-anchor="middle">1 tick / clock</text>
+  <rect x="644" y="188" width="230" height="34" rx="17" fill="#3b4252" stroke="#81a1c1" stroke-width="1.5"/>
+  <text x="759" y="211" fill="#d8dee9" font-family="monospace" font-size="13" text-anchor="middle">AXI4-Stream + AXI4-Lite</text>
+
+  <!-- bottom stat strip -->
+  <text x="232" y="258" fill="#ebcb8b" font-family="monospace" font-size="16" font-weight="bold">84-cycle latency</text>
+  <text x="420" y="258" fill="#a3b3c9" font-family="monospace" font-size="16">·</text>
+  <text x="440" y="258" fill="#ebcb8b" font-family="monospace" font-size="16" font-weight="bold">83× peak vs scalar</text>
+  <text x="648" y="258" fill="#a3b3c9" font-family="monospace" font-size="16">·</text>
+  <text x="668" y="258" fill="#ebcb8b" font-family="monospace" font-size="16" font-weight="bold">115,918 checks · 0 mismatch</text>
+</svg>
