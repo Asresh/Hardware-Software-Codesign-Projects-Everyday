@@ -69,6 +69,16 @@
       "software_layer": "bare-metal C driver, software golden model, and independent scalar CORDIC baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), anchored to IEEE double libm for accuracy",
       "summary": "GPU-style CORDIC Special Function Unit: a SIMD array of iterative shift-and-add CORDIC lanes evaluates sin/cos/exp/cosh/sinh/atan2/hypot/ln/sqrt (no multiplier in the iteration), dispatched from a shared ring buffer; ~9 cycles/function amortised over a 4-lane wave, 34.47x aggregate / 35.58x peak over a scalar CORDIC baseline, 1.15e-7 max abs error vs libm (~23 bits); 264 jobs / 13253 requests / 39759 checked words, 0 mismatches."
+    },
+    {
+      "day": 8,
+      "name": "gpu_order_book_engine",
+      "domain": "networking / market-data feed handling (HFT)",
+      "microarchitecture": "content-addressable price-level map (associative memory) with a log-depth parallel comparator-tree BBO reduction",
+      "interface": "AXI4-Stream market-data ingress plus a 32-bit MMIO control/snapshot register file with a BBO-update interrupt",
+      "software_layer": "bare-metal C feed-handler driver, a slot-exact golden order book, and a scalar linear-scan baseline cost model",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised AXI-Stream backpressure and at full rate",
+      "summary": "GPU/FPGA-style CAM limit-order-book / BBO engine: a 32-level content-addressable price map does a single-cycle parallel (side,price) match + update, and two log-depth comparator trees pick best-bid (max) and best-ask (min) simultaneously, republishing the top of book 2 cycles after every message at a sustained 1 message/clock (0.939 msgs/clock incl. drain); 39.61x aggregate / 200.00x peak over a scalar linear-scan baseline; 266 streams / 8214 messages / 16428 checked BBO records, 0 mismatches."
     }
   ]
 }

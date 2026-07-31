@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260" width="1000" height="260" role="img" aria-label="Day 8 GPU Order-Book BBO Engine">
+  <rect x="0" y="0" width="1000" height="260" fill="#1f2733"/>
+  <rect x="0" y="0" width="1000" height="260" fill="none" stroke="#3d4a5c" stroke-width="4"/>
+  <!-- decorative price-ladder motif -->
+  <g opacity="0.5">
+    <rect x="720" y="40"  width="220" height="18" fill="#2f6f4f"/>
+    <rect x="720" y="64"  width="180" height="18" fill="#2f6f4f"/>
+    <rect x="720" y="88"  width="150" height="18" fill="#2f6f4f"/>
+    <rect x="720" y="118" width="150" height="18" fill="#8a3b3b"/>
+    <rect x="720" y="142" width="185" height="18" fill="#8a3b3b"/>
+    <rect x="720" y="166" width="215" height="18" fill="#8a3b3b"/>
+    <line x1="705" y1="110" x2="960" y2="110" stroke="#c9d4e3" stroke-width="2" stroke-dasharray="6 4"/>
+  </g>
+  <text x="60" y="86" font-family="Menlo,Consolas,monospace" font-size="26" fill="#7fd1a8" font-weight="bold">DAY 8</text>
+  <text x="60" y="150" font-family="Helvetica,Arial,sans-serif" font-size="52" fill="#f2f6fb" font-weight="bold">GPU Order-Book / BBO Engine</text>
+  <text x="62" y="192" font-family="Helvetica,Arial,sans-serif" font-size="23" fill="#c9d4e3">CAM-based limit order book &#183; single-cycle associative update</text>
+  <text x="62" y="222" font-family="Menlo,Consolas,monospace" font-size="18" fill="#8fa6c2">2-cycle message&#8594;BBO latency &#183; 1 msg/clock &#183; ultra-low-latency HFT feed handler</text>
+</svg>

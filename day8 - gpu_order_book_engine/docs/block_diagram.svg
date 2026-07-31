@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 660" width="1040" height="660" role="img" aria-label="Order-book engine block diagram">
+  <rect x="0" y="0" width="1040" height="660" fill="#232b36"/>
+  <defs>
+    <marker id="ad" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#7fb2ff"/>
+    </marker>
+    <marker id="ac" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#e0a94a"/>
+    </marker>
+    <marker id="ai" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 z" fill="#e46a6a"/>
+    </marker>
+  </defs>
+
+  <text x="24" y="34" font-family="Helvetica,Arial,sans-serif" font-size="22" fill="#f2f6fb" font-weight="bold">CAM-based Limit Order-Book / BBO Engine &#8212; datapath &amp; control</text>
+
+  <!-- Host -->
+  <rect x="24" y="70" width="180" height="150" rx="8" fill="#2f3a4a" stroke="#7fb2ff" stroke-width="2"/>
+  <text x="114" y="98" text-anchor="middle" font-family="Helvetica" font-size="16" fill="#f2f6fb" font-weight="bold">Host CPU</text>
+  <text x="114" y="122" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#c9d4e3">feed handler</text>
+  <text x="114" y="140" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#c9d4e3">lob_driver.c</text>
+  <text x="114" y="164" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#9fb0c8">- push messages</text>
+  <text x="114" y="180" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#9fb0c8">- program MMIO</text>
+  <text x="114" y="196" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#9fb0c8">- BBO ISR</text>
+
+  <!-- Engine container -->
+  <rect x="250" y="60" width="770" height="470" rx="10" fill="#1c232e" stroke="#4a5a70" stroke-width="2"/>
+  <text x="266" y="84" font-family="Helvetica" font-size="14" fill="#8fa6c2" font-weight="bold">order_book_engine  (PW=16, QW=24, N_LEVELS=32)</text>
+
+  <!-- decode -->
+  <rect x="270" y="110" width="150" height="70" rx="6" fill="#33475e" stroke="#7fb2ff" stroke-width="2"/>
+  <text x="345" y="140" text-anchor="middle" font-family="Menlo,monospace" font-size="12" fill="#f2f6fb" font-weight="bold">ob_msg_decode</text>
+  <text x="345" y="160" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#c9d4e3">op/side/price/qty</text>
+
+  <!-- CAM -->
+  <rect x="470" y="100" width="200" height="120" rx="6" fill="#3a3050" stroke="#b79be0" stroke-width="2"/>
+  <text x="570" y="126" text-anchor="middle" font-family="Menlo,monospace" font-size="13" fill="#f2f6fb" font-weight="bold">ob_cam</text>
+  <text x="570" y="146" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#d9c9f2">associative price map</text>
+  <text x="570" y="163" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#d9c9f2">32 x {v,side,price,qty}</text>
+  <text x="570" y="180" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#d9c9f2">parallel match + alloc</text>
+  <text x="570" y="197" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#d9c9f2">1-cycle update</text>
+
+  <!-- reduce trees -->
+  <rect x="470" y="250" width="200" height="60" rx="6" fill="#243f34" stroke="#7fd1a8" stroke-width="2"/>
+  <text x="570" y="275" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#f2f6fb" font-weight="bold">ob_bbo_reduce (bid)</text>
+  <text x="570" y="294" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#bfe6d2">MAX-price tree, depth 5</text>
+
+  <rect x="470" y="325" width="200" height="60" rx="6" fill="#402d2d" stroke="#e08a8a" stroke-width="2"/>
+  <text x="570" y="350" text-anchor="middle" font-family="Menlo,monospace" font-size="11" fill="#f2f6fb" font-weight="bold">ob_bbo_reduce (ask)</text>
+  <text x="570" y="369" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#f0c9c9">MIN-price tree, depth 5</text>
+
+  <!-- BBO latch -->
+  <rect x="730" y="250" width="180" height="135" rx="6" fill="#33475e" stroke="#7fb2ff" stroke-width="2"/>
+  <text x="820" y="278" text-anchor="middle" font-family="Menlo,monospace" font-size="12" fill="#f2f6fb" font-weight="bold">BBO latch</text>
+  <text x="820" y="300" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#c9d4e3">stage-2 register</text>
+  <text x="820" y="320" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#c9d4e3">bbo_bid_{px,qty}</text>
+  <text x="820" y="336" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#c9d4e3">bbo_ask_{px,qty}</text>
+  <text x="820" y="356" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#c9d4e3">bbo_commit strobe</text>
+  <text x="820" y="374" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#c9d4e3">change detect</text>
+
+  <!-- regfile -->
+  <rect x="730" y="110" width="180" height="105" rx="6" fill="#3d3a26" stroke="#e0a94a" stroke-width="2"/>
+  <text x="820" y="136" text-anchor="middle" font-family="Menlo,monospace" font-size="12" fill="#f2f6fb" font-weight="bold">ob_regfile</text>
+  <text x="820" y="157" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#f0dfb0">MMIO ctrl/status</text>
+  <text x="820" y="173" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#f0dfb0">msg_count</text>
+  <text x="820" y="189" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#f0dfb0">BBO snapshot regs</text>
+  <text x="820" y="205" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#f0dfb0">soft_reset / irq_ack</text>
+
+  <!-- pipeline stage dividers -->
+  <line x1="450" y1="95" x2="450" y2="410" stroke="#4a5a70" stroke-width="1" stroke-dasharray="3 5"/>
+  <line x1="700" y1="240" x2="700" y2="410" stroke="#4a5a70" stroke-width="1" stroke-dasharray="3 5"/>
+  <text x="360" y="428" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#66788f">stage 0: decode</text>
+  <text x="575" y="428" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#66788f">stage 1: CAM + reduce</text>
+  <text x="820" y="428" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#66788f">stage 2: latch</text>
+
+  <!-- ===== datapath arrows (blue, solid) ===== -->
+  <!-- host -> decode : AXI4-Stream -->
+  <line x1="204" y1="130" x2="268" y2="140" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="236" y="118" text-anchor="middle" font-family="Menlo,monospace" font-size="9" fill="#7fb2ff">s_tdata[63:0]</text>
+  <text x="236" y="160" text-anchor="middle" font-family="Menlo,monospace" font-size="9" fill="#7fb2ff">s_tvalid/ready</text>
+  <!-- decode -> cam -->
+  <line x1="420" y1="145" x2="468" y2="150" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <!-- cam -> bid tree -->
+  <line x1="545" y1="220" x2="545" y2="248" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <!-- cam -> ask tree -->
+  <line x1="595" y1="220" x2="595" y2="323" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="610" y="242" font-family="Menlo,monospace" font-size="9" fill="#7fb2ff">level array (32x)</text>
+  <!-- bid tree -> latch -->
+  <line x1="670" y1="278" x2="728" y2="295" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <!-- ask tree -> latch -->
+  <line x1="670" y1="352" x2="728" y2="330" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <!-- latch -> regfile (snapshot) -->
+  <line x1="820" y1="248" x2="820" y2="217" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="884" y="238" text-anchor="middle" font-family="Menlo,monospace" font-size="9" fill="#7fb2ff">snapshot</text>
+
+  <!-- ===== control arrows (amber, dashed) ===== -->
+  <!-- host <-> regfile MMIO : routed along the bottom to avoid the datapath -->
+  <path d="M150,220 L150,505 L990,505 L990,217" fill="none" stroke="#e0a94a" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#ac)"/>
+  <text x="570" y="499" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#e0a94a">MMIO: reg_addr / reg_wdata / reg_rdata  (0x00..0x1C)</text>
+  <!-- regfile -> cam soft_reset/ovf_clr -->
+  <line x1="728" y1="150" x2="672" y2="138" stroke="#e0a94a" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#ac)"/>
+  <text x="700" y="118" text-anchor="middle" font-family="Menlo,monospace" font-size="9" fill="#e0a94a">soft_reset / ovf_clr</text>
+
+  <!-- ===== interrupt path (red, dashed) ===== -->
+  <path d="M820,385 L820,455 L90,455 L90,220" fill="none" stroke="#e46a6a" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#ai)"/>
+  <text x="455" y="448" text-anchor="middle" font-family="Menlo,monospace" font-size="10" fill="#e46a6a">irq  (BBO changed) &#8212; level-held until irq_ack</text>
+
+  <!-- legend -->
+  <rect x="250" y="548" width="770" height="92" rx="8" fill="#1c232e" stroke="#4a5a70" stroke-width="1.5"/>
+  <text x="266" y="572" font-family="Helvetica" font-size="13" fill="#f2f6fb" font-weight="bold">Legend</text>
+  <line x1="266" y1="592" x2="316" y2="592" stroke="#7fb2ff" stroke-width="2.5" marker-end="url(#ad)"/>
+  <text x="324" y="596" font-family="Menlo,monospace" font-size="11" fill="#c9d4e3">datapath (messages, level array, BBO)</text>
+  <line x1="266" y1="614" x2="316" y2="614" stroke="#e0a94a" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#ac)"/>
+  <text x="324" y="618" font-family="Menlo,monospace" font-size="11" fill="#c9d4e3">control (MMIO, reset)</text>
+  <line x1="640" y1="592" x2="690" y2="592" stroke="#e46a6a" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#ai)"/>
+  <text x="698" y="596" font-family="Menlo,monospace" font-size="11" fill="#c9d4e3">interrupt (BBO-update)</text>
+  <text x="640" y="618" font-family="Menlo,monospace" font-size="11" fill="#9fb0c8">Sustained 1 msg/clock, 2-cycle latency</text>
+</svg>
