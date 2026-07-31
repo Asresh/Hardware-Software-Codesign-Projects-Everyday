@@ -21,6 +21,7 @@ __pycache__/
 **/sw/sfu_host
 **/sw/lob_host
 **/sw/asig_host
+**/sw/bpd_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -28,6 +29,7 @@ __pycache__/
 **/tb/vectors/sfu_const.vh
 **/tb/vectors/lob_const.vh
 **/tb/vectors/asig_const.vh
+**/tb/vectors/bpd_const.vh
 
 # --- OS / editor cruft ---
 .DS_Store

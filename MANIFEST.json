@@ -89,6 +89,16 @@
       "software_layer": "bare-metal C feed-handler driver, a bit-exact fixed-point golden model, and a documented scalar cost-model baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised ingress gaps + egress backpressure and again at full rate, plus control-plane counter/IRQ checks",
       "summary": "GPU/FPGA-style real-time alpha-signal engine: per-symbol fast/slow EWMA + rolling variance in a single-cycle read-modify-write symbol RAM feed a deep feed-forward tail (32-stage integer sqrt then 48-stage divider) that emits a z-score / momentum / alert signal record every tick at a sustained 1.000 ticks/clock with a deterministic 84-cycle latency; 54.73x aggregate / 83.00x peak over a scalar baseline; 264 streams / 57959 ticks / 115918 checked records, 0 mismatches."
+    },
+    {
+      "day": 10,
+      "name": "gpu_bitpack_decode_engine",
+      "domain": "compression / columnar market-data decompression (HFT)",
+      "microarchitecture": "streaming bit-unpack dataflow with a variable-rate bit-FIFO aligner, a 4-lane barrel-shift field extractor, and a combinational zig-zag + 4-wide delta-prefix reconstruction tail",
+      "interface": "AXI4-Stream compressed ingress + wide 128-bit AXI4-Stream decoded egress + AXI4-Lite control/status register file with a block-done/error interrupt",
+      "software_layer": "bare-metal C driver, a bit-exact reference codec (encoder + golden decoder), and a documented scalar cost-model baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each block streamed under randomised ingress bubbles + egress backpressure and again at full rate, plus a peak micro-benchmark and a malformed-block error/IRQ test",
+      "summary": "GPU/FPGA-style line-rate columnar (FOR + delta + zig-zag + bit-pack) market-data decompression engine: a 192-bit variable-rate bit-FIFO feeds a 4-lane barrel-shift field extractor and a combinational zig-zag + 4-wide delta-prefix tail that retires up to 4 decoded int32 values/clock at a 5-cycle latency; 1.86 sustained / 4.00 peak values/clock, 20.76x aggregate / 39.85x peak over a documented scalar baseline; 268 blocks / 67171 values / 138438 checked decodes, 0 mismatches."
     }
   ]
 }

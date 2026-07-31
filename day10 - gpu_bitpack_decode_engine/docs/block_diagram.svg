@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1070 600" width="1070" height="600">
+  <rect x="0" y="0" width="1070" height="600" fill="#243442"/>
+  <text x="24" y="36" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="bold" fill="#f4f7fa">Bit-Pack Decode Engine — block diagram</text>
+  <text x="24" y="58" font-family="Menlo,Consolas,monospace" font-size="13" fill="#8ba0b2">solid = datapath   ·   dashed = control / handshake   ·   Q = FIFO depth</text>
+
+  <!-- ===================== HOST ===================== -->
+  <rect x="24" y="96" width="180" height="150" rx="10" fill="#132230" stroke="#5aa9e6" stroke-width="2"/>
+  <text x="114" y="126" font-family="Helvetica,Arial,sans-serif" font-size="17" font-weight="bold" fill="#f4f7fa" text-anchor="middle">Host CPU</text>
+  <text x="114" y="150" font-family="Menlo,Consolas,monospace" font-size="12" fill="#9fb4c6" text-anchor="middle">bpd_driver.c</text>
+  <text x="114" y="172" font-family="Menlo,Consolas,monospace" font-size="11" fill="#7fd0b6" text-anchor="middle">program CSR</text>
+  <text x="114" y="190" font-family="Menlo,Consolas,monospace" font-size="11" fill="#7fd0b6" text-anchor="middle">feed / drain DMA</text>
+  <text x="114" y="208" font-family="Menlo,Consolas,monospace" font-size="11" fill="#7fd0b6" text-anchor="middle">service IRQ</text>
+
+  <!-- ===================== REGFILE ===================== -->
+  <rect x="256" y="96" width="176" height="120" rx="10" fill="#1b2b3a" stroke="#c98bdb" stroke-width="2"/>
+  <text x="344" y="122" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#f4f7fa" text-anchor="middle">bpd_regfile</text>
+  <text x="344" y="142" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">AXI4-Lite CSR</text>
+  <text x="344" y="162" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#c9d6e2" text-anchor="middle">CTRL/STATUS/BLOCKS</text>
+  <text x="344" y="178" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#c9d6e2" text-anchor="middle">VALUES/CYCLES/ERR</text>
+  <text x="344" y="200" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#7fd0b6" text-anchor="middle">en · irq_en · soft_rst</text>
+
+  <!-- AXI4-Lite bus host<->regfile (dashed control) -->
+  <line x1="204" y1="156" x2="256" y2="156" stroke="#c98bdb" stroke-width="2" stroke-dasharray="6 4"/>
+  <polygon points="256,156 246,151 246,161" fill="#c98bdb"/>
+  <text x="230" y="148" font-family="Menlo,Consolas,monospace" font-size="9.5" fill="#c98bdb" text-anchor="middle">s_axil_*</text>
+
+  <!-- ===================== INGRESS AXIS ===================== -->
+  <text x="24" y="316" font-family="Menlo,Consolas,monospace" font-size="12" fill="#e8b04b">AXI4-Stream ingress (compressed, 32b)</text>
+  <line x1="24" y1="330" x2="150" y2="330" stroke="#e8b04b" stroke-width="3"/>
+  <polygon points="150,330 138,324 138,336" fill="#e8b04b"/>
+  <text x="30" y="352" font-family="Menlo,Consolas,monospace" font-size="10" fill="#c9d6e2">s_axis_tdata/tvalid/tready/tlast</text>
+
+  <!-- ===================== BITREADER ===================== -->
+  <rect x="156" y="288" width="180" height="150" rx="10" fill="#132230" stroke="#e8b04b" stroke-width="2"/>
+  <text x="246" y="314" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#f4f7fa" text-anchor="middle">bpd_bitreader</text>
+  <text x="246" y="334" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">variable-rate</text>
+  <text x="246" y="350" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">bit FIFO / aligner</text>
+  <rect x="176" y="366" width="140" height="30" rx="5" fill="#20303f" stroke="#8ba0b2" stroke-width="1"/>
+  <text x="246" y="386" font-family="Menlo,Consolas,monospace" font-size="11" fill="#7fd0b6" text-anchor="middle">buf Q=192b</text>
+  <text x="246" y="418" font-family="Menlo,Consolas,monospace" font-size="10" fill="#c9d6e2" text-anchor="middle">pop_bits (0..128/clk)</text>
+
+  <!-- ===================== EXTRACT ===================== -->
+  <rect x="368" y="288" width="176" height="150" rx="10" fill="#132230" stroke="#7fd0b6" stroke-width="2"/>
+  <text x="456" y="314" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#f4f7fa" text-anchor="middle">bpd_extract</text>
+  <text x="456" y="334" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">wide barrel-shift</text>
+  <text x="456" y="350" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">field extractor</text>
+  <text x="456" y="378" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#c9d6e2" text-anchor="middle">4 lanes × width bits</text>
+  <text x="456" y="396" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#c9d6e2" text-anchor="middle">window[127:0]</text>
+  <text x="456" y="420" font-family="Menlo,Consolas,monospace" font-size="10" fill="#7fd0b6" text-anchor="middle">→ 4 residuals/clk</text>
+
+  <!-- ===================== DECODE ===================== -->
+  <rect x="576" y="288" width="176" height="150" rx="10" fill="#132230" stroke="#7fd0b6" stroke-width="2"/>
+  <text x="664" y="314" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#f4f7fa" text-anchor="middle">bpd_decode</text>
+  <text x="664" y="334" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">zig-zag +</text>
+  <text x="664" y="350" font-family="Menlo,Consolas,monospace" font-size="11" fill="#9fb4c6" text-anchor="middle">4-wide delta prefix</text>
+  <text x="664" y="378" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#c9d6e2" text-anchor="middle">v += Σ deltas + base</text>
+  <text x="664" y="400" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#e8b04b" text-anchor="middle">carry (running value)</text>
+  <path d="M664 412 q40 24 0 24 q-40 0 0 -24" fill="none" stroke="#e8b04b" stroke-width="1.5"/>
+
+  <!-- ===================== EGRESS REG ===================== -->
+  <rect x="784" y="288" width="150" height="150" rx="10" fill="#1b2b3a" stroke="#5aa9e6" stroke-width="2"/>
+  <text x="859" y="314" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#f4f7fa" text-anchor="middle">egress reg</text>
+  <text x="859" y="336" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#9fb4c6" text-anchor="middle">128b beat</text>
+  <text x="859" y="354" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#9fb4c6" text-anchor="middle">skid Q=1</text>
+  <text x="859" y="380" font-family="Menlo,Consolas,monospace" font-size="10" fill="#c9d6e2" text-anchor="middle">{v3,v2,v1,v0}</text>
+  <text x="859" y="398" font-family="Menlo,Consolas,monospace" font-size="10" fill="#c9d6e2" text-anchor="middle">tcnt · tlast</text>
+
+  <!-- datapath arrows between stages (solid) -->
+  <g stroke-width="3" fill="none">
+    <line x1="336" y1="352" x2="368" y2="352" stroke="#7fd0b6"/>
+    <line x1="544" y1="352" x2="576" y2="352" stroke="#7fd0b6"/>
+    <line x1="752" y1="352" x2="784" y2="352" stroke="#5aa9e6"/>
+  </g>
+  <polygon points="368,352 356,346 356,358" fill="#7fd0b6"/>
+  <polygon points="576,352 564,346 564,358" fill="#7fd0b6"/>
+  <polygon points="784,352 772,346 772,358" fill="#5aa9e6"/>
+
+  <!-- egress out -->
+  <line x1="934" y1="352" x2="1020" y2="352" stroke="#5aa9e6" stroke-width="3"/>
+  <polygon points="1020,352 1008,346 1008,358" fill="#5aa9e6"/>
+  <text x="946" y="330" font-family="Menlo,Consolas,monospace" font-size="11" fill="#5aa9e6">decoded</text>
+  <text x="946" y="374" font-family="Menlo,Consolas,monospace" font-size="9.5" fill="#c9d6e2">m_axis_tdata[127:0]</text>
+  <text x="946" y="388" font-family="Menlo,Consolas,monospace" font-size="9.5" fill="#c9d6e2">tcnt/tlast/tvalid</text>
+
+  <!-- ===================== CONTROL FSM ===================== -->
+  <rect x="368" y="480" width="384" height="72" rx="10" fill="#241d33" stroke="#c98bdb" stroke-width="2"/>
+  <text x="560" y="506" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#f4f7fa" text-anchor="middle">bitpack_decode_engine — control FSM</text>
+  <text x="560" y="528" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#c9d6e2" text-anchor="middle">IDLE → HDR0 → HDR1 → RUN → PAD → DONE   (combinational bit-pop, aligned)</text>
+  <text x="560" y="544" font-family="Menlo,Consolas,monospace" font-size="10" fill="#7fd0b6" text-anchor="middle">parses base/width/count · schedules pops · counts blocks/values/cycles</text>
+
+  <!-- control arrows (dashed) FSM to stages -->
+  <g stroke="#c98bdb" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
+    <path d="M400 480 L246 440"/>
+    <path d="M470 480 L456 440"/>
+    <path d="M650 480 L664 440"/>
+    <path d="M720 480 L859 440"/>
+  </g>
+
+  <!-- regfile control into FSM (en/soft_rst) -->
+  <path d="M344 216 L344 260 L520 260 L520 480" stroke="#c98bdb" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+  <polygon points="520,480 515,470 525,470" fill="#c98bdb"/>
+  <text x="530" y="256" font-family="Menlo,Consolas,monospace" font-size="9.5" fill="#c98bdb">en/irq_en/soft_rst</text>
+
+  <!-- IRQ path back to host -->
+  <path d="M256 176 L226 176 L226 96 L114 96 L114 92" fill="none" stroke="#e8724b" stroke-width="2" stroke-dasharray="3 3"/>
+  <path d="M760 516 L980 516 L980 232 L114 232 L114 246" fill="none" stroke="#e8724b" stroke-width="2" stroke-dasharray="3 3"/>
+  <polygon points="114,246 109,236 119,236" fill="#e8724b"/>
+  <text x="600" y="248" font-family="Menlo,Consolas,monospace" font-size="10.5" fill="#e8724b" text-anchor="middle">irq (block-done / error)  →  host</text>
+</svg>

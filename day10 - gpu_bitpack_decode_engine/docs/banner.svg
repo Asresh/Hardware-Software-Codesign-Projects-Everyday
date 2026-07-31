@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 240" width="960" height="240">
+  <rect x="0" y="0" width="960" height="240" fill="#20303f"/>
+  <rect x="0" y="0" width="960" height="8" fill="#e8b04b"/>
+  <rect x="0" y="232" width="960" height="8" fill="#e8b04b"/>
+
+  <!-- day badge -->
+  <rect x="34" y="52" width="150" height="136" rx="10" fill="#132230" stroke="#e8b04b" stroke-width="2"/>
+  <text x="109" y="112" font-family="Menlo,Consolas,monospace" font-size="26" fill="#9fb4c6" text-anchor="middle">DAY</text>
+  <text x="109" y="168" font-family="Menlo,Consolas,monospace" font-size="66" font-weight="bold" fill="#e8b04b" text-anchor="middle">10</text>
+
+  <!-- title -->
+  <text x="214" y="98" font-family="Helvetica,Arial,sans-serif" font-size="46" font-weight="bold" fill="#f4f7fa">Bit-Pack Decode Engine</text>
+  <text x="216" y="140" font-family="Helvetica,Arial,sans-serif" font-size="23" fill="#7fd0b6">line-rate columnar market-data decompression</text>
+  <text x="216" y="172" font-family="Menlo,Consolas,monospace" font-size="17" fill="#9fb4c6">FOR + delta + zig-zag + bit-unpack  &#8226;  AXI4-Stream  &#8226;  4 values/clock</text>
+
+  <!-- little packed-bits motif -->
+  <g>
+    <rect x="216" y="192" width="24" height="20" fill="#e8b04b"/>
+    <rect x="242" y="192" width="14" height="20" fill="#7fd0b6"/>
+    <rect x="258" y="192" width="30" height="20" fill="#5aa9e6"/>
+    <rect x="290" y="192" width="10" height="20" fill="#e8b04b"/>
+    <rect x="302" y="192" width="20" height="20" fill="#7fd0b6"/>
+    <rect x="324" y="192" width="16" height="20" fill="#5aa9e6"/>
+    <text x="352" y="207" font-family="Menlo,Consolas,monospace" font-size="14" fill="#6f8598">&#8594; unpacked int32 stream</text>
+  </g>
+</svg>
