@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" width="1120" height="720">
+  <!-- opaque mid-tone background -->
+  <rect x="0" y="0" width="1120" height="720" fill="#1b2836"/>
+  <rect x="0" y="0" width="1120" height="720" fill="none" stroke="#3a4a5e" stroke-width="3"/>
+
+  <text x="560" y="38" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#ffffff" text-anchor="middle" font-weight="bold">Day 11 &#183; Feed-Integrity Engine &#8212; block diagram</text>
+
+  <!-- ===================== legend ===================== -->
+  <rect x="812" y="56" width="288" height="96" rx="8" fill="#132030" stroke="#3a4a5e" stroke-width="1.5"/>
+  <text x="828" y="78" font-family="Menlo, monospace" font-size="13" fill="#c7d3df" font-weight="bold">legend</text>
+  <line x1="828" y1="98" x2="876" y2="98" stroke="#7fe0c8" stroke-width="4"/>
+  <text x="886" y="103" font-family="Menlo, monospace" font-size="12" fill="#c7d3df">datapath (feed bytes)</text>
+  <line x1="828" y1="122" x2="876" y2="122" stroke="#f2b447" stroke-width="3" stroke-dasharray="6 4"/>
+  <text x="886" y="127" font-family="Menlo, monospace" font-size="12" fill="#c7d3df">control / CSR (AXI4-Lite)</text>
+  <line x1="828" y1="144" x2="876" y2="144" stroke="#e5588f" stroke-width="3"/>
+  <text x="886" y="149" font-family="Menlo, monospace" font-size="12" fill="#c7d3df">interrupt</text>
+
+  <!-- ===================== host CPU ===================== -->
+  <rect x="40" y="300" width="170" height="150" rx="12" fill="#243a52" stroke="#9fd8ff" stroke-width="2.5"/>
+  <text x="125" y="332" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#ffffff" text-anchor="middle" font-weight="bold">Host CPU</text>
+  <text x="125" y="356" font-family="Menlo, monospace" font-size="12" fill="#9fd8ff" text-anchor="middle">feed-handler</text>
+  <text x="125" y="374" font-family="Menlo, monospace" font-size="12" fill="#9fd8ff" text-anchor="middle">firmware (sw/)</text>
+  <text x="125" y="404" font-family="Menlo, monospace" font-size="11" fill="#c7d3df" text-anchor="middle">crc_driver.c</text>
+  <text x="125" y="420" font-family="Menlo, monospace" font-size="11" fill="#c7d3df" text-anchor="middle">crc_host.c</text>
+
+  <!-- market data source -->
+  <rect x="40" y="120" width="170" height="96" rx="10" fill="#132030" stroke="#7fe0c8" stroke-width="2"/>
+  <text x="125" y="150" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#ffffff" text-anchor="middle" font-weight="bold">Market-data feed</text>
+  <text x="125" y="174" font-family="Menlo, monospace" font-size="11" fill="#9fd8ff" text-anchor="middle">hdr0 &#183; hdr1 &#183; payload</text>
+  <text x="125" y="192" font-family="Menlo, monospace" font-size="11" fill="#9fd8ff" text-anchor="middle">&#183; FCS trailer</text>
+
+  <!-- ===================== engine boundary ===================== -->
+  <rect x="300" y="80" width="740" height="600" rx="14" fill="none" stroke="#5a6f88" stroke-width="2" stroke-dasharray="3 6"/>
+  <text x="316" y="106" font-family="Menlo, monospace" font-size="14" fill="#8fa6bd" font-weight="bold">crc_feed_integrity_engine  (top)</text>
+
+  <!-- == pkt_parser == -->
+  <rect x="330" y="150" width="230" height="150" rx="10" fill="#0e5c7c" stroke="#7fe0c8" stroke-width="2.5"/>
+  <text x="445" y="180" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="bold">pkt_parser</text>
+  <text x="445" y="204" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">framing FSM</text>
+  <text x="445" y="222" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">HDR0/HDR1/PAY/TRAILER</text>
+  <text x="445" y="246" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">byte accounting + TLAST</text>
+  <text x="445" y="270" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">malformed &#8594; frame_err</text>
+  <text x="445" y="290" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">res_valid 1-cyc strobe</text>
+
+  <!-- == crc32_unit (inside parser datapath) == -->
+  <rect x="600" y="150" width="200" height="118" rx="10" fill="#0e7c66" stroke="#7fe0c8" stroke-width="2.5"/>
+  <text x="700" y="180" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#ffffff" text-anchor="middle" font-weight="bold">crc32_unit &#215;2</text>
+  <text x="700" y="204" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">combinational GF(2)</text>
+  <text x="700" y="222" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">4-byte XOR fold / clk</text>
+  <text x="700" y="240" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">poly 0xEDB88320</text>
+  <text x="700" y="258" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">nbytes 1..4 tail select</text>
+
+  <!-- == seq_tracker == -->
+  <rect x="330" y="360" width="230" height="150" rx="10" fill="#0e5c7c" stroke="#7fe0c8" stroke-width="2.5"/>
+  <text x="445" y="390" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="bold">seq_tracker</text>
+  <text x="445" y="414" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">per-channel seq RAM</text>
+  <text x="445" y="432" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">NCH = 256 &#215; 32-bit</text>
+  <text x="445" y="456" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">comb read @ res_valid</text>
+  <text x="445" y="474" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">check seq == last+1</text>
+  <text x="445" y="498" font-family="Menlo, monospace" font-size="11" fill="#d8fff4" text-anchor="middle">gap &#8594; seq_ok=0</text>
+
+  <!-- == crc_regfile == -->
+  <rect x="600" y="360" width="410" height="180" rx="10" fill="#4a3a6e" stroke="#c9b6ff" stroke-width="2.5"/>
+  <text x="805" y="390" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#ffffff" text-anchor="middle" font-weight="bold">crc_regfile  (AXI4-Lite CSR)</text>
+  <text x="805" y="416" font-family="Menlo, monospace" font-size="11" fill="#e7ddff" text-anchor="middle">CTRL: EN / IRQ_EN / SEQ_CHK / SOFT_RST</text>
+  <text x="805" y="436" font-family="Menlo, monospace" font-size="11" fill="#e7ddff" text-anchor="middle">counters: PKT / ERR / CRC_ERR / GAP / FRAME_ERR / BYTE</text>
+  <text x="805" y="456" font-family="Menlo, monospace" font-size="11" fill="#e7ddff" text-anchor="middle">snapshot: LAST_{CHANNEL,SEQ,CRC,EXP_CRC,EXP_SEQ}</text>
+  <text x="805" y="476" font-family="Menlo, monospace" font-size="11" fill="#e7ddff" text-anchor="middle">STATUS &#183; IRQ_ACK (W1C) &#183; VERSION</text>
+  <text x="805" y="502" font-family="Menlo, monospace" font-size="11" fill="#ffd6e6" text-anchor="middle">sticky IRQ on any integrity failure</text>
+  <text x="805" y="522" font-family="Menlo, monospace" font-size="11" fill="#e7ddff" text-anchor="middle">packet-done event bus (1 pkt / strobe)</text>
+
+  <!-- ================ datapath arrows (teal) ================ -->
+  <!-- feed -> parser : AXI4-Stream -->
+  <line x1="210" y1="168" x2="330" y2="200" stroke="#7fe0c8" stroke-width="4" marker-end="url(#tarrow)"/>
+  <text x="250" y="150" font-family="Menlo, monospace" font-size="11" fill="#7fe0c8">AXI4-Stream</text>
+  <text x="216" y="188" font-family="Menlo, monospace" font-size="10" fill="#9fd8ff">tdata[31:0] tvalid tready tlast</text>
+
+  <!-- parser <-> crc32 (combinational fold) -->
+  <line x1="560" y1="200" x2="600" y2="200" stroke="#7fe0c8" stroke-width="4" marker-end="url(#tarrow)"/>
+  <line x1="600" y1="228" x2="560" y2="228" stroke="#7fe0c8" stroke-width="4" marker-end="url(#tarrow)"/>
+  <text x="566" y="192" font-family="Menlo, monospace" font-size="9" fill="#9fd8ff">crc_in</text>
+  <text x="566" y="248" font-family="Menlo, monospace" font-size="9" fill="#9fd8ff">crc_out</text>
+
+  <!-- parser -> seq_tracker (result strobe) -->
+  <line x1="445" y1="300" x2="445" y2="360" stroke="#7fe0c8" stroke-width="4" marker-end="url(#tarrow)"/>
+  <text x="455" y="335" font-family="Menlo, monospace" font-size="10" fill="#9fd8ff">channel, seq, crc, frame_err</text>
+
+  <!-- parser -> regfile event bus -->
+  <line x1="560" y1="250" x2="600" y2="430" stroke="#7fe0c8" stroke-width="3.5" marker-end="url(#tarrow)"/>
+  <!-- seq_tracker -> regfile event bus -->
+  <line x1="560" y1="440" x2="600" y2="440" stroke="#7fe0c8" stroke-width="3.5" marker-end="url(#tarrow)"/>
+  <text x="566" y="432" font-family="Menlo, monospace" font-size="9" fill="#9fd8ff">seq_ok, exp_seq</text>
+
+  <!-- ================ control arrows (amber dashed) ================ -->
+  <!-- host <-> regfile AXI4-Lite -->
+  <path d="M 210 380 C 250 380, 250 470, 600 470" fill="none" stroke="#f2b447" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#aarrow)"/>
+  <path d="M 600 500 C 250 500, 250 410, 210 410" fill="none" stroke="#f2b447" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#aarrow)"/>
+  <text x="300" y="540" font-family="Menlo, monospace" font-size="11" fill="#f2b447">AXI4-Lite: aw/w/b/ar/r  (byte addr 0x00..0x3C)</text>
+
+  <!-- regfile control fan-out to parser + seq_tracker -->
+  <path d="M 700 360 C 700 330, 470 330, 460 300" fill="none" stroke="#f2b447" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#aarrow)"/>
+  <text x="600" y="326" font-family="Menlo, monospace" font-size="10" fill="#f2b447">en</text>
+  <path d="M 640 360 C 620 340, 520 350, 500 360" fill="none" stroke="#f2b447" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#aarrow)"/>
+  <text x="540" y="352" font-family="Menlo, monospace" font-size="10" fill="#f2b447">seq_check_en / soft_rst</text>
+
+  <!-- ================ interrupt (pink) ================ -->
+  <path d="M 805 540 C 805 600, 125 600, 125 450" fill="none" stroke="#e5588f" stroke-width="3" marker-end="url(#iarrow)"/>
+  <text x="430" y="618" font-family="Menlo, monospace" font-size="12" fill="#e5588f">irq &#8594; host ISR  (sticky; cleared by IRQ_ACK W1C)</text>
+
+  <!-- result tap note -->
+  <text x="330" y="662" font-family="Menlo, monospace" font-size="11" fill="#8fa6bd">Verification tap: res_* bus sampled by tb (bit-exact vs C golden) &#183; result latency = 2 clocks (trailer in &#8594; result out)</text>
+
+  <!-- arrow markers -->
+  <defs>
+    <marker id="tarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7fe0c8"/></marker>
+    <marker id="aarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f2b447"/></marker>
+    <marker id="iarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e5588f"/></marker>
+  </defs>
+</svg>

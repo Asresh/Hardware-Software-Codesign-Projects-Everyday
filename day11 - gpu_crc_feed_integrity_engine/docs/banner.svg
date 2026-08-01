@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 300" width="980" height="300">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="980" height="300" fill="#1e2a38"/>
+  <rect x="0" y="0" width="980" height="300" fill="none" stroke="#3a4a5e" stroke-width="4"/>
+
+  <!-- day badge -->
+  <rect x="40" y="52" width="150" height="150" rx="16" fill="#0e7c66" stroke="#7fe0c8" stroke-width="3"/>
+  <text x="115" y="120" font-family="Menlo, Consolas, monospace" font-size="34" fill="#d8fff4" text-anchor="middle" font-weight="bold">DAY</text>
+  <text x="115" y="182" font-family="Menlo, Consolas, monospace" font-size="72" fill="#ffffff" text-anchor="middle" font-weight="bold">11</text>
+
+  <!-- title block -->
+  <text x="222" y="92" font-family="Helvetica, Arial, sans-serif" font-size="44" fill="#ffffff" font-weight="bold">Feed-Integrity Engine</text>
+  <text x="224" y="128" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#9fd8ff">Line-rate CRC-32 + sequence-gap check</text>
+  <text x="226" y="160" font-family="Menlo, Consolas, monospace" font-size="16" fill="#7fe0c8">HFT feed handler &#183; FPGA ultra-low-latency</text>
+
+  <!-- stat card -->
+  <rect x="768" y="70" width="172" height="122" rx="12" fill="#132030" stroke="#3a4a5e" stroke-width="2"/>
+  <text x="854" y="100" font-family="Menlo, Consolas, monospace" font-size="14" fill="#7fe0c8" text-anchor="middle">CRC-32 / FCS</text>
+  <text x="854" y="140" font-family="Menlo, Consolas, monospace" font-size="34" fill="#ffffff" text-anchor="middle" font-weight="bold">3.99</text>
+  <text x="854" y="164" font-family="Menlo, Consolas, monospace" font-size="13" fill="#9fd8ff" text-anchor="middle">bytes / clock</text>
+  <text x="854" y="184" font-family="Menlo, Consolas, monospace" font-size="13" fill="#9fd8ff" text-anchor="middle">31.98&#215; vs scalar</text>
+
+  <!-- signal-name strip (fully below the card) -->
+  <line x1="40" y1="222" x2="940" y2="222" stroke="#3a4a5e" stroke-width="1.5"/>
+  <text x="42" y="252" font-family="Menlo, Consolas, monospace" font-size="15" fill="#c7d3df">AXI4-Stream ingress &#8226; 4 bytes/clock CRC-32 &#8226; per-channel seq RAM &#8226; AXI4-Lite CSR &#8226; integrity IRQ</text>
+  <text x="42" y="278" font-family="Menlo, Consolas, monospace" font-size="14" fill="#6b8299">KAT: CRC32("123456789") = 0xCBF43926   &#183;   2-cycle result latency   &#183;   0 mismatches vs C golden</text>
+</svg>

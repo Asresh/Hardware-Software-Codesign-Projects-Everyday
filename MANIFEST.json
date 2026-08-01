@@ -99,6 +99,16 @@
       "software_layer": "bare-metal C driver, a bit-exact reference codec (encoder + golden decoder), and a documented scalar cost-model baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each block streamed under randomised ingress bubbles + egress backpressure and again at full rate, plus a peak micro-benchmark and a malformed-block error/IRQ test",
       "summary": "GPU/FPGA-style line-rate columnar (FOR + delta + zig-zag + bit-pack) market-data decompression engine: a 192-bit variable-rate bit-FIFO feeds a 4-lane barrel-shift field extractor and a combinational zig-zag + 4-wide delta-prefix tail that retires up to 4 decoded int32 values/clock at a 5-cycle latency; 1.86 sustained / 4.00 peak values/clock, 20.76x aggregate / 39.85x peak over a documented scalar baseline; 268 blocks / 67171 values / 138438 checked decodes, 0 mismatches."
+    },
+    {
+      "day": 11,
+      "name": "gpu_crc_feed_integrity_engine",
+      "domain": "error-correcting codes / market-data feed integrity (HFT)",
+      "microarchitecture": "combinational GF(2) CRC-32 fold (unrolled LFSR) + AXI4-Stream framing FSM + per-channel sequence RAM",
+      "interface": "AXI4-Stream packet ingress + AXI4-Lite control/status register file with an integrity-failure interrupt",
+      "software_layer": "bare-metal C feed-handler driver, a bit-exact CRC/sequence golden model, and a documented scalar cost-model baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), anchored to the published CRC32(\"123456789\")=0xCBF43926 known-answer vector, each packet run under randomised ingress bubbles and again at full rate, plus a peak micro-benchmark and a malformed-frame error/IRQ test",
+      "summary": "GPU/FPGA-style line-rate market-data feed-integrity engine: a combinational GF(2) CRC-32/FCS fold checks four payload bytes per clock while an AXI4-Stream framing FSM and a per-channel sequence RAM verify the trailer CRC and detect dropped-packet gaps, raising a sticky integrity interrupt one packet at a time; 3.770 sustained / 3.992 peak bytes/clock, 2-cycle result latency, 31.02x aggregate / 31.98x peak over a documented scalar baseline; KAT-anchored (0xCBF43926), 315 packets / 27838 bytes checked per pass under randomised ingress bubbles + full rate, 37 CRC errors + 30 sequence gaps caught, 632 records checked, 0 mismatches."
     }
   ]
 }
