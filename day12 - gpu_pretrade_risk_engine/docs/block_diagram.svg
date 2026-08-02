@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700">
+  <rect x="0" y="0" width="1120" height="700" fill="#26333f"/>
+  <text x="560" y="38" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="bold" fill="#f2f6fa" text-anchor="middle">Day 12 - Pre-Trade Risk / Market-Access Gateway</text>
+  <text x="560" y="62" font-family="Menlo,monospace" font-size="14" fill="#9fb3c6" text-anchor="middle">solid = order/decision datapath (128b AXI4-Stream) &#160;&#160; dashed = control / status / interrupt</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="820" y1="86" x2="860" y2="86" stroke="#4fd1a5" stroke-width="3"/>
+  <text x="866" y="91" font-family="Menlo,monospace" font-size="13" fill="#cfe" >datapath</text>
+  <line x1="820" y1="106" x2="860" y2="106" stroke="#e0567a" stroke-width="2.5" stroke-dasharray="7 5"/>
+  <text x="866" y="111" font-family="Menlo,monospace" font-size="13" fill="#f3b3c4">control/irq</text>
+
+  <!-- ===== Host CPU ===== -->
+  <rect x="40" y="150" width="160" height="220" rx="10" fill="#1b2735" stroke="#8aa0b6" stroke-width="2"/>
+  <text x="120" y="182" font-family="Helvetica" font-size="20" font-weight="bold" fill="#f2f6fa" text-anchor="middle">Host CPU</text>
+  <text x="120" y="206" font-family="Menlo,monospace" font-size="12" fill="#9fb3c6" text-anchor="middle">risk_driver.c</text>
+  <rect x="58" y="222" width="124" height="30" rx="5" fill="#2b3a49" stroke="#5b7089"/>
+  <text x="120" y="242" font-family="Menlo,monospace" font-size="12" fill="#cfe" text-anchor="middle">program limits</text>
+  <rect x="58" y="258" width="124" height="30" rx="5" fill="#2b3a49" stroke="#5b7089"/>
+  <text x="120" y="278" font-family="Menlo,monospace" font-size="12" fill="#cfe" text-anchor="middle">submit orders</text>
+  <rect x="58" y="294" width="124" height="30" rx="5" fill="#2b3a49" stroke="#5b7089"/>
+  <text x="120" y="314" font-family="Menlo,monospace" font-size="12" fill="#cfe" text-anchor="middle">collect decisions</text>
+  <rect x="58" y="330" width="124" height="30" rx="5" fill="#3a2b33" stroke="#8a5b6b"/>
+  <text x="120" y="350" font-family="Menlo,monospace" font-size="12" fill="#f3b3c4" text-anchor="middle">ISR: violations</text>
+
+  <!-- ===== ingress FIFO ===== -->
+  <rect x="250" y="150" width="120" height="60" rx="8" fill="#22303c" stroke="#4fd1a5" stroke-width="2"/>
+  <text x="310" y="176" font-family="Menlo,monospace" font-size="13" fill="#cfe" text-anchor="middle">order FIFO</text>
+  <text x="310" y="196" font-family="Menlo,monospace" font-size="11" fill="#9fb3c6" text-anchor="middle">128b x 16 deep</text>
+
+  <!-- ===== egress FIFO ===== -->
+  <rect x="250" y="440" width="120" height="60" rx="8" fill="#22303c" stroke="#4fd1a5" stroke-width="2"/>
+  <text x="310" y="466" font-family="Menlo,monospace" font-size="13" fill="#cfe" text-anchor="middle">decision FIFO</text>
+  <text x="310" y="486" font-family="Menlo,monospace" font-size="11" fill="#9fb3c6" text-anchor="middle">128b x 16 deep</text>
+
+  <!-- host <-> fifos datapath -->
+  <line x1="200" y1="180" x2="250" y2="180" stroke="#4fd1a5" stroke-width="3" marker-end="url(#ah)"/>
+  <line x1="250" y1="470" x2="200" y2="470" stroke="#4fd1a5" stroke-width="3" marker-end="url(#ah)"/>
+  <text x="212" y="140" font-family="Menlo,monospace" font-size="11" fill="#9fb3c6">TVALID/TREADY</text>
+
+  <!-- ===== risk_pipeline ===== -->
+  <rect x="420" y="130" width="360" height="400" rx="12" fill="#1b2735" stroke="#4fd1a5" stroke-width="2.5"/>
+  <text x="600" y="158" font-family="Helvetica" font-size="19" font-weight="bold" fill="#9fe8cf" text-anchor="middle">risk_pipeline</text>
+
+  <!-- stage E -->
+  <rect x="440" y="172" width="320" height="40" rx="6" fill="#2b3a49" stroke="#5b7089"/>
+  <text x="600" y="197" font-family="Menlo,monospace" font-size="13" fill="#f2f6fa" text-anchor="middle">Stage E : latch order, async table reads</text>
+
+  <!-- gate array -->
+  <g font-family="Menlo,monospace" font-size="11" fill="#e6eef5" text-anchor="middle">
+    <rect x="440" y="224" width="100" height="34" rx="5" fill="#33475a"/><text x="490" y="245">price band</text>
+    <rect x="550" y="224" width="100" height="34" rx="5" fill="#33475a"/><text x="600" y="245">max qty</text>
+    <rect x="660" y="224" width="100" height="34" rx="5" fill="#33475a"/><text x="710" y="245">notional x</text>
+    <rect x="440" y="266" width="100" height="34" rx="5" fill="#33475a"/><text x="490" y="287">pos limit</text>
+    <rect x="550" y="266" width="100" height="34" rx="5" fill="#33475a"/><text x="600" y="287">msg count</text>
+    <rect x="660" y="266" width="100" height="34" rx="5" fill="#33475a"/><text x="710" y="287">kill/halt/range</text>
+  </g>
+  <text x="600" y="322" font-family="Menlo,monospace" font-size="12" fill="#9fb3c6" text-anchor="middle">6 heterogeneous gates evaluate in parallel</text>
+
+  <!-- priority encoder -->
+  <rect x="470" y="336" width="260" height="40" rx="6" fill="#3a4d2b" stroke="#7f9a5b"/>
+  <text x="600" y="361" font-family="Menlo,monospace" font-size="13" fill="#dff0c8" text-anchor="middle">priority encoder -&gt; accept / reason</text>
+
+  <!-- stage D -->
+  <rect x="440" y="392" width="320" height="40" rx="6" fill="#2b3a49" stroke="#5b7089"/>
+  <text x="600" y="417" font-family="Menlo,monospace" font-size="13" fill="#f2f6fa" text-anchor="middle">Stage D : register decision beat</text>
+
+  <!-- commit note -->
+  <rect x="440" y="446" width="320" height="60" rx="6" fill="#22303c" stroke="#4fd1a5" stroke-dasharray="4 3"/>
+  <text x="600" y="470" font-family="Menlo,monospace" font-size="12" fill="#9fe8cf" text-anchor="middle">on ACCEPT: position += signed qty, count += 1</text>
+  <text x="600" y="490" font-family="Menlo,monospace" font-size="11" fill="#9fb3c6" text-anchor="middle">same-cycle write-before-read (hazard-free RMW)</text>
+
+  <!-- ingress fifo -> pipeline -->
+  <line x1="370" y1="180" x2="420" y2="192" stroke="#4fd1a5" stroke-width="3" marker-end="url(#ah)"/>
+  <!-- pipeline -> egress fifo -->
+  <line x1="420" y1="412" x2="370" y2="470" stroke="#4fd1a5" stroke-width="3" marker-end="url(#ah)"/>
+
+  <!-- ===== risk_tables ===== -->
+  <rect x="830" y="150" width="250" height="220" rx="12" fill="#1b2735" stroke="#5aa0e0" stroke-width="2.5"/>
+  <text x="955" y="178" font-family="Helvetica" font-size="18" font-weight="bold" fill="#bcd8f5" text-anchor="middle">risk_tables</text>
+  <rect x="848" y="192" width="214" height="34" rx="5" fill="#243a52"/><text x="955" y="214" font-family="Menlo,monospace" font-size="12" fill="#cfe" text-anchor="middle">symbol cfg RAM (x32)</text>
+  <rect x="848" y="232" width="214" height="34" rx="5" fill="#243a52"/><text x="955" y="254" font-family="Menlo,monospace" font-size="12" fill="#cfe" text-anchor="middle">account cfg RAM (x8)</text>
+  <rect x="848" y="272" width="214" height="34" rx="5" fill="#2f4a34"/><text x="955" y="294" font-family="Menlo,monospace" font-size="12" fill="#d6f0c8" text-anchor="middle">position RAM (256 x 32b)</text>
+  <rect x="848" y="312" width="214" height="34" rx="5" fill="#2f4a34"/><text x="955" y="334" font-family="Menlo,monospace" font-size="12" fill="#d6f0c8" text-anchor="middle">count RAM (8 x 32b)</text>
+
+  <!-- pipeline <-> tables (read/commit) -->
+  <line x1="780" y1="240" x2="830" y2="240" stroke="#4fd1a5" stroke-width="3" marker-end="url(#ah)"/>
+  <text x="805" y="232" font-family="Menlo,monospace" font-size="10" fill="#9fb3c6" text-anchor="middle">read</text>
+  <line x1="830" y1="300" x2="780" y2="300" stroke="#4fd1a5" stroke-width="3" marker-end="url(#ah)"/>
+  <text x="805" y="316" font-family="Menlo,monospace" font-size="10" fill="#9fb3c6" text-anchor="middle">commit</text>
+
+  <!-- ===== risk_apb_regfile ===== -->
+  <rect x="420" y="560" width="660" height="110" rx="12" fill="#1b2735" stroke="#e0a24f" stroke-width="2.5"/>
+  <text x="750" y="586" font-family="Helvetica" font-size="18" font-weight="bold" fill="#f0d29a" text-anchor="middle">risk_apb_regfile  (APB3 control/status)</text>
+  <g font-family="Menlo,monospace" font-size="11" fill="#f2f6fa" text-anchor="middle">
+    <rect x="440" y="600" width="150" height="30" rx="5" fill="#4a3a24"/><text x="515" y="620">CTRL: kill/enable/irq</text>
+    <rect x="600" y="600" width="150" height="30" rx="5" fill="#4a3a24"/><text x="675" y="620">config-write decode</text>
+    <rect x="760" y="600" width="150" height="30" rx="5" fill="#4a3a24"/><text x="835" y="620">stats histogram</text>
+    <rect x="920" y="600" width="140" height="30" rx="5" fill="#5a2f3a"/><text x="990" y="620">IRQ (sticky)</text>
+    <rect x="440" y="636" width="470" height="26" rx="5" fill="#2b3a49"/><text x="675" y="654">counters: total / accept / reject / rej[1..8] / last</text>
+  </g>
+
+  <!-- APB bus host->regfile (control, dashed) -->
+  <path d="M120 370 L120 615 L420 615" fill="none" stroke="#e0567a" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ac)"/>
+  <text x="230" y="608" font-family="Menlo,monospace" font-size="11" fill="#f3b3c4">PSEL/PENABLE/PADDR/PWDATA/PRDATA</text>
+
+  <!-- regfile -> tables config (dashed) -->
+  <path d="M955 560 L955 370" fill="none" stroke="#e0567a" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ac)"/>
+  <text x="962" y="470" font-family="Menlo,monospace" font-size="11" fill="#f3b3c4">cfg writes</text>
+
+  <!-- pipeline -> regfile retire event (dashed) -->
+  <path d="M600 530 L600 560" fill="none" stroke="#e0567a" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ac)"/>
+  <text x="608" y="548" font-family="Menlo,monospace" font-size="11" fill="#f3b3c4">retire event</text>
+
+  <!-- regfile IRQ -> host (dashed) -->
+  <path d="M990 600 L990 100 L120 100 L120 150" fill="none" stroke="#e0567a" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ac)"/>
+  <text x="540" y="94" font-family="Menlo,monospace" font-size="11" fill="#f3b3c4">irq (violation interrupt)</text>
+
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#4fd1a5"/></marker>
+    <marker id="ac" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#e0567a"/></marker>
+  </defs>
+</svg>

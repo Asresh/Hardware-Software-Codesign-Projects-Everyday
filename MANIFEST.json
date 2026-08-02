@@ -109,6 +109,16 @@
       "software_layer": "bare-metal C feed-handler driver, a bit-exact CRC/sequence golden model, and a documented scalar cost-model baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), anchored to the published CRC32(\"123456789\")=0xCBF43926 known-answer vector, each packet run under randomised ingress bubbles and again at full rate, plus a peak micro-benchmark and a malformed-frame error/IRQ test",
       "summary": "GPU/FPGA-style line-rate market-data feed-integrity engine: a combinational GF(2) CRC-32/FCS fold checks four payload bytes per clock while an AXI4-Stream framing FSM and a per-channel sequence RAM verify the trailer CRC and detect dropped-packet gaps, raising a sticky integrity interrupt one packet at a time; 3.770 sustained / 3.992 peak bytes/clock, 2-cycle result latency, 31.02x aggregate / 31.98x peak over a documented scalar baseline; KAT-anchored (0xCBF43926), 315 packets / 27838 bytes checked per pass under randomised ingress bubbles + full rate, 37 CRC errors + 30 sequence gaps caught, 632 records checked, 0 mismatches."
+    },
+    {
+      "day": 12,
+      "name": "gpu_pretrade_risk_engine",
+      "domain": "risk management / pre-trade market-access controls (HFT)",
+      "microarchitecture": "parallel heterogeneous risk-gate array with priority-encoded verdict reduction, a single-cycle position read-modify-write RAM, and a per-account accepted-order counter",
+      "interface": "AXI4-Stream order ingress + AXI4-Stream decision egress over an APB3 control/status register file with a violation/kill-switch interrupt",
+      "software_layer": "bare-metal C firmware driver, a bit-exact golden reference, and a documented scalar cost-model baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised ingress bubbles + egress backpressure and again at full rate, plus an all-accept RMW burst, an APB statistics-histogram check, and a kill-switch/IRQ directed test",
+      "summary": "GPU/FPGA line-rate pre-trade risk / market-access gateway (SEC 15c3-5 style): every 128-bit AXI4-Stream order runs six heterogeneous risk gates (kill, range, halt, fat-finger price band, max order size, max notional, position limit, per-account message cap) fully in parallel, a priority encoder collapses them to a single accept/reason verdict, and an accepted order commits its new net position + count the same cycle via write-before-read forwarding; sustained 0.9936 / peak 0.9981 orders/clock at a deterministic 2-cycle latency; 53.39x aggregate / 53.63x peak over a documented scalar cost-model baseline; anchored to a pinned fat-finger reject, every reason code exercised, 312 orders/pass checked bit-exact under randomised bubbles + backpressure and at full rate, a 1024-order same-key RMW burst, an APB stats-histogram match, and a kill-switch/interrupt test, 0 mismatches."
     }
   ]
 }
