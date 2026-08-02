@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="780" viewBox="0 0 1300 780" role="img" aria-label="MoE router engine block diagram">
+  <defs>
+    <marker id="dp" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#2f6db0"/>
+    </marker>
+    <marker id="dpL" markerWidth="12" markerHeight="12" refX="0" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M9,0 L0,4 L9,8 Z" fill="#2f6db0"/>
+    </marker>
+    <marker id="ct" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#c9782f"/>
+    </marker>
+    <marker id="ct2" markerWidth="12" markerHeight="12" refX="0" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M9,0 L0,4 L9,8 Z" fill="#c9782f"/>
+    </marker>
+    <marker id="irqm" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- background (mid-tone, reads on light and dark) -->
+  <rect x="0" y="0" width="1300" height="780" fill="#d7dde6"/>
+
+  <!-- ===== Host ===== -->
+  <rect x="60" y="40" width="330" height="110" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="80" y="72" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#1f2733" font-weight="bold">Host CPU / GPU driver</text>
+  <text x="80" y="99" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#435062">sw/moe_driver.c</text>
+  <text x="80" y="122" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#435062">configure · submit tokens · collect records · ISR</text>
+  <text x="80" y="142" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#435062">golden model (moe_ref.c) · scalar baseline (moe_baseline.c)</text>
+
+  <!-- ===== Engine container ===== -->
+  <rect x="40" y="185" width="1220" height="545" rx="12" fill="#c9d2dd" stroke="#33404f" stroke-width="2"/>
+  <text x="60" y="214" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#1f2733" font-weight="bold">moe_router_engine  (top)  —  elastic pipeline, 38-cycle fixed latency, 1 token/clock</text>
+
+  <!-- ===== AXI4-Lite register file ===== -->
+  <rect x="880" y="238" width="360" height="118" rx="8" fill="#fdf0e0" stroke="#c9782f" stroke-width="2"/>
+  <text x="900" y="268" font-family="Helvetica, Arial, sans-serif" font-size="19" fill="#8a4f16" font-weight="bold">moe_axi_regfile</text>
+  <text x="900" y="292" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#5c3a12">CTRL · CAP · STATUS(W1C) · SCRATCH · VERSION · PARAMS</text>
+  <text x="900" y="312" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#5c3a12">TOKENS · ROUTED · OVERFLOWS · per-expert LOAD[i]</text>
+  <text x="900" y="336" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#5c3a12">sticky over-capacity IRQ</text>
+
+  <!-- ===== datapath boxes ===== -->
+  <!-- ingest -->
+  <rect x="70" y="470" width="150" height="150" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="145" y="502" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1f2733" font-weight="bold" text-anchor="middle">ingest (S0)</text>
+  <text x="145" y="530" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">unpack E</text>
+  <text x="145" y="548" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">Q8.8 logits</text>
+  <text x="145" y="574" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">assign</text>
+  <text x="145" y="592" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">token_id</text>
+
+  <!-- topk -->
+  <rect x="255" y="470" width="150" height="150" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="330" y="502" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1f2733" font-weight="bold" text-anchor="middle">moe_topk (S1)</text>
+  <text x="330" y="532" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">top-2 argmax</text>
+  <text x="330" y="550" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">reduction</text>
+  <text x="330" y="568" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">(lowest-idx ties)</text>
+
+  <!-- softmax -->
+  <rect x="440" y="470" width="175" height="150" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="527" y="502" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1f2733" font-weight="bold" text-anchor="middle">moe_softmax (S2)</text>
+  <rect x="458" y="516" width="140" height="42" rx="5" fill="#eaf1f8" stroke="#2f6db0" stroke-width="1.5"/>
+  <text x="527" y="534" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#204a78" text-anchor="middle">exp LUT 257×Q.16</text>
+  <text x="527" y="550" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#204a78" text-anchor="middle">$readmemh</text>
+  <text x="527" y="582" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">piecewise-linear exp</text>
+  <text x="527" y="600" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">num0,num1,den</text>
+
+  <!-- dividers -->
+  <rect x="650" y="470" width="180" height="150" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="740" y="500" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1f2733" font-weight="bold" text-anchor="middle">moe_divu × 2</text>
+  <rect x="666" y="512" width="148" height="30" rx="4" fill="#eef2f6" stroke="#33404f" stroke-width="1"/>
+  <text x="740" y="532" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2733" text-anchor="middle">34-stage restoring div</text>
+  <rect x="666" y="548" width="148" height="30" rx="4" fill="#eef2f6" stroke="#33404f" stroke-width="1"/>
+  <text x="740" y="568" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#1f2733" text-anchor="middle">34-stage restoring div</text>
+  <text x="740" y="600" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">→ Q.16 gate weights (1/clk)</text>
+
+  <!-- capacity -->
+  <rect x="865" y="470" width="165" height="150" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="947" y="500" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1f2733" font-weight="bold" text-anchor="middle">moe_capacity</text>
+  <text x="947" y="530" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">per-expert load[]</text>
+  <text x="947" y="548" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">single-cycle RMW</text>
+  <text x="947" y="566" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">cap check → drop</text>
+  <text x="947" y="592" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">stats + IRQ pulse</text>
+
+  <!-- pack / egress -->
+  <rect x="1065" y="470" width="150" height="150" rx="8" fill="#ffffff" stroke="#33404f" stroke-width="2"/>
+  <text x="1140" y="500" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#1f2733" font-weight="bold" text-anchor="middle">pack (retire)</text>
+  <text x="1140" y="530" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">128-bit record</text>
+  <text x="1140" y="548" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">{tid, e0/w0,</text>
+  <text x="1140" y="566" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#435062" text-anchor="middle">e1/w1, ovf, rt}</text>
+
+  <!-- sideband note -->
+  <rect x="650" y="648" width="180" height="46" rx="6" fill="#dfe7f1" stroke="#2f6db0" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="740" y="668" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#204a78" text-anchor="middle">sideband delay = 35</text>
+  <text x="740" y="685" font-family="Helvetica, Arial, sans-serif" font-size="12.5" fill="#204a78" text-anchor="middle">{tid,e0,e1,last} aligned to div</text>
+  <path d="M740,648 L740,624" stroke="#2f6db0" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#dpL)"/>
+
+  <!-- ===== datapath arrows ===== -->
+  <path d="M220,545 L253,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+  <path d="M405,545 L438,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+  <path d="M615,545 L648,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+  <path d="M830,545 L863,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+  <path d="M1030,545 L1063,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+
+  <!-- ingress / egress streams -->
+  <path d="M40,545 L68,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+  <path d="M1215,545 L1268,545" stroke="#2f6db0" stroke-width="3" fill="none" marker-end="url(#dp)"/>
+  <text x="150" y="446" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#204a78" font-weight="bold">AXI4-Stream ingress · s_axis_tdata[127:0] · tvalid/tready/tlast (E×Q8.8 logits/beat)</text>
+  <text x="1230" y="446" font-family="Helvetica, Arial, sans-serif" font-size="13.5" fill="#204a78" font-weight="bold" text-anchor="end">AXI4-Stream egress · m_axis_tdata[127:0] record</text>
+
+  <!-- ===== control: regfile -> capacity (cap/en/soft_rst) ===== -->
+  <path d="M947,356 L947,470" stroke="#c9782f" stroke-width="2.5" fill="none" stroke-dasharray="7 4" marker-end="url(#ct)"/>
+  <text x="957" y="416" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#8a4f16">cap · en · soft_rst</text>
+  <!-- capacity stats -> regfile -->
+  <path d="M1010,470 L1010,392 L1090,392 L1090,357" stroke="#c9782f" stroke-width="2.5" fill="none" stroke-dasharray="7 4" marker-end="url(#ct)"/>
+  <text x="1018" y="440" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#8a4f16">tokens/routed/</text>
+  <text x="1018" y="457" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#8a4f16">overflow/load[]</text>
+
+  <!-- ===== AXI4-Lite host <-> regfile ===== -->
+  <path d="M390,105 L1060,105 L1060,236" stroke="#c9782f" stroke-width="2.5" fill="none" stroke-dasharray="7 4" marker-start="url(#ct2)" marker-end="url(#ct)"/>
+  <text x="640" y="96" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#8a4f16" font-weight="bold">AXI4-Lite  ·  awaddr/wdata/wstrb  ·  araddr/rdata/rresp</text>
+
+  <!-- ===== interrupt regfile -> host ===== -->
+  <path d="M900,300 L430,300 L430,152" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-dasharray="3 3" marker-end="url(#irqm)"/>
+  <text x="440" y="290" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#a5281c" font-weight="bold">irq (over-capacity, sticky / W1C)</text>
+
+  <!-- ===== legend ===== -->
+  <rect x="60" y="655" width="360" height="60" rx="6" fill="#ffffff" stroke="#33404f" stroke-width="1.5"/>
+  <line x1="76" y1="675" x2="116" y2="675" stroke="#2f6db0" stroke-width="3" marker-end="url(#dp)"/>
+  <text x="124" y="680" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2733">datapath (AXI4-Stream)</text>
+  <line x1="76" y1="700" x2="116" y2="700" stroke="#c9782f" stroke-width="2.5" stroke-dasharray="7 4"/>
+  <text x="124" y="705" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2733">control (AXI4-Lite)</text>
+  <line x1="270" y1="700" x2="310" y2="700" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="3 3"/>
+  <text x="318" y="705" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2733">interrupt</text>
+</svg>

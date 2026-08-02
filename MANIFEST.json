@@ -119,6 +119,16 @@
       "software_layer": "bare-metal C firmware driver, a bit-exact golden reference, and a documented scalar cost-model baseline",
       "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised ingress bubbles + egress backpressure and again at full rate, plus an all-accept RMW burst, an APB statistics-histogram check, and a kill-switch/IRQ directed test",
       "summary": "GPU/FPGA line-rate pre-trade risk / market-access gateway (SEC 15c3-5 style): every 128-bit AXI4-Stream order runs six heterogeneous risk gates (kill, range, halt, fat-finger price band, max order size, max notional, position limit, per-account message cap) fully in parallel, a priority encoder collapses them to a single accept/reason verdict, and an accepted order commits its new net position + count the same cycle via write-before-read forwarding; sustained 0.9936 / peak 0.9981 orders/clock at a deterministic 2-cycle latency; 53.39x aggregate / 53.63x peak over a documented scalar cost-model baseline; anchored to a pinned fat-finger reject, every reason code exercised, 312 orders/pass checked bit-exact under randomised bubbles + backpressure and at full rate, a 1024-order same-key RMW burst, an APB stats-histogram match, and a kill-switch/interrupt test, 0 mismatches."
+    },
+    {
+      "day": 13,
+      "name": "gpu_moe_router_engine",
+      "domain": "machine-learning inference / Mixture-of-Experts routing",
+      "microarchitecture": "streaming fixed-point MoE-gating datapath: a log-depth top-2 argmax reduction tree feeding a piecewise-linear exp-LUT softmax renormalizer (two 34-stage pipelined restoring dividers) with per-expert capacity single-cycle read-modify-write counters",
+      "interface": "AXI4-Stream logit ingress + AXI4-Stream dispatch egress + AXI4-Lite control/status register file with an over-capacity interrupt",
+      "software_layer": "bare-metal C driver, a bit-exact fixed-point golden model + shared exp LUT, and a documented scalar cost-model baseline",
+      "verification": "Icarus Verilog SystemVerilog differential testbench against a C golden model (bit-exact), each stream run under randomised ingress bubbles + egress backpressure and again at full rate, plus CSR statistics/IRQ checks and E=4/8/16 parameterization",
+      "summary": "GPU/heterogeneous-inference Mixture-of-Experts top-k routing/gating engine: per token it selects the top-2 experts via a log-depth argmax tree, evaluates a fixed-point softmax (257-entry piecewise-linear exp LUT) renormalised by two 34-stage pipelined restoring dividers, and applies per-expert capacity with a single-cycle load read-modify-write, emitting a 128-bit dispatch record every clock at a deterministic 38-cycle latency; 0.893 sustained / 1.000 peak tokens/clock; 116.94x aggregate / 131.00x peak over a documented scalar cost-model baseline; bit-exact over 316 tokens (12 directed corner cases incl. a capacity storm + 300 random) checked under randomised bubbles + backpressure and again at full rate, plus CSR statistics + over-capacity IRQ checks and E=4/8/16 parameterization, gate weights within 1.35e-4 of a double-precision softmax, 0 mismatches."
     }
   ]
 }

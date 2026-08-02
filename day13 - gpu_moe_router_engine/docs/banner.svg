@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Day 13 - GPU MoE Router Engine">
+  <rect x="0" y="0" width="1200" height="300" fill="#1f2733"/>
+  <rect x="0" y="0" width="1200" height="300" fill="none" stroke="#3d4a5c" stroke-width="4"/>
+  <!-- accent bar -->
+  <rect x="0" y="0" width="14" height="300" fill="#e0873d"/>
+  <rect x="1186" y="0" width="14" height="300" fill="#4f9d69"/>
+
+  <text x="60" y="96" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#8fa3bd" font-weight="bold" letter-spacing="3">DAY 13 · HARDWARE / SOFTWARE CO-DESIGN</text>
+  <text x="58" y="176" font-family="Helvetica, Arial, sans-serif" font-size="76" fill="#f2f5f9" font-weight="bold">GPU MoE Router Engine</text>
+  <text x="60" y="228" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#c7d2e0">Mixture-of-Experts top-k gating · fixed-point softmax · capacity dispatch</text>
+
+  <!-- expert lanes motif -->
+  <g>
+    <rect x="60"  y="256" width="150" height="18" rx="4" fill="#e0873d"/>
+    <rect x="220" y="256" width="110" height="18" rx="4" fill="#4f9d69"/>
+    <rect x="340" y="256" width="70"  height="18" rx="4" fill="#3d6fb0"/>
+    <rect x="420" y="256" width="45"  height="18" rx="4" fill="#8a6bbf"/>
+    <rect x="475" y="256" width="30"  height="18" rx="4" fill="#55606f"/>
+    <rect x="515" y="256" width="22"  height="18" rx="4" fill="#55606f"/>
+    <rect x="547" y="256" width="16"  height="18" rx="4" fill="#55606f"/>
+    <rect x="573" y="256" width="12"  height="18" rx="4" fill="#55606f"/>
+  </g>
+
+  <text x="1120" y="176" font-family="Helvetica, Arial, sans-serif" font-size="150" fill="#2b3542" font-weight="bold" text-anchor="end">MoE</text>
+  <text x="60" y="292" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#7c8ba0">AXI4-Stream ingress/egress · AXI4-Lite CSR · tree-reduction top-k · exp-LUT renormalizer · 1 token/clock</text>
+</svg>
