@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+  <rect x="0" y="0" width="1200" height="300" fill="#243447"/>
+  <rect x="0" y="0" width="1200" height="10" fill="#4fd1c5"/>
+  <rect x="0" y="290" width="1200" height="10" fill="#4fd1c5"/>
+
+  <!-- day badge -->
+  <rect x="60" y="70" width="150" height="160" rx="14" fill="#1b2735" stroke="#4fd1c5" stroke-width="3"/>
+  <text x="135" y="130" font-family="Helvetica,Arial,sans-serif" font-size="26" fill="#9fb3c8" text-anchor="middle">DAY</text>
+  <text x="135" y="200" font-family="Helvetica,Arial,sans-serif" font-size="80" font-weight="bold" fill="#ffffff" text-anchor="middle">14</text>
+
+  <!-- title -->
+  <text x="250" y="128" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="bold" fill="#ffffff">All-Reduce Collective Engine</text>
+  <text x="252" y="176" font-family="Helvetica,Arial,sans-serif" font-size="27" fill="#4fd1c5">Multi-GPU gradient / activation reduction &#8226; NCCL-style SUM / PROD / MAX / MIN</text>
+  <text x="252" y="222" font-family="Helvetica,Arial,sans-serif" font-size="22" fill="#9fb3c8">R&#215;P systolic reduction array &#8226; descriptor-ring DMA &#8226; bit-exact integer datapath</text>
+
+  <!-- little rank-fan-in glyph -->
+  <g stroke="#4fd1c5" stroke-width="3" fill="none">
+    <line x1="1010" y1="90" x2="1110" y2="150"/>
+    <line x1="1010" y1="130" x2="1110" y2="150"/>
+    <line x1="1010" y1="170" x2="1110" y2="150"/>
+    <line x1="1010" y1="210" x2="1110" y2="150"/>
+  </g>
+  <circle cx="1010" cy="90"  r="12" fill="#f6ad55"/>
+  <circle cx="1010" cy="130" r="12" fill="#f6ad55"/>
+  <circle cx="1010" cy="170" r="12" fill="#f6ad55"/>
+  <circle cx="1010" cy="210" r="12" fill="#f6ad55"/>
+  <circle cx="1120" cy="150" r="16" fill="#68d391"/>
+</svg>

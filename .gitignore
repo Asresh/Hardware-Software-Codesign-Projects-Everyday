@@ -25,6 +25,7 @@ __pycache__/
 **/sw/crc_host
 **/sw/risk_host
 **/sw/moe_host
+**/sw/arc_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -36,6 +37,7 @@ __pycache__/
 **/tb/vectors/crc_const.vh
 **/tb/vectors/risk_const.vh
 **/tb/vectors/moe_const.vh
+**/tb/vectors/arc_const.vh
 **/tb/vectors/golden.txt
 exp_lut.hex
 
