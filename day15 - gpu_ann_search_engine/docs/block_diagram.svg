@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="660" viewBox="0 0 1040 660">
+  <!-- opaque mid-tone background so it reads on light and dark themes -->
+  <rect x="0" y="0" width="1040" height="660" fill="#33384a"/>
+  <rect x="0" y="0" width="1040" height="46" fill="#242838"/>
+  <text x="24" y="30" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#eaf0ff">Day 15 &#8212; GPU vector-search (ANN) top-K engine &#8212; block diagram</text>
+
+  <!-- ============ HOST ============ -->
+  <rect x="40" y="80" width="220" height="150" rx="8" fill="#3b4a6b" stroke="#8fb3ff" stroke-width="2"/>
+  <text x="150" y="108" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#eaf0ff">Host CPU / GPU shard</text>
+  <text x="150" y="134" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdd8f0">ann_driver.c</text>
+  <text x="150" y="156" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdd8f0">- load query window</text>
+  <text x="150" y="174" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdd8f0">- set metric / N / START</text>
+  <text x="150" y="192" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdd8f0">- DMA database shard</text>
+  <text x="150" y="210" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdd8f0">- read top-K on IRQ</text>
+
+  <!-- ============ MMIO control bus ============ -->
+  <text x="300" y="118" font-family="Helvetica,Arial,sans-serif" font-size="12" font-weight="bold" fill="#ffd479">MMIO control bus</text>
+  <line x1="260" y1="132" x2="470" y2="132" stroke="#ffd479" stroke-width="2.5"/>
+  <polygon points="470,132 460,127 460,137" fill="#ffd479"/>
+  <line x1="470" y1="160" x2="260" y2="160" stroke="#ffd479" stroke-width="2.5"/>
+  <polygon points="260,160 270,155 270,165" fill="#ffd479"/>
+  <text x="300" y="150" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#ffe9b8">reg_wr / rd / addr[7:0]</text>
+  <text x="300" y="178" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#ffe9b8">reg_rdata[31:0] (status + topK)</text>
+
+  <!-- ============ AXI4-Stream ingress ============ -->
+  <text x="300" y="212" font-family="Helvetica,Arial,sans-serif" font-size="12" font-weight="bold" fill="#7fe0c0">AXI4-Stream database ingress</text>
+  <line x1="260" y1="226" x2="470" y2="226" stroke="#7fe0c0" stroke-width="3"/>
+  <polygon points="470,226 458,220 458,232" fill="#7fe0c0"/>
+  <text x="300" y="244" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#bff0e2">s_tdata[P*8] / tvalid / tready / tlast</text>
+
+  <!-- ============ ann_regfile ============ -->
+  <rect x="470" y="80" width="230" height="180" rx="8" fill="#4a3b64" stroke="#c8a6ff" stroke-width="2"/>
+  <text x="585" y="106" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#f0e8ff">ann_regfile</text>
+  <text x="585" y="126" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#ded0f5">MMIO CSR + AXI-Stream FSM</text>
+  <text x="585" y="146" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#ded0f5">IDLE &#8594; RUN &#8594; FINISH</text>
+  <text x="585" y="164" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#ded0f5">tready = busy</text>
+  <text x="585" y="182" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#ded0f5">TLAST boundary check</text>
+  <text x="585" y="200" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#ded0f5">stats: vecs / beats / last_cyc</text>
+  <text x="585" y="222" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#ded0f5">sticky DONE/ERR IRQ (W1C)</text>
+  <text x="585" y="246" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#b9a6e0">query byte-RAM write port</text>
+
+  <!-- control pulses from regfile down to datapath -->
+  <text x="726" y="150" font-family="Helvetica,Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#ffd479">control</text>
+  <line x1="700" y1="170" x2="770" y2="170" stroke="#ffd479" stroke-width="2"/>
+  <line x1="770" y1="170" x2="770" y2="300" stroke="#ffd479" stroke-width="2"/>
+  <polygon points="770,300 765,290 775,290" fill="#ffd479"/>
+  <text x="712" y="188" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#ffe9b8">clr / metric</text>
+  <text x="712" y="202" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#ffe9b8">q_wr / q_waddr</text>
+
+  <!-- datapath beat from regfile to array -->
+  <text x="726" y="232" font-family="Helvetica,Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#7fe0c0">data</text>
+  <line x1="585" y1="260" x2="585" y2="300" stroke="#7fe0c0" stroke-width="3"/>
+  <polygon points="585,300 579,290 591,290" fill="#7fe0c0"/>
+  <text x="470" y="286" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#bff0e2">beat_valid / beat_data[P*8]</text>
+
+  <!-- ============ ann_distance_array ============ -->
+  <rect x="300" y="300" width="470" height="180" rx="8" fill="#2f5148" stroke="#7fe0c0" stroke-width="2"/>
+  <text x="535" y="326" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#e6fff6">ann_distance_array &#8212; P SIMD lanes</text>
+  <text x="535" y="346" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#c6efe0">query byte-RAM (D x int8)  |  chunk/vector counters  |  int32 accumulator</text>
+
+  <!-- PE lane boxes -->
+  <rect x="320" y="360" width="86" height="60" rx="5" fill="#3d6a5d" stroke="#a8f0da" stroke-width="1.5"/>
+  <text x="363" y="384" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="bold" fill="#eafff9">PE 0</text>
+  <text x="363" y="402" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#c9f2e6">(q-x)&#178; / q&#183;x</text>
+  <rect x="414" y="360" width="86" height="60" rx="5" fill="#3d6a5d" stroke="#a8f0da" stroke-width="1.5"/>
+  <text x="457" y="384" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="bold" fill="#eafff9">PE 1</text>
+  <text x="457" y="402" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#c9f2e6">ann_distance_pe</text>
+  <text x="530" y="396" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#a8f0da">&#183; &#183; &#183;</text>
+  <rect x="560" y="360" width="86" height="60" rx="5" fill="#3d6a5d" stroke="#a8f0da" stroke-width="1.5"/>
+  <text x="603" y="384" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="bold" fill="#eafff9">PE P-1</text>
+  <text x="603" y="402" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#c9f2e6">int8 &#215; int8</text>
+
+  <!-- adder tree + accumulator -->
+  <rect x="662" y="360" width="92" height="60" rx="5" fill="#48705f" stroke="#a8f0da" stroke-width="1.5"/>
+  <text x="708" y="382" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#eafff9">adder tree</text>
+  <text x="708" y="399" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#c9f2e6">+ acc (int32)</text>
+  <line x1="646" y1="390" x2="662" y2="390" stroke="#a8f0da" stroke-width="1.5"/>
+  <text x="360" y="446" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#c9f2e6">CHUNKS = D/P beats fold one vector &#8594; one 32-bit score, emitted on the last chunk</text>
+
+  <!-- emit datapath to topk -->
+  <text x="792" y="384" font-family="Helvetica,Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#7fe0c0">emit</text>
+  <line x1="754" y1="390" x2="840" y2="390" stroke="#7fe0c0" stroke-width="3"/>
+  <line x1="840" y1="390" x2="840" y2="300" stroke="#7fe0c0" stroke-width="3"/>
+  <polygon points="840,300 834,310 846,310" fill="#7fe0c0"/>
+  <text x="760" y="410" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#bff0e2">emit_valid</text>
+  <text x="760" y="424" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#bff0e2">score / id</text>
+
+  <!-- ============ ann_topk ============ -->
+  <rect x="800" y="140" width="200" height="160" rx="8" fill="#5a4636" stroke="#f0b27a" stroke-width="2"/>
+  <text x="900" y="166" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#fff0e2">ann_topk</text>
+  <text x="900" y="186" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#f5ddc6">insertion-select network</text>
+  <text x="900" y="204" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#f5ddc6">K sorted slots (score,id)</text>
+  <text x="900" y="222" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#f5ddc6">parallel compare &#8594; pos</text>
+  <text x="900" y="240" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#f5ddc6">shift + insert / clock</text>
+  <text x="900" y="258" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#f5ddc6">stable tie rule</text>
+  <text x="900" y="282" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#e0b89a">L2: keep min  |  IP: keep max</text>
+
+  <!-- topk results back to regfile readback -->
+  <line x1="800" y1="200" x2="700" y2="200" stroke="#c8a6ff" stroke-width="2"/>
+  <polygon points="700,200 710,195 710,205" fill="#c8a6ff"/>
+  <text x="704" y="120" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#d9c6f5">topk_score[K][32]</text>
+  <text x="704" y="134" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#d9c6f5">topk_id[K][32]</text>
+
+  <!-- ============ interrupt path ============ -->
+  <rect x="470" y="520" width="230" height="60" rx="8" fill="#5c2f3a" stroke="#ff8fa6" stroke-width="2"/>
+  <text x="585" y="546" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#ffdbe3">irq  (search-complete / error)</text>
+  <text x="585" y="566" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#ffc6d2">sticky, cleared W1C via REG_IRQ_ACK</text>
+  <line x1="585" y1="260" x2="585" y2="300" stroke="none"/>
+  <line x1="510" y1="520" x2="510" y2="260" stroke="#ff8fa6" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="510" y1="260" x2="510" y2="230" stroke="#ff8fa6" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="470" y1="522" x2="150" y2="522" stroke="#ff8fa6" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="150" y1="522" x2="150" y2="230" stroke="#ff8fa6" stroke-width="2" stroke-dasharray="6 4"/>
+  <polygon points="150,230 145,240 155,240" fill="#ff8fa6"/>
+  <text x="200" y="514" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#ffc6d2">interrupt to host</text>
+
+  <!-- ============ legend ============ -->
+  <rect x="40" y="596" width="960" height="44" rx="6" fill="#242838" stroke="#556080" stroke-width="1"/>
+  <line x1="60" y1="612" x2="100" y2="612" stroke="#7fe0c0" stroke-width="3"/>
+  <text x="108" y="616" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#cdd8f0">datapath (int8 beats / int32 score)</text>
+  <line x1="330" y1="612" x2="370" y2="612" stroke="#ffd479" stroke-width="2.5"/>
+  <text x="378" y="616" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#cdd8f0">control (MMIO / clr / metric)</text>
+  <line x1="600" y1="612" x2="640" y2="612" stroke="#c8a6ff" stroke-width="2"/>
+  <text x="648" y="616" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#cdd8f0">CSR readback</text>
+  <line x1="770" y1="612" x2="810" y2="612" stroke="#ff8fa6" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="818" y="616" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#cdd8f0">interrupt</text>
+  <text x="60" y="632" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#9fb0d0">Default configuration: D=64 dims, P=8 lanes, K=8 results, CHUNKS=8 beats/vector.  No back-pressure FIFO: one beat absorbed per clock (tready=busy).</text>
+</svg>
