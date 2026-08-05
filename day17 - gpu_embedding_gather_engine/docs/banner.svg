@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260" width="1000" height="260">
+  <rect x="0" y="0" width="1000" height="260" fill="#2b3a4a"/>
+  <rect x="0" y="0" width="1000" height="6" fill="#e0a33e"/>
+  <rect x="0" y="254" width="1000" height="6" fill="#e0a33e"/>
+
+  <!-- day badge -->
+  <rect x="34" y="42" width="150" height="176" rx="10" fill="#1d2833" stroke="#e0a33e" stroke-width="2"/>
+  <text x="109" y="98" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#9fb3c8" text-anchor="middle">DAY</text>
+  <text x="109" y="166" font-family="Helvetica,Arial,sans-serif" font-size="66" font-weight="bold" fill="#e0a33e" text-anchor="middle">17</text>
+  <text x="109" y="196" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#7f95ab" text-anchor="middle">codesign</text>
+
+  <!-- title -->
+  <text x="214" y="86" font-family="Helvetica,Arial,sans-serif" font-size="34" font-weight="bold" fill="#f2f6fa">Sharded Embedding Gather-Reduce Engine</text>
+  <text x="214" y="120" font-family="Helvetica,Arial,sans-serif" font-size="19" fill="#a8c0d6">EmbeddingBag pooling for multi-GPU recommendation inference</text>
+
+  <!-- feature chips -->
+  <rect x="214" y="140" width="212" height="34" rx="6" fill="#3a5169" stroke="#5c7d9c" stroke-width="1.5"/>
+  <text x="320" y="163" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#dce8f3" text-anchor="middle">double-buffered staging</text>
+
+  <rect x="438" y="140" width="150" height="34" rx="6" fill="#3a5169" stroke="#5c7d9c" stroke-width="1.5"/>
+  <text x="513" y="163" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#dce8f3" text-anchor="middle">AXI4 + MMIO</text>
+
+  <rect x="600" y="140" width="196" height="34" rx="6" fill="#3a5169" stroke="#5c7d9c" stroke-width="1.5"/>
+  <text x="698" y="163" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#dce8f3" text-anchor="middle">SUM / MEAN / MAX / MIN</text>
+
+  <!-- measured numbers strip -->
+  <rect x="214" y="186" width="752" height="42" rx="6" fill="#1d2833" stroke="#4a6076" stroke-width="1.5"/>
+  <text x="232" y="213" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#8fd694">3.374 pooled words/clock peak</text>
+  <text x="470" y="213" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#8fd694">1.667x from double buffering</text>
+  <text x="708" y="213" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#8fd694">13.17x over scalar</text>
+
+  <!-- ping-pong motif -->
+  <rect x="836" y="52" width="60" height="30" rx="4" fill="#e0a33e"/>
+  <rect x="904" y="52" width="60" height="30" rx="4" fill="#4a6076" stroke="#7f95ab" stroke-width="1.5"/>
+  <text x="866" y="73" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#1d2833" text-anchor="middle">fill A</text>
+  <text x="934" y="73" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#dce8f3" text-anchor="middle">fold B</text>
+  <rect x="836" y="90" width="60" height="30" rx="4" fill="#4a6076" stroke="#7f95ab" stroke-width="1.5"/>
+  <rect x="904" y="90" width="60" height="30" rx="4" fill="#e0a33e"/>
+  <text x="866" y="111" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#dce8f3" text-anchor="middle">fold A</text>
+  <text x="934" y="111" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#1d2833" text-anchor="middle">fill B</text>
+</svg>
