@@ -12,6 +12,7 @@ __pycache__/
 **/results/*.log
 **/results/*.vcd
 **/results/*.vvp
+**/results/sweep_*/
 **/sw/fir_host
 **/sw/gemm_host
 **/sw/scan_host
@@ -27,6 +28,7 @@ __pycache__/
 **/sw/moe_host
 **/sw/arc_host
 **/sw/ann_host
+**/sw/kvp_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -40,6 +42,8 @@ __pycache__/
 **/tb/vectors/moe_const.vh
 **/tb/vectors/arc_const.vh
 **/tb/vectors/ann_const.vh
+**/tb/vectors/kvp_const.vh
+**/tb/vectors/batches.txt
 **/tb/vectors/searches.txt
 **/tb/vectors/golden.txt
 exp_lut.hex

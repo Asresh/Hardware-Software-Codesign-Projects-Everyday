@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+  <rect x="0" y="0" width="1200" height="300" fill="#2b3a55"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#7aa2c8"/>
+  <rect x="0" y="292" width="1200" height="8" fill="#7aa2c8"/>
+
+  <!-- day badge -->
+  <rect x="48" y="60" width="180" height="180" rx="14" fill="#3c5378" stroke="#9dbbd8" stroke-width="3"/>
+  <text x="138" y="130" font-family="Helvetica,Arial,sans-serif" font-size="30" fill="#cfe0f0" text-anchor="middle">DAY</text>
+  <text x="138" y="205" font-family="Helvetica,Arial,sans-serif" font-size="86" font-weight="bold" fill="#ffffff" text-anchor="middle">16</text>
+
+  <!-- title -->
+  <text x="270" y="118" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="bold" fill="#ffffff">KV-Cache Paging Engine</text>
+  <text x="272" y="163" font-family="Helvetica,Arial,sans-serif" font-size="26" fill="#cfe0f0">paged-attention block-table accelerator for multi-GPU LLM serving</text>
+  <text x="272" y="205" font-family="Helvetica,Arial,sans-serif" font-size="22" fill="#a9c6e0">set-associative translation cache &#183; LRU &#183; LIFO block allocator &#183; Wishbone B4 walker &#183; MMIO + IRQ</text>
+
+  <!-- block-table strip motif -->
+  <g>
+    <rect x="272" y="228" width="52" height="34" rx="4" fill="#5b8cb8" stroke="#cfe0f0" stroke-width="2"/>
+    <rect x="330" y="228" width="52" height="34" rx="4" fill="#5b8cb8" stroke="#cfe0f0" stroke-width="2"/>
+    <rect x="388" y="228" width="52" height="34" rx="4" fill="#5b8cb8" stroke="#cfe0f0" stroke-width="2"/>
+    <rect x="446" y="228" width="52" height="34" rx="4" fill="#7f5f9e" stroke="#cfe0f0" stroke-width="2"/>
+    <rect x="504" y="228" width="52" height="34" rx="4" fill="#5b8cb8" stroke="#cfe0f0" stroke-width="2"/>
+    <rect x="562" y="228" width="52" height="34" rx="4" fill="#4a6c8c" stroke="#cfe0f0" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="628" y="252" font-family="Helvetica,Arial,sans-serif" font-size="19" fill="#a9c6e0">logical blocks &#8594; physical KV blocks</text>
+  </g>
+
+  <!-- measured headline -->
+  <rect x="880" y="60" width="272" height="180" rx="12" fill="#243349" stroke="#7aa2c8" stroke-width="3"/>
+  <text x="1016" y="98" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#a9c6e0" text-anchor="middle">measured</text>
+  <text x="1016" y="146" font-family="Helvetica,Arial,sans-serif" font-size="40" font-weight="bold" fill="#ffffff" text-anchor="middle">0.97 xlat/clk</text>
+  <text x="1016" y="182" font-family="Helvetica,Arial,sans-serif" font-size="26" fill="#cfe0f0" text-anchor="middle">13.02x / 20.42x</text>
+  <text x="1016" y="216" font-family="Helvetica,Arial,sans-serif" font-size="19" fill="#a9c6e0" text-anchor="middle">8464 checks, 0 mismatches</text>
+</svg>
