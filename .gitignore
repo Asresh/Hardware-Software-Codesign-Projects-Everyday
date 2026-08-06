@@ -30,6 +30,7 @@ __pycache__/
 **/sw/ann_host
 **/sw/kvp_host
 **/sw/emb_host
+**/sw/kds_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -45,9 +46,11 @@ __pycache__/
 **/tb/vectors/ann_const.vh
 **/tb/vectors/kvp_const.vh
 **/tb/vectors/emb_const.vh
+**/tb/vectors/kds_const.vh
 **/tb/vectors/batches.txt
 **/tb/vectors/searches.txt
 **/tb/vectors/descs.txt
+**/tb/vectors/graphs.txt
 **/tb/vectors/golden.txt
 exp_lut.hex
 

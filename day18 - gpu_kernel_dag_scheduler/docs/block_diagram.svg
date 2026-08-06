@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" width="1280" height="900">
+  <rect x="0" y="0" width="1280" height="900" fill="#333a49"/>
+
+  <defs>
+    <marker id="dat" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 11 4 L 0 8 z" fill="#8fd0b0"/>
+    </marker>
+    <marker id="ctl" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 11 4 L 0 8 z" fill="#e8b45c"/>
+    </marker>
+    <marker id="irqm" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 11 4 L 0 8 z" fill="#e07a7a"/>
+    </marker>
+  </defs>
+
+  <text x="28" y="42" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="bold" fill="#ffffff">Day 18 - multi-GPU kernel-DAG scheduler (hardware command processor)</text>
+  <text x="28" y="70" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#a9bccb">green = datapath / graph words &#183; amber = control &#183; red = interrupt &#183; MAX_NODES=64, DEVICES=4</text>
+
+  <!-- ============================== host ============================== -->
+  <rect x="28" y="104" width="250" height="150" rx="10" fill="#42506a" stroke="#9dc0d8" stroke-width="2.5"/>
+  <text x="153" y="134" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" fill="#ffffff" text-anchor="middle">HOST CPU</text>
+  <text x="44" y="162" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#c8d8e2">sw/kds_driver.c</text>
+  <text x="44" y="184" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#a9bccb">kds_build_graph()  node array</text>
+  <text x="44" y="204" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#a9bccb">kds_launch()       doorbell</text>
+  <text x="44" y="224" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#a9bccb">kds_isr()          completion</text>
+  <text x="44" y="244" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#a9bccb">kds_collect()      schedule + CSRs</text>
+
+  <!-- ============================== shared memory ============================== -->
+  <rect x="28" y="640" width="250" height="210" rx="10" fill="#42506a" stroke="#9dc0d8" stroke-width="2.5"/>
+  <text x="153" y="670" font-family="Helvetica,Arial,sans-serif" font-size="19" font-weight="bold" fill="#ffffff" text-anchor="middle">SHARED MEMORY</text>
+  <rect x="44" y="686" width="218" height="66" rx="6" fill="#3a465c" stroke="#8fd0b0" stroke-width="1.6"/>
+  <text x="56" y="706" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfe6da">node array @ NODE_BASE</text>
+  <text x="56" y="726" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9bccb">w0 {dev[23:16], dur[15:0]}</text>
+  <text x="56" y="744" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9bccb">w1..w2 dep mask &#183; w3 kernel id</text>
+  <rect x="44" y="760" width="218" height="76" rx="6" fill="#3a465c" stroke="#8fd0b0" stroke-width="1.6"/>
+  <text x="56" y="780" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfe6da">result array @ RSLT_BASE</text>
+  <text x="56" y="800" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9bccb">w0 start tick &#183; w1 finish tick</text>
+  <text x="56" y="818" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9bccb">w2 {flags, device, seq}</text>
+  <text x="56" y="834" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9bccb">w3 kernel id echo</text>
+
+  <!-- ============================== control bus ============================== -->
+  <rect x="300" y="104" width="72" height="746" rx="6" fill="#3c4658" stroke="#e8b45c" stroke-width="2"/>
+  <text x="318" y="480" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#e8b45c" text-anchor="middle" transform="rotate(-90 318 480)">AXI4-Lite CONTROL SLAVE</text>
+  <text x="340" y="280" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#c9b48a" text-anchor="middle" transform="rotate(-90 340 280)">AWADDR AWVALID AWREADY</text>
+  <text x="356" y="280" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#c9b48a" text-anchor="middle" transform="rotate(-90 356 280)">WDATA WVALID WREADY BRESP BVALID</text>
+  <text x="340" y="700" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#c9b48a" text-anchor="middle" transform="rotate(-90 340 700)">ARADDR ARVALID ARREADY</text>
+  <text x="356" y="700" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#c9b48a" text-anchor="middle" transform="rotate(-90 356 700)">RDATA RRESP RVALID RREADY</text>
+
+  <line x1="278" y1="150" x2="296" y2="150" stroke="#e8b45c" stroke-width="2.5" marker-end="url(#ctl)"/>
+  <line x1="296" y1="200" x2="278" y2="200" stroke="#e8b45c" stroke-width="2.5" marker-end="url(#ctl)"/>
+
+  <!-- ============================== the engine ============================== -->
+  <rect x="392" y="96" width="856" height="760" rx="12" fill="#3a4356" stroke="#9dc0d8" stroke-width="2"/>
+  <text x="410" y="124" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff">kds_top</text>
+
+  <!-- regfile -->
+  <rect x="412" y="140" width="230" height="150" rx="8" fill="#4a5670" stroke="#e8b45c" stroke-width="2.2"/>
+  <text x="527" y="164" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_regfile</text>
+  <text x="424" y="188" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#d8c9a8">CTRL.START &#183; NUM_NODES</text>
+  <text x="424" y="206" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#d8c9a8">NODE_BASE &#183; RSLT_BASE</text>
+  <text x="424" y="224" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#d8c9a8">MAKESPAN DISPATCHED STALL</text>
+  <text x="424" y="242" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#d8c9a8">DEPWAIT MAXCONC SERIAL</text>
+  <text x="424" y="260" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#d8c9a8">DEV_BUSY[0..3] BUSCYC CAPS</text>
+  <text x="424" y="280" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#e0a0a0">IRQ_STATUS (W1C) &#183; IRQ_ENABLE</text>
+
+  <!-- core FSM -->
+  <rect x="690" y="140" width="240" height="150" rx="8" fill="#4a5670" stroke="#e8b45c" stroke-width="2.2"/>
+  <text x="810" y="164" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_core  FSM</text>
+  <text x="810" y="192" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#d8c9a8" text-anchor="middle">IDLE &#8594; FETCH &#8594; CHECK</text>
+  <text x="810" y="212" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#d8c9a8" text-anchor="middle">&#8594; RUN &#8594; WB &#8594; DONE</text>
+  <text x="810" y="234" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#c9b48a" text-anchor="middle">1 tick / clock in RUN, no bus</text>
+  <text x="810" y="254" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#e0a0a0" text-anchor="middle">ERROR: LEN DUR DEV DEP</text>
+  <text x="810" y="272" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#e0a0a0" text-anchor="middle">CYCLE BUS</text>
+
+  <!-- axil master -->
+  <rect x="978" y="140" width="250" height="150" rx="8" fill="#4a5670" stroke="#8fd0b0" stroke-width="2.2"/>
+  <text x="1103" y="164" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_axil_master</text>
+  <text x="990" y="188" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">pipelined, 4 outstanding</text>
+  <text x="990" y="208" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">AR runs ahead of R</text>
+  <text x="990" y="228" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">AW + W held until both</text>
+  <text x="990" y="246" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">handshake, done on B</text>
+  <text x="990" y="270" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#e0a0a0">RRESP/BRESP != OKAY &#8594; E_BUS</text>
+
+  <!-- node mem / CAM -->
+  <rect x="412" y="330" width="290" height="180" rx="8" fill="#465370" stroke="#8fd0b0" stroke-width="2.2"/>
+  <text x="557" y="354" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_node_mem  (graph CAM)</text>
+  <text x="424" y="380" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">64 entries x { dep[63:0], dev[3:0],</text>
+  <text x="424" y="398" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">dur[15:0], kid[31:0] }</text>
+  <text x="424" y="424" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">dep_flat  64 x 64 = 4096 bits, read</text>
+  <text x="424" y="442" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">in parallel every tick</text>
+  <text x="424" y="468" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">dev_flat  64 x 4 affinity masks</text>
+  <text x="424" y="492" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">narrow port: dur (dispatch), kid (WB)</text>
+
+  <!-- scoreboard -->
+  <rect x="742" y="330" width="230" height="180" rx="8" fill="#465370" stroke="#8fd0b0" stroke-width="2.2"/>
+  <text x="857" y="354" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_scoreboard</text>
+  <text x="857" y="382" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfe6da" text-anchor="middle">64 parallel masked matches</text>
+  <text x="754" y="410" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">ready[i] = valid[i] &amp; ~issued[i]</text>
+  <text x="754" y="430" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">           &amp; ((dep[i] &amp; ~done)==0)</text>
+  <text x="754" y="458" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">done_mask[63:0]  retirement reg</text>
+  <text x="754" y="478" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">issued_mask[63:0]</text>
+  <text x="754" y="500" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">&#8594; ready[63:0], ready_any</text>
+
+  <!-- placer -->
+  <rect x="1008" y="330" width="220" height="180" rx="8" fill="#465370" stroke="#8fd0b0" stroke-width="2.2"/>
+  <text x="1118" y="354" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_placer</text>
+  <text x="1020" y="382" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">placeable[i] = ready[i]</text>
+  <text x="1020" y="400" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">   &amp; |(dev[i] &amp; free_mask)</text>
+  <text x="1020" y="426" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">two-level priority encoder</text>
+  <text x="1020" y="444" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">8 groups of 8 &#8594; lowest index</text>
+  <text x="1020" y="470" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">device: lowest allowed free slot</text>
+  <text x="1020" y="496" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">&#8594; sel_node, sel_dev, sel_valid</text>
+
+  <!-- devq -->
+  <rect x="742" y="548" width="486" height="180" rx="8" fill="#465370" stroke="#8fd0b0" stroke-width="2.2"/>
+  <text x="985" y="572" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">kds_devq - DEVICES execution slots (countdown timers)</text>
+  <g font-family="Helvetica,Arial,sans-serif" font-size="12.5">
+    <rect x="762" y="590" width="104" height="76" rx="6" fill="#3a465c" stroke="#7fc4a0" stroke-width="1.6"/>
+    <text x="814" y="610" fill="#cfe6da" text-anchor="middle">GPU 0</text>
+    <text x="814" y="630" fill="#a9bccb" text-anchor="middle">busy, rem</text>
+    <text x="814" y="650" fill="#a9bccb" text-anchor="middle">node id</text>
+
+    <rect x="878" y="590" width="104" height="76" rx="6" fill="#3a465c" stroke="#7fc4a0" stroke-width="1.6"/>
+    <text x="930" y="610" fill="#cfe6da" text-anchor="middle">GPU 1</text>
+    <text x="930" y="630" fill="#a9bccb" text-anchor="middle">busy, rem</text>
+    <text x="930" y="650" fill="#a9bccb" text-anchor="middle">node id</text>
+
+    <rect x="994" y="590" width="104" height="76" rx="6" fill="#3a465c" stroke="#7fc4a0" stroke-width="1.6"/>
+    <text x="1046" y="610" fill="#cfe6da" text-anchor="middle">GPU 2</text>
+    <text x="1046" y="630" fill="#a9bccb" text-anchor="middle">busy, rem</text>
+    <text x="1046" y="650" fill="#a9bccb" text-anchor="middle">node id</text>
+
+    <rect x="1110" y="590" width="104" height="76" rx="6" fill="#3a465c" stroke="#7fc4a0" stroke-width="1.6"/>
+    <text x="1162" y="610" fill="#cfe6da" text-anchor="middle">GPU 3</text>
+    <text x="1162" y="630" fill="#a9bccb" text-anchor="middle">busy, rem</text>
+    <text x="1162" y="650" fill="#a9bccb" text-anchor="middle">node id</text>
+  </g>
+  <text x="762" y="692" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">rem == 0 on a busy slot &#8594; retire at end of tick: done bit and freed slot both appear next tick</text>
+  <text x="762" y="712" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">comp_valid[3:0] + comp_node &#8594; done_mask, finish = start + dur + 1</text>
+
+  <!-- deadlock note -->
+  <rect x="412" y="548" width="290" height="180" rx="8" fill="#414c63" stroke="#e07a7a" stroke-width="2"/>
+  <text x="557" y="572" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">exact cycle detection</text>
+  <text x="424" y="600" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#e6c0c0">!sel_valid &amp; busy == 0 &amp; !all_done</text>
+  <text x="424" y="620" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">nothing runnable, nothing running:</text>
+  <text x="424" y="638" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">the graph has a cycle. No timeout.</text>
+  <text x="424" y="668" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">every tick is exactly one of</text>
+  <text x="424" y="686" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">dispatch / structural stall / dep stall</text>
+  <text x="424" y="706" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">makespan = disp + stall + depwait</text>
+
+  <!-- ============================ arrows ============================ -->
+  <!-- control: regfile -> core -->
+  <line x1="642" y1="196" x2="688" y2="196" stroke="#e8b45c" stroke-width="2.5" marker-end="url(#ctl)"/>
+  <text x="665" y="188" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c" text-anchor="middle">start</text>
+  <line x1="688" y1="240" x2="644" y2="240" stroke="#e8b45c" stroke-width="2.5" marker-end="url(#ctl)"/>
+  <text x="666" y="258" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c" text-anchor="middle">counters</text>
+
+  <!-- core <-> master -->
+  <line x1="930" y1="196" x2="976" y2="196" stroke="#e8b45c" stroke-width="2.5" marker-end="url(#ctl)"/>
+  <text x="953" y="188" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c" text-anchor="middle">req</text>
+  <line x1="976" y1="240" x2="932" y2="240" stroke="#8fd0b0" stroke-width="2.5" marker-end="url(#dat)"/>
+  <text x="954" y="258" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0" text-anchor="middle">rd_data</text>
+
+  <!-- master -> memory (down the right and along the bottom) -->
+  <path d="M 1103 292 L 1103 312 L 1250 312 L 1250 872 L 153 872 L 153 852" fill="none" stroke="#8fd0b0" stroke-width="3" marker-end="url(#dat)"/>
+  <text x="700" y="866" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#8fd0b0" text-anchor="middle">AXI4-Lite MEMORY MASTER: ARADDR/RDATA (graph fetch) &#183; AWADDR/WDATA/BRESP (result writeback)</text>
+
+  <!-- fetch fills the CAM -->
+  <path d="M 1050 292 L 1050 306 L 700 306 L 700 322 L 620 322 L 620 328" fill="none" stroke="#8fd0b0" stroke-width="2.5" marker-end="url(#dat)"/>
+  <text x="790" y="300" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#8fd0b0" text-anchor="middle">FETCH: one node record per 4 words, validated as it lands</text>
+
+  <!-- CAM -> scoreboard -->
+  <line x1="702" y1="400" x2="740" y2="400" stroke="#8fd0b0" stroke-width="3" marker-end="url(#dat)"/>
+  <text x="721" y="392" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0" text-anchor="middle">dep_flat</text>
+  <!-- scoreboard -> placer -->
+  <line x1="972" y1="400" x2="1006" y2="400" stroke="#8fd0b0" stroke-width="3" marker-end="url(#dat)"/>
+  <text x="989" y="392" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0" text-anchor="middle">ready</text>
+  <!-- CAM -> placer affinity -->
+  <path d="M 702 470 L 720 470 L 720 524 L 1118 524 L 1118 512" fill="none" stroke="#8fd0b0" stroke-width="2" marker-end="url(#dat)"/>
+  <text x="920" y="518" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0" text-anchor="middle">dev_flat (affinity)</text>
+
+  <!-- placer -> devq -->
+  <path d="M 1118 512 L 1118 546" fill="none" stroke="#e8b45c" stroke-width="2.5" marker-end="url(#ctl)"/>
+  <text x="1190" y="538" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c" text-anchor="middle">dispatch</text>
+  <!-- devq -> scoreboard (retire) -->
+  <path d="M 860 546 L 860 512" fill="none" stroke="#8fd0b0" stroke-width="2.5" marker-end="url(#dat)"/>
+  <text x="800" y="538" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0" text-anchor="middle">retire &#8594; done_mask</text>
+  <!-- devq busy -> placer -->
+  <path d="M 1214 590 L 1240 590 L 1240 470 L 1230 470" fill="none" stroke="#8fd0b0" stroke-width="2" marker-end="url(#dat)"/>
+  <text x="1256" y="530" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0" text-anchor="middle" transform="rotate(-90 1256 530)">free_mask</text>
+
+  <!-- interrupt -->
+  <path d="M 412 276 L 372 276 L 372 96 L 200 96 L 200 102" fill="none" stroke="#e07a7a" stroke-width="3" marker-end="url(#irqm)"/>
+  <text x="580" y="88" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e07a7a" text-anchor="middle">irq (GRAPH_DONE / ERROR, sticky, W1C)</text>
+
+  <!-- host writes the graph into memory -->
+  <path d="M 153 254 L 153 636" fill="none" stroke="#8fd0b0" stroke-width="2.5" marker-end="url(#dat)"/>
+  <text x="140" y="450" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#8fd0b0" text-anchor="middle" transform="rotate(-90 140 450)">host lays the graph out once per launch</text>
+
+  <!-- legend: no FIFOs, queue depths -->
+  <rect x="412" y="748" width="816" height="92" rx="8" fill="#3c4658" stroke="#8fb8d0" stroke-width="1.6"/>
+  <text x="428" y="772" font-family="Helvetica,Arial,sans-serif" font-size="13.5" font-weight="bold" fill="#ffffff">elasticity and queue depths</text>
+  <text x="428" y="794" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">memory read pipeline: up to OUTSTANDING = 4 addresses in flight (f_issue - f_ack), reads return in order - no reorder buffer needed</text>
+  <text x="428" y="812" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#a9bccb">writeback: up to 4 beats in flight (w_issue - w_ack); the result word mux is combinational, so no drain FIFO is required</text>
+  <text x="428" y="830" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#cfe6da">RUN phase: zero bus traffic, one tick per clock - the schedule is a function of the graph alone, not of memory timing</text>
+</svg>
