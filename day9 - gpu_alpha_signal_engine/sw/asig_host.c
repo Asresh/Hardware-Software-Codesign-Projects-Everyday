@@ -87,8 +87,11 @@ static void gen_random(const asig_cfg_t *cfg, int nsym, int nt){
     for (int s = 0; s < N_SYM; s++) px[s] = clampp((int64_t)rng_range(2, 3999) << FRAC);
     for (int i = 0; i < nt; i++){
         uint32_t sym = (uint32_t)rng_range(0, nsym - 1);
-        int32_t step = (int32_t)(rng_range(-30, 30)) << (FRAC - 4);   /* small drift */
-        if ((rng_u32() & 0x3F) == 0) step = (int32_t)(rng_range(-400, 400)) << FRAC; /* jump */
+        /* scale by multiplication, not <<: rng_range can be negative and
+           left-shifting a negative value is undefined behaviour. FRAC is 16,
+           so these products stay far inside int32. */
+        int32_t step = (int32_t)rng_range(-30, 30) * (1 << (FRAC - 4));  /* small drift */
+        if ((rng_u32() & 0x3F) == 0) step = (int32_t)rng_range(-400, 400) * (1 << FRAC); /* jump */
         px[sym] = clampp((int64_t)px[sym] + step + (int32_t)(rng_u32() & 0xFFFF) - 0x8000);
         tk[i].sym = sym; tk[i].price = px[sym];
     }

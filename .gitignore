@@ -3,6 +3,7 @@
 *.fst
 *.vvp
 *.o
+*.dSYM/
 *.elf
 obj_dir/
 __pycache__/

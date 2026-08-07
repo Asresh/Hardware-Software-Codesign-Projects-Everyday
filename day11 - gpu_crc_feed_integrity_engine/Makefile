@@ -31,7 +31,7 @@ ING   := $(VEC)/ingress.hex
 HOST  := sw/crc_host
 SIM   := results/crc_sim.vvp
 
-.PHONY: all sim sw vectors metrics elab synth clean
+.PHONY: all sim sw vectors metrics elab synth clean check
 
 all: sim metrics
 
@@ -79,6 +79,25 @@ synth:
 	   echo "yosys not found - using analytical area estimate"; \
 	   $(PYTHON) scripts/area_estimate.py --chw $(CHW) ; \
 	 fi
+
+# ---------------- sanitizer gate ---------------------------------------------
+# Rebuilds the host / model / baseline with UBSan + ASan and regenerates the
+# vectors through them. This exists because the work happens on clang and CI
+# runs gcc: clang wraps signed overflow quietly, gcc -O2 treats it as a licence
+# to drop a loop bound, and the difference between those two is an
+# out-of-bounds write that only ever shows up in CI. -fno-sanitize-recover
+# makes the first finding a non-zero exit, so this is a gate and not a report.
+# Leak detection is off: these generators are one-shot and exit without freeing
+# on purpose, which is not the defect class this is guarding against.
+SAN_FLAGS ?= -O1 -g -fno-omit-frame-pointer \
+             -fsanitize=undefined,address -fno-sanitize-recover=all
+SAN_ENV   ?= ASAN_OPTIONS=detect_leaks=0
+
+check:
+	@rm -rf $(HOST) $(HOST).dSYM
+	$(SAN_ENV) $(MAKE) vectors CFLAGS="$(CFLAGS) $(SAN_FLAGS)"
+	@rm -rf $(HOST) $(HOST).dSYM
+	@echo "sanitizer check clean: $@ ($(HOST))"
 
 clean:
 	rm -f $(HOST) $(SIM)
