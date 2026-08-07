@@ -106,7 +106,12 @@ static void gen_corners(void) {
     for (uint32_t i = 0; i < 100; i++) vbuf[i] = -777;
     emit_block(vbuf, 100, -777);
     // 4) full 32-bit width, alternating extremes
-    { int32_t p = 0; for (uint32_t i = 0; i < 64; i++) { p += (i & 1) ? (int32_t)0x7FFFFFFF : (int32_t)0x80000000; vbuf[i] = p; } }
+    // The accumulator is unsigned because these three cases exist to walk
+    // *past* INT_MAX and INT_MIN. Signed overflow is undefined, and gcc -O2
+    // acts on that: it deduces the loop cannot reach its bound and the write
+    // runs off the end of vbuf. Unsigned addition is the same two's-complement
+    // wrap these tests are asking for, defined instead of assumed.
+    { uint32_t p = 0; for (uint32_t i = 0; i < 64; i++) { p += (i & 1) ? 0x7FFFFFFFu : 0x80000000u; vbuf[i] = (int32_t)p; } }
     emit_block(vbuf, 64, 0);
     // 5) count not a multiple of LANES, small width
     gen_targeted(7, 500, 5);
@@ -121,10 +126,10 @@ static void gen_corners(void) {
     { int32_t p = 1000000; for (uint32_t i = 0; i < 300; i++) { p += (int32_t)rng_range(1, 4000); vbuf[i] = p; } }
     emit_block(vbuf, 300, 1000000);
     // 10) wrap past INT_MAX
-    { int32_t p = (int32_t)0x7FFFFF00; for (uint32_t i = 0; i < 50; i++) { p += 40; vbuf[i] = p; } }
+    { uint32_t p = 0x7FFFFF00u; for (uint32_t i = 0; i < 50; i++) { p += 40u; vbuf[i] = (int32_t)p; } }
     emit_block(vbuf, 50, (int32_t)0x7FFFFF00);
     // 11) wrap past INT_MIN
-    { int32_t p = (int32_t)0x80000100; for (uint32_t i = 0; i < 50; i++) { p -= 40; vbuf[i] = p; } }
+    { uint32_t p = 0x80000100u; for (uint32_t i = 0; i < 50; i++) { p -= 40u; vbuf[i] = (int32_t)p; } }
     emit_block(vbuf, 50, (int32_t)0x80000100);
     // 12) large block, mid width
     gen_targeted(600, 250000, 13);
