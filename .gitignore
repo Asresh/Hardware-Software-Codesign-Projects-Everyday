@@ -13,6 +13,7 @@ __pycache__/
 **/results/*.vcd
 **/results/*.vvp
 **/results/sweep_*/
+**/results/mutant_*/
 **/sw/fir_host
 **/sw/gemm_host
 **/sw/scan_host
@@ -31,6 +32,7 @@ __pycache__/
 **/sw/kvp_host
 **/sw/emb_host
 **/sw/kds_host
+**/sw/p2p_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -47,10 +49,12 @@ __pycache__/
 **/tb/vectors/kvp_const.vh
 **/tb/vectors/emb_const.vh
 **/tb/vectors/kds_const.vh
+**/tb/vectors/p2p_const.vh
 **/tb/vectors/batches.txt
 **/tb/vectors/searches.txt
 **/tb/vectors/descs.txt
 **/tb/vectors/graphs.txt
+**/tb/vectors/runs.txt
 **/tb/vectors/golden.txt
 exp_lut.hex
 

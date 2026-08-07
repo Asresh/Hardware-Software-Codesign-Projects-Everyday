@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+  <rect x="0" y="0" width="1200" height="300" fill="#2b3242"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#7cc0a8"/>
+  <rect x="0" y="292" width="1200" height="8" fill="#7cc0a8"/>
+
+  <!-- day badge -->
+  <rect x="44" y="60" width="150" height="150" rx="14" fill="#3d475c" stroke="#8fd0b8" stroke-width="3"/>
+  <text x="119" y="128" font-family="Helvetica,Arial,sans-serif" font-size="30" fill="#c3d4e0" text-anchor="middle">DAY</text>
+  <text x="119" y="188" font-family="Helvetica,Arial,sans-serif" font-size="64" font-weight="bold" fill="#ffffff" text-anchor="middle">19</text>
+
+  <!-- title -->
+  <text x="234" y="108" font-family="Helvetica,Arial,sans-serif" font-size="44" font-weight="bold" fill="#ffffff">GPU Peer Transport Engine</text>
+  <text x="234" y="152" font-family="Helvetica,Arial,sans-serif" font-size="26" fill="#b8cdd8">RDMA-style GPU-to-GPU link &#183; credit-based streaming dataflow</text>
+  <text x="234" y="192" font-family="Helvetica,Arial,sans-serif" font-size="21" fill="#9fb6c4">tensor-parallel inference fabric &#183; work/completion rings &#183; reduce on the wire</text>
+
+  <!-- two peers exchanging packets, credits flowing back -->
+  <g>
+    <rect x="880" y="72" width="86" height="60" rx="8" fill="#3d475c" stroke="#8fd0b8" stroke-width="2.5"/>
+    <text x="923" y="108" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#dfe9f0" text-anchor="middle">GPU 0</text>
+    <rect x="1064" y="72" width="86" height="60" rx="8" fill="#3d475c" stroke="#8fd0b8" stroke-width="2.5"/>
+    <text x="1107" y="108" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#dfe9f0" text-anchor="middle">GPU 1</text>
+
+    <!-- packets on the wire -->
+    <rect x="978" y="90" width="14" height="10" fill="#8fd0b8"/>
+    <rect x="998" y="90" width="14" height="10" fill="#8fd0b8"/>
+    <rect x="1018" y="90" width="14" height="10" fill="#6f9fbf"/>
+    <rect x="1038" y="90" width="14" height="10" fill="#6f9fbf"/>
+    <path d="M 966 116 L 1060 116" stroke="#8fd0b8" stroke-width="3" fill="none"/>
+    <path d="M 1053 111 L 1064 116 L 1053 121 z" fill="#8fd0b8"/>
+
+    <!-- credit return -->
+    <path d="M 1064 146 L 970 146" stroke="#e8b45c" stroke-width="3" fill="none" stroke-dasharray="7 5"/>
+    <path d="M 977 141 L 966 146 L 977 151 z" fill="#e8b45c"/>
+    <text x="1015" y="176" font-family="Helvetica,Arial,sans-serif" font-size="17" fill="#e8b45c" text-anchor="middle">credits</text>
+
+    <!-- receive buffer pool -->
+    <g fill="#4a5568" stroke="#8fd0b8" stroke-width="1.6">
+      <rect x="1064" y="196" width="20" height="20"/>
+      <rect x="1086" y="196" width="20" height="20"/>
+      <rect x="1108" y="196" width="20" height="20"/>
+      <rect x="1130" y="196" width="20" height="20"/>
+    </g>
+    <text x="1107" y="238" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#9fb6c4" text-anchor="middle">4 buffers</text>
+    <text x="923" y="238" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#9fb6c4" text-anchor="middle">MTU 16 words</text>
+  </g>
+</svg>
