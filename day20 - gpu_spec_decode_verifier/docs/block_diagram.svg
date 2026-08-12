@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 1020" width="1360" height="1020">
+  <rect x="0" y="0" width="1360" height="1020" fill="#343047"/>
+
+  <defs>
+    <marker id="dat" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 11 4 L 0 8 z" fill="#8fd0b0"/>
+    </marker>
+    <marker id="ctl" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 11 4 L 0 8 z" fill="#e8b45c"/>
+    </marker>
+    <marker id="irqm" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 11 4 L 0 8 z" fill="#e07a7a"/>
+    </marker>
+  </defs>
+
+  <text x="28" y="42" font-family="Helvetica,Arial,sans-serif" font-size="26" font-weight="bold" fill="#ffffff">Day 20 - speculative-decoding draft-tree verifier (multi-GPU / heterogeneous inference)</text>
+  <text x="28" y="70" font-family="Helvetica,Arial,sans-serif" font-size="17" fill="#c6bce0">draft tree in on-chip flops &#183; all N children tested in parallel &#183; log-depth argmax picks the winner in the same cycle &#183; one accepted token per clock</text>
+
+  <!-- legend -->
+  <g font-family="Helvetica,Arial,sans-serif" font-size="15">
+    <line x1="940" y1="60" x2="980" y2="60" stroke="#8fd0b0" stroke-width="3" marker-end="url(#dat)"/>
+    <text x="988" y="65" fill="#8fd0b0">datapath</text>
+    <line x1="1090" y1="60" x2="1130" y2="60" stroke="#e8b45c" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ctl)"/>
+    <text x="1138" y="65" fill="#e8b45c">control / config</text>
+  </g>
+
+  <!-- ================= host CPU ================= -->
+  <rect x="28" y="96" width="268" height="86" rx="8" fill="#474063" stroke="#b7a6e0" stroke-width="2.5"/>
+  <text x="162" y="126" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">HOST / node control CPU</text>
+  <text x="162" y="149" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfc6e6" text-anchor="middle">sw/sdv_driver.c - arms the acceptance</text>
+  <text x="162" y="167" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfc6e6" text-anchor="middle">policy, never walks the tree</text>
+
+  <!-- ================= APB3 control bus ================= -->
+  <rect x="28" y="202" width="600" height="58" rx="5" fill="#3d3854" stroke="#e8b45c" stroke-width="2"/>
+  <text x="40" y="222" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e8b45c">APB3 control  PSEL  PENABLE  PWRITE  PADDR[11:0]  PWDATA[31:0]</text>
+  <text x="40" y="240" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e8b45c">              PRDATA[31:0]  PREADY (tied 1, zero-wait)  PSLVERR (unmapped address)</text>
+  <text x="40" y="256" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#bda8dd">CTRL &#183; TH_ABS &#183; TH_REL &#183; MAX_ACC &#183; STATUS &#183; IRQ_STAT (W1C) &#183; ERRCODE &#183; CAPS &#183; 10 counters &#183; HIST[0..MAX_DEPTH-1]</text>
+  <line x1="162" y1="182" x2="162" y2="200" stroke="#e8b45c" stroke-width="3" marker-end="url(#ctl)"/>
+
+  <!-- ================= draft device ================= -->
+  <rect x="1006" y="96" width="326" height="86" rx="8" fill="#474063" stroke="#b7a6e0" stroke-width="2.5"/>
+  <text x="1169" y="126" font-family="Helvetica,Arial,sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">DRAFT DEVICE + TARGET GPU</text>
+  <text x="1169" y="149" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfc6e6" text-anchor="middle">emits one node record per proposed token:</text>
+  <text x="1169" y="167" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfc6e6" text-anchor="middle">{parent, draft tok, target argmax, score, pmax}</text>
+
+  <!-- ingress stream -->
+  <rect x="712" y="202" width="620" height="58" rx="5" fill="#33455a" stroke="#8fd0b0" stroke-width="2"/>
+  <text x="724" y="222" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#8fd0b0">AXI4-Stream ingress   S_TVALID / S_TREADY   S_TDATA[127:0]   S_TLAST (end of tree)</text>
+  <text x="724" y="241" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2">w0[15:0] parent (0xFFFF = root) &#183; w1 draft token &#183; w2 target argmax at this position</text>
+  <text x="724" y="256" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2">w3[15:0] score = P(this token) Q0.16 &#183; w3[31:16] pmax = best P at this position</text>
+  <line x1="1169" y1="182" x2="1169" y2="200" stroke="#8fd0b0" stroke-width="3" marker-end="url(#dat)"/>
+
+  <!-- ================= accelerator outline ================= -->
+  <rect x="28" y="292" width="1304" height="586" rx="10" fill="#3a3550" stroke="#8f86b5" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="44" y="316" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#c6bce0">sdv_top  (MAX_NODES = 64, MAX_DEPTH = 16)</text>
+
+  <!-- ================ apb regs ================ -->
+  <rect x="48" y="336" width="272" height="326" rx="8" fill="#413b5c" stroke="#e8b45c" stroke-width="2.5"/>
+  <text x="184" y="362" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">sdv_apb_regs</text>
+  <text x="184" y="382" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#cfc6e6" text-anchor="middle">control / status / telemetry</text>
+  <g font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e4dcf4">
+    <text x="64" y="410">CTRL[0] EN   CTRL[1] IRQ_EN</text>
+    <text x="64" y="430">CTRL[3:2] MODE  greedy / typical</text>
+    <text x="64" y="448">              / both / any</text>
+    <text x="64" y="468">CTRL[8] CLR_STAT  CTRL[9] SOFT_RST</text>
+    <text x="64" y="492">TH_ABS[15:0]   TH_REL[15:0] Q0.16</text>
+    <text x="64" y="512">MAX_ACC (clamped to MAX_DEPTH)</text>
+    <text x="64" y="540">jobs / nodes / accepted / rejected</text>
+    <text x="64" y="560">clamped / busy / srcstall / bpstall</text>
+    <text x="64" y="580">last-job cycles / last-job accepted</text>
+    <text x="64" y="604">HIST[k]: tokens accepted at depth k</text>
+    <text x="64" y="628">REGMAP_CSUM cross-checks sw/sdv.h</text>
+    <text x="64" y="650">IRQ_STAT: DONE / ERROR / CLAMP</text>
+  </g>
+
+  <!-- ================ node array ================ -->
+  <rect x="360" y="336" width="330" height="270" rx="8" fill="#3b4a5e" stroke="#8fd0b0" stroke-width="2.5"/>
+  <text x="525" y="362" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">sdv_node_array</text>
+  <text x="525" y="382" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#b8e0cc" text-anchor="middle">64 x 112 flops - the whole tree on chip</text>
+
+  <!-- the per-node cells -->
+  <g>
+    <rect x="378" y="396" width="294" height="26" rx="3" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <text x="386" y="414" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0">node 0    par 0xFFFF | tok | pred | score | thr</text>
+    <rect x="378" y="426" width="294" height="26" rx="3" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <text x="386" y="444" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0">node 1    par | tok | pred | score | thr</text>
+    <rect x="378" y="456" width="294" height="26" rx="3" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <text x="386" y="474" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0">node 2    par | tok | pred | score | thr</text>
+    <text x="525" y="498" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#b8e0cc" text-anchor="middle">. . .   64 cells, all read every cycle   . . .</text>
+    <rect x="378" y="506" width="294" height="26" rx="3" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <text x="386" y="524" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0">node 63   par | tok | pred | score | thr</text>
+  </g>
+  <text x="525" y="554" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e8b45c" text-anchor="middle">load-time precompute, one 16x16 multiply:</text>
+  <text x="525" y="572" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e8b45c" text-anchor="middle">thr[j] = max(TH_ABS, (pmax[j] * TH_REL) &gt;&gt; 16)</text>
+  <text x="525" y="594" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#b8e0cc" text-anchor="middle">keeps the multiplier out of the walk's critical path</text>
+
+  <!-- candidate mask -->
+  <rect x="360" y="622" width="330" height="112" rx="8" fill="#3b4a5e" stroke="#8fd0b0" stroke-width="2.5"/>
+  <text x="525" y="646" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">parallel candidate mask  cand[63:0]</text>
+  <text x="525" y="668" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">cand[j] = live(j) &amp; (par[j] == cur) &amp; accept(j)</text>
+  <text x="525" y="688" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">accept: tok[j] == pred[cur]   (greedy)</text>
+  <text x="525" y="706" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">        score[j] &gt;= thr[cur]  (typical)</text>
+  <text x="525" y="726" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2" text-anchor="middle">64 parent + 64 token + 64 score compares, one cycle</text>
+
+  <!-- structural validation -->
+  <rect x="360" y="750" width="330" height="106" rx="8" fill="#4a3f52" stroke="#e07a7a" stroke-width="2.5"/>
+  <text x="525" y="774" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">structural validation (1 cycle, all N)</text>
+  <text x="525" y="796" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#eecccc" text-anchor="middle">three parallel reductions, priority encoded:</text>
+  <text x="525" y="816" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#f0b9b9" text-anchor="middle">NNODES &gt; ROOT &gt; PARENT &gt; SELF</text>
+  <text x="525" y="838" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#eecccc" text-anchor="middle">a malformed tree costs one cycle, not a half-walk</text>
+
+  <!-- ================ argmax tree ================ -->
+  <rect x="730" y="336" width="286" height="270" rx="8" fill="#3b4a5e" stroke="#8fd0b0" stroke-width="2.5"/>
+  <text x="873" y="362" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">sdv_argmax_tree</text>
+  <text x="873" y="382" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#b8e0cc" text-anchor="middle">log2(64) = 6 levels of 2-input merges</text>
+
+  <!-- draw the reduction tree -->
+  <g stroke="#8fd0b0" stroke-width="2" fill="none">
+    <path d="M 754 470 L 770 452"/><path d="M 786 470 L 770 452"/>
+    <path d="M 818 470 L 834 452"/><path d="M 850 470 L 834 452"/>
+    <path d="M 882 470 L 898 452"/><path d="M 914 470 L 898 452"/>
+    <path d="M 946 470 L 962 452"/><path d="M 978 470 L 962 452"/>
+    <path d="M 770 452 L 802 424"/><path d="M 834 452 L 802 424"/>
+    <path d="M 898 452 L 930 424"/><path d="M 962 452 L 930 424"/>
+    <path d="M 802 424 L 866 400"/><path d="M 930 424 L 866 400"/>
+  </g>
+  <g fill="#8fd0b0">
+    <circle cx="754" cy="472" r="5"/><circle cx="786" cy="472" r="5"/>
+    <circle cx="818" cy="472" r="5"/><circle cx="850" cy="472" r="5"/>
+    <circle cx="882" cy="472" r="5"/><circle cx="914" cy="472" r="5"/>
+    <circle cx="946" cy="472" r="5"/><circle cx="978" cy="472" r="5"/>
+    <circle cx="770" cy="450" r="5"/><circle cx="834" cy="450" r="5"/>
+    <circle cx="898" cy="450" r="5"/><circle cx="962" cy="450" r="5"/>
+    <circle cx="802" cy="422" r="6"/><circle cx="930" cy="422" r="6"/>
+  </g>
+  <circle cx="866" cy="398" r="7" fill="#ffffff"/>
+  <text x="873" y="500" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">merge rule: take the right child only if it is</text>
+  <text x="873" y="518" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">valid AND strictly greater - so ties fall to the</text>
+  <text x="873" y="536" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">lower index structurally, not by comparison</text>
+  <text x="873" y="562" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e8b45c" text-anchor="middle">out: any / idx[5:0] / val[15:0]</text>
+  <text x="873" y="584" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#b8e0cc" text-anchor="middle">this replaces the CPU's inner sweep</text>
+
+  <!-- ================ walk FSM ================ -->
+  <rect x="730" y="622" width="286" height="234" rx="8" fill="#41455e" stroke="#b7a6e0" stroke-width="2.5"/>
+  <text x="873" y="648" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">sdv_core  walk FSM</text>
+  <g font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e4dcf4">
+    <text x="748" y="676">LOAD   1 node record / clock</text>
+    <text x="748" y="700">CHECK  1 cycle, whole tree, and waits</text>
+    <text x="748" y="718">       for the FIFO to drain first</text>
+    <text x="748" y="742">WALK   1 clock per accepted token</text>
+    <text x="748" y="760">       cur &lt;= argmax idx; push on k+1</text>
+    <text x="748" y="784">TRAIL  1 cycle: count, bonus, status</text>
+  </g>
+  <text x="873" y="812" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#8fd0b0" text-anchor="middle">cost = nodes + accepted + 3 cycles</text>
+  <text x="873" y="834" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#c6bce0" text-anchor="middle">only the load term depends on the tree size</text>
+
+  <!-- ================ FIFO ================ -->
+  <rect x="1056" y="336" width="256" height="182" rx="8" fill="#3b4a5e" stroke="#8fd0b0" stroke-width="2.5"/>
+  <text x="1184" y="362" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">sdv_fifo</text>
+  <text x="1184" y="384" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#e8b45c" text-anchor="middle">depth 32 x 129 bits</text>
+  <text x="1184" y="404" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">{TLAST, 128-bit beat}</text>
+  <g>
+    <rect x="1076" y="416" width="30" height="26" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <rect x="1110" y="416" width="30" height="26" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <rect x="1144" y="416" width="30" height="26" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <rect x="1178" y="416" width="30" height="26" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <rect x="1212" y="416" width="30" height="26" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <rect x="1246" y="416" width="30" height="26" fill="#31404f" stroke="#7fb79c" stroke-width="1.5"/>
+    <text x="1290" y="435" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#d6ece0">...</text>
+  </g>
+  <text x="1184" y="464" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">holds a whole job: MAX_DEPTH tokens</text>
+  <text x="1184" y="482" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">+ 1 trailer, so the walk never stalls on</text>
+  <text x="1184" y="500" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">backpressure once it has started</text>
+
+  <!-- ================ emit ================ -->
+  <rect x="1056" y="546" width="256" height="118" rx="8" fill="#3b4a5e" stroke="#8fd0b0" stroke-width="2.5"/>
+  <text x="1184" y="572" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">sdv_emit</text>
+  <text x="1184" y="594" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">egress AXI4-Stream master,</text>
+  <text x="1184" y="612" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#d6ece0" text-anchor="middle">one beat per clock when ready.</text>
+  <text x="1184" y="636" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2" text-anchor="middle">TLAST travels with the data, so the</text>
+  <text x="1184" y="654" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2" text-anchor="middle">reader frames a job as it arrives</text>
+
+  <!-- ================= wiring inside ================= -->
+  <!-- ingress into node array -->
+  <line x1="1169" y1="260" x2="1169" y2="292" stroke="#8fd0b0" stroke-width="3"/>
+  <path d="M 1169 292 L 1169 314 L 525 314 L 525 334" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+  <text x="700" y="308" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#8fd0b0">node record + S_TLAST</text>
+
+  <!-- config from regs to array / core -->
+  <path d="M 320 470 L 358 470" stroke="#e8b45c" stroke-width="3" stroke-dasharray="7 5" fill="none" marker-end="url(#ctl)"/>
+  <text x="326" y="462" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c">MODE, TH_ABS, TH_REL</text>
+  <path d="M 320 700 L 340 700 L 340 740 L 728 740" stroke="#e8b45c" stroke-width="3" stroke-dasharray="7 5" fill="none" marker-end="url(#ctl)"/>
+  <text x="380" y="734" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c">EN, MAX_ACC, SOFT_RST  (latched on the first beat of a job)</text>
+
+  <!-- candidate mask + scores to the tree -->
+  <path d="M 690 664 L 712 664 L 712 472 L 728 472" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+  <text x="600" y="618" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0">cand[63:0] + score[63:0]</text>
+
+  <!-- tree result to FSM -->
+  <path d="M 873 606 L 873 620" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+  <text x="884" y="616" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0">idx / val / any</text>
+
+  <!-- FSM broadcasts cur back to the array -->
+  <path d="M 730 700 L 706 700 L 706 560 L 692 560" stroke="#e8b45c" stroke-width="3" stroke-dasharray="7 5" fill="none" marker-end="url(#ctl)"/>
+  <text x="600" y="556" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c">cur[5:0] broadcast</text>
+
+  <!-- validation into FSM -->
+  <path d="M 690 800 L 714 800 L 714 782 L 728 782" stroke="#e07a7a" stroke-width="3" fill="none" marker-end="url(#irqm)"/>
+
+  <!-- FSM to FIFO -->
+  <path d="M 1016 690 L 1036 690 L 1036 470 L 1054 470" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+  <text x="1006" y="640" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0">push accepted</text>
+  <text x="1006" y="656" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0">token / trailer</text>
+
+  <!-- FIFO to emit -->
+  <path d="M 1184 518 L 1184 544" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+
+  <!-- FIFO empty back to FSM (the gate that makes the walk unstallable) -->
+  <path d="M 1056 400 L 1030 400 L 1030 660 L 1016 660" stroke="#e8b45c" stroke-width="3" stroke-dasharray="7 5" fill="none" marker-end="url(#ctl)"/>
+  <text x="936" y="394" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c">empty gates CHECK</text>
+
+  <!-- statistics strobes to regs -->
+  <path d="M 730 830 L 340 830 L 340 620 L 318 620" stroke="#e8b45c" stroke-width="3" stroke-dasharray="7 5" fill="none" marker-end="url(#ctl)"/>
+  <text x="360" y="852" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#e8b45c">job_done / node_inc / accept_inc + depth / err / clamp / stall strobes</text>
+
+  <!-- ================= egress ================= -->
+  <rect x="712" y="906" width="620" height="82" rx="5" fill="#33455a" stroke="#8fd0b0" stroke-width="2"/>
+  <text x="724" y="928" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#8fd0b0">AXI4-Stream egress   M_TVALID / M_TREADY   M_TDATA[127:0]   M_TLAST (trailer)</text>
+  <text x="724" y="948" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2">accepted-token beat: w0 node index &#183; w1 token &#183; w2 score &#183; w3 depth</text>
+  <text x="724" y="966" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#a9d8c2">trailer beat:  w0 accepted count &#183; w1 bonus token &#183; w2 error code &#183; w3 (nodes &lt;&lt; 16) | CLAMP</text>
+  <text x="724" y="982" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8fd0b0">the node indices are what tell the runtime which KV-cache rows to keep</text>
+  <path d="M 1184 664 L 1184 878 L 1184 904" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+
+  <!-- ================= interrupt ================= -->
+  <path d="M 120 662 L 120 700 L 20 700 L 20 140 L 26 140" stroke="#e07a7a" stroke-width="3" fill="none" marker-end="url(#irqm)"/>
+  <text x="30" y="726" font-family="Helvetica,Arial,sans-serif" font-size="13" fill="#e07a7a">IRQ  DONE | ERROR | CLAMP</text>
+  <text x="30" y="746" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#e07a7a">sticky, masked by CTRL[1],</text>
+  <text x="30" y="764" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#e07a7a">acknowledged write-1-to-clear</text>
+
+  <!-- host reads results -->
+  <path d="M 712 946 L 300 946 L 300 800 L 180 800 L 180 700" stroke="#8fd0b0" stroke-width="3" fill="none" marker-end="url(#dat)"/>
+  <text x="310" y="966" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#8fd0b0">host consumes the beats: accepted tokens, bonus token, KV rows to keep</text>
+</svg>

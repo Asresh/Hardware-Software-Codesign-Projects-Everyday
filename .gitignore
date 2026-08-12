@@ -34,6 +34,7 @@ __pycache__/
 **/sw/emb_host
 **/sw/kds_host
 **/sw/p2p_host
+**/sw/sdv_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -51,12 +52,14 @@ __pycache__/
 **/tb/vectors/emb_const.vh
 **/tb/vectors/kds_const.vh
 **/tb/vectors/p2p_const.vh
+**/tb/vectors/sdv_const.vh
 **/tb/vectors/batches.txt
 **/tb/vectors/searches.txt
 **/tb/vectors/descs.txt
 **/tb/vectors/graphs.txt
 **/tb/vectors/runs.txt
 **/tb/vectors/golden.txt
+**/tb/vectors/totals.txt
 exp_lut.hex
 
 # --- OS / editor cruft ---
