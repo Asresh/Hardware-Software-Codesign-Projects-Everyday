@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 860" width="1280" height="860">
+  <rect x="0" y="0" width="1280" height="860" fill="#2b3440"/>
+
+  <defs>
+    <marker id="dat" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7fd1b9"/>
+    </marker>
+    <marker id="ctl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f0b862"/>
+    </marker>
+    <marker id="irqm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff8a7a"/>
+    </marker>
+  </defs>
+
+  <text x="28" y="38" font-family="Helvetica,Arial,sans-serif" font-size="24" font-weight="bold" fill="#e8eef5">Day 21 - MX-cast custom functional unit on an RV32I core</text>
+  <text x="28" y="62" font-family="Helvetica,Arial,sans-serif" font-size="14" fill="#9fb3c8">solid teal = datapath  |  dashed amber = control  |  red = interrupt</text>
+
+  <!-- ================= host ================= -->
+  <rect x="28" y="96" width="212" height="150" rx="10" fill="#3b4a5e" stroke="#4c9aff" stroke-width="2"/>
+  <text x="134" y="124" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#e8eef5" text-anchor="middle">HOST CPU</text>
+  <text x="134" y="146" font-family="Courier,monospace" font-size="12" fill="#9fb3c8" text-anchor="middle">sw/mxq_driver.c</text>
+  <text x="40" y="172" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cfd9e4">load program image</text>
+  <text x="40" y="190" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cfd9e4">stage tensor shard</text>
+  <text x="40" y="208" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cfd9e4">write CTRL.START</text>
+  <text x="40" y="226" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cfd9e4">wait for IRQ, read RETVAL</text>
+
+  <!-- ================= bus spine ================= -->
+  <rect x="272" y="96" width="150" height="150" rx="10" fill="#33415a" stroke="#4c9aff" stroke-width="2"/>
+  <text x="347" y="122" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#e8eef5" text-anchor="middle">MMIO bus</text>
+  <text x="347" y="142" font-family="Courier,monospace" font-size="11" fill="#9fb3c8" text-anchor="middle">h_sel  h_we</text>
+  <text x="347" y="158" font-family="Courier,monospace" font-size="11" fill="#9fb3c8" text-anchor="middle">h_addr[19:0]</text>
+  <text x="347" y="174" font-family="Courier,monospace" font-size="11" fill="#9fb3c8" text-anchor="middle">h_wdata[31:0]</text>
+  <text x="347" y="190" font-family="Courier,monospace" font-size="11" fill="#9fb3c8" text-anchor="middle">h_rdata[31:0]</text>
+  <text x="347" y="206" font-family="Courier,monospace" font-size="11" fill="#9fb3c8" text-anchor="middle">h_ready</text>
+  <text x="347" y="230" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#7fd1b9" text-anchor="middle">1 wait state</text>
+
+  <line x1="240" y1="150" x2="270" y2="150" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+  <line x1="270" y1="196" x2="242" y2="196" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+
+  <!-- window decode -->
+  <rect x="272" y="278" width="150" height="86" rx="8" fill="#33415a" stroke="#f0b862" stroke-width="2" stroke-dasharray="6 3"/>
+  <text x="347" y="300" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#f0b862" text-anchor="middle">window decode</text>
+  <text x="347" y="318" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">0x0_0000 registers</text>
+  <text x="347" y="334" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">0x1_0000 IMEM</text>
+  <text x="347" y="350" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">0x2_0000 DMEM</text>
+  <line x1="347" y1="246" x2="347" y2="276" stroke="#f0b862" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ctl)"/>
+
+  <!-- ================= mxq_top boundary ================= -->
+  <rect x="452" y="86" width="800" height="742" rx="14" fill="none" stroke="#5a6b80" stroke-width="2" stroke-dasharray="10 6"/>
+  <text x="470" y="108" font-family="Courier,monospace" font-size="13" fill="#9fb3c8">rtl/mxq_top.v</text>
+
+  <!-- csr -->
+  <rect x="476" y="126" width="238" height="196" rx="10" fill="#3b4a5e" stroke="#f0b862" stroke-width="2"/>
+  <text x="595" y="150" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#e8eef5" text-anchor="middle">mxq_csr</text>
+  <text x="595" y="168" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#9fb3c8" text-anchor="middle">22 registers, word indexed</text>
+  <text x="490" y="192" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">CTRL  START/IRQ_EN/SOFT_RST</text>
+  <text x="490" y="209" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">STATUS  ERRCODE  TRAP_PC</text>
+  <text x="490" y="226" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">ARG0..ARG3  START_PC  WDOG</text>
+  <text x="490" y="243" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">CYCLES INSTRET CUSTOM_OPS</text>
+  <text x="490" y="260" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">BRANCH_TAKEN LOADS STORES</text>
+  <text x="490" y="277" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">RETVAL HALT_PC CAPS VERSION</text>
+  <text x="490" y="294" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">IRQ_STAT (W1C)  REGMAP_CSUM</text>
+  <text x="595" y="313" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#7fd1b9" text-anchor="middle">no state in the datapath</text>
+
+  <line x1="422" y1="160" x2="474" y2="160" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+
+  <!-- core -->
+  <rect x="476" y="352" width="454" height="330" rx="12" fill="#33415a" stroke="#4c9aff" stroke-width="2.5"/>
+  <text x="703" y="378" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="bold" fill="#e8eef5" text-anchor="middle">mxq_core - three stages, one retire per cycle</text>
+
+  <!-- F -->
+  <rect x="496" y="396" width="112" height="72" rx="8" fill="#44536b" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="552" y="418" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#e8eef5" text-anchor="middle">F  fetch</text>
+  <text x="552" y="436" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">pc_f, valid_f</text>
+  <text x="552" y="452" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">fetch-fault flag</text>
+
+  <!-- X -->
+  <rect x="628" y="396" width="164" height="188" rx="8" fill="#44536b" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="710" y="418" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#e8eef5" text-anchor="middle">X  decode / execute</text>
+  <rect x="640" y="428" width="140" height="30" rx="5" fill="#33415a" stroke="#9fb3c8" stroke-width="1"/>
+  <text x="710" y="448" font-family="Courier,monospace" font-size="11" fill="#cfd9e4" text-anchor="middle">mxq_decode</text>
+  <rect x="640" y="464" width="140" height="30" rx="5" fill="#33415a" stroke="#9fb3c8" stroke-width="1"/>
+  <text x="710" y="484" font-family="Courier,monospace" font-size="11" fill="#cfd9e4" text-anchor="middle">mxq_regfile 32x32</text>
+  <rect x="640" y="500" width="140" height="30" rx="5" fill="#33415a" stroke="#9fb3c8" stroke-width="1"/>
+  <text x="710" y="520" font-family="Courier,monospace" font-size="11" fill="#cfd9e4" text-anchor="middle">mxq_alu + branch</text>
+  <rect x="640" y="536" width="140" height="36" rx="5" fill="#2f5d52" stroke="#7fd1b9" stroke-width="2"/>
+  <text x="710" y="551" font-family="Courier,monospace" font-size="11" font-weight="bold" fill="#7fd1b9" text-anchor="middle">mxq_mx_unit</text>
+  <text x="710" y="566" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#a8e0cf" text-anchor="middle">custom-0, combinational</text>
+
+  <!-- W -->
+  <rect x="812" y="396" width="104" height="72" rx="8" fill="#44536b" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="864" y="418" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#e8eef5" text-anchor="middle">W  commit</text>
+  <text x="864" y="436" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">load extend</text>
+  <text x="864" y="452" font-family="Courier,monospace" font-size="10.5" fill="#cfd9e4" text-anchor="middle">regfile write</text>
+
+  <line x1="608" y1="432" x2="626" y2="432" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+  <line x1="792" y1="432" x2="810" y2="432" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+
+  <!-- the one bypass -->
+  <path d="M 864 468 L 864 610 L 710 610 L 710 588" fill="none" stroke="#7fd1b9" stroke-width="2.5" stroke-dasharray="none" marker-end="url(#dat)"/>
+  <text x="790" y="626" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#7fd1b9" text-anchor="middle">the only bypass: W to X (covers load-use, so no stall)</text>
+
+  <!-- redirect -->
+  <path d="M 628 490 L 560 490 L 560 470" fill="none" stroke="#f0b862" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ctl)"/>
+  <text x="556" y="508" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#f0b862" text-anchor="middle">redirect + kill 1</text>
+
+  <!-- trap -->
+  <rect x="496" y="536" width="112" height="60" rx="8" fill="#4a3b46" stroke="#ff8a7a" stroke-width="1.5"/>
+  <text x="552" y="556" font-family="Helvetica,Arial,sans-serif" font-size="11.5" font-weight="bold" fill="#ff8a7a" text-anchor="middle">trap priority</text>
+  <text x="552" y="572" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#e8cfcf" text-anchor="middle">WDOG &gt; FETCH &gt; ILLEGAL</text>
+  <text x="552" y="586" font-family="Helvetica,Arial,sans-serif" font-size="9.5" fill="#e8cfcf" text-anchor="middle">&gt; ALIGN &gt; RANGE</text>
+  <line x1="628" y1="560" x2="610" y2="560" stroke="#ff8a7a" stroke-width="2" marker-end="url(#irqm)"/>
+
+  <text x="703" y="660" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#f0b862" text-anchor="middle">cycles = instructions retired + taken branches + 2, exactly, on every job</text>
+
+  <!-- csr to core control -->
+  <path d="M 540 322 L 540 352" fill="none" stroke="#f0b862" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ctl)"/>
+  <text x="470" y="342" font-family="Courier,monospace" font-size="10" fill="#f0b862">start / start_pc / wdog / arg0..3 / soft_rst</text>
+  <path d="M 700 352 L 700 322" fill="none" stroke="#f0b862" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ctl)"/>
+  <text x="770" y="342" font-family="Courier,monospace" font-size="10" fill="#f0b862">halted / trapped / errcode / 6 counters</text>
+
+  <!-- ================= memories ================= -->
+  <rect x="964" y="352" width="266" height="132" rx="10" fill="#3b4a5e" stroke="#7fd1b9" stroke-width="2"/>
+  <text x="1097" y="376" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#e8eef5" text-anchor="middle">mxq_sram  IMEM</text>
+  <text x="1097" y="396" font-family="Courier,monospace" font-size="11.5" fill="#9fb3c8" text-anchor="middle">2^12 x 32, synchronous read</text>
+  <text x="1097" y="418" font-family="Courier,monospace" font-size="11" fill="#cfd9e4" text-anchor="middle">im_addr[11:0] -&gt; im_rdata[31:0]</text>
+  <text x="1097" y="440" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#7fd1b9" text-anchor="middle">core owns it while running,</text>
+  <text x="1097" y="456" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#7fd1b9" text-anchor="middle">host owns it while halted</text>
+  <text x="1097" y="474" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#9fb3c8" text-anchor="middle">read-only to the core</text>
+
+  <rect x="964" y="506" width="266" height="176" rx="10" fill="#3b4a5e" stroke="#7fd1b9" stroke-width="2"/>
+  <text x="1097" y="530" font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="bold" fill="#e8eef5" text-anchor="middle">mxq_sram  DMEM</text>
+  <text x="1097" y="550" font-family="Courier,monospace" font-size="11.5" fill="#9fb3c8" text-anchor="middle">2^12 x 32, byte enables</text>
+  <text x="978" y="574" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">dm_addr[11:0]  dm_be[3:0]</text>
+  <text x="978" y="592" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">dm_wdata[31:0] dm_we</text>
+  <text x="978" y="610" font-family="Courier,monospace" font-size="11" fill="#cfd9e4">dm_rdata[31:0]</text>
+  <text x="1097" y="636" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#7fd1b9" text-anchor="middle">bf16 shard in, MXFP4 out</text>
+  <text x="1097" y="654" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#9fb3c8" text-anchor="middle">1 scale byte + 4 bits/element</text>
+  <text x="1097" y="672" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#9fb3c8" text-anchor="middle">= 4.25 bits/element</text>
+
+  <line x1="930" y1="404" x2="962" y2="404" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+  <line x1="962" y1="430" x2="930" y2="430" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+  <line x1="930" y1="556" x2="962" y2="556" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+  <line x1="962" y1="600" x2="930" y2="600" stroke="#7fd1b9" stroke-width="2.5" marker-end="url(#dat)"/>
+
+  <!-- host memory windows -->
+  <path d="M 422 320 L 440 320 L 440 700 L 1097 700 L 1097 682" fill="none" stroke="#7fd1b9" stroke-width="2" marker-end="url(#dat)"/>
+  <path d="M 440 700 L 1097 700 L 1097 484" fill="none" stroke="#7fd1b9" stroke-width="2" stroke-dasharray="none"/>
+  <text x="700" y="718" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#7fd1b9" text-anchor="middle">host program load and result readback (halted only)</text>
+
+  <!-- ================= interrupt ================= -->
+  <path d="M 476 200 L 452 200 L 452 268 L 134 268 L 134 248" fill="none" stroke="#ff8a7a" stroke-width="2.5" marker-end="url(#irqm)"/>
+  <text x="290" y="264" font-family="Courier,monospace" font-size="12" fill="#ff8a7a" text-anchor="middle">irq = IRQ_EN &amp; (DONE | TRAP)</text>
+
+  <!-- ================= verification port ================= -->
+  <rect x="476" y="750" width="454" height="62" rx="10" fill="#3d3b52" stroke="#b39ddb" stroke-width="2" stroke-dasharray="6 3"/>
+  <text x="703" y="772" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#cdb8f0" text-anchor="middle">commit trace port - verification only, not part of the design</text>
+  <text x="703" y="794" font-family="Courier,monospace" font-size="11" fill="#cfd9e4" text-anchor="middle">dbg_valid  dbg_pc  dbg_code{wen,rd,load,store}  dbg_wdata  dbg_addr  dbg_sdata</text>
+  <line x1="703" y1="682" x2="703" y2="748" stroke="#b39ddb" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ctl)"/>
+
+  <rect x="964" y="750" width="266" height="62" rx="10" fill="#3d3b52" stroke="#b39ddb" stroke-width="2" stroke-dasharray="6 3"/>
+  <text x="1097" y="774" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdb8f0" text-anchor="middle">tb/mxq_tb.sv compares every</text>
+  <text x="1097" y="792" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#cdb8f0" text-anchor="middle">commit against sw/mxq_iss.c</text>
+  <line x1="930" y1="781" x2="962" y2="781" stroke="#b39ddb" stroke-width="2" marker-end="url(#ctl)"/>
+</svg>

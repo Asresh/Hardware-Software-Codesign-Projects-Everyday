@@ -35,6 +35,7 @@ __pycache__/
 **/sw/kds_host
 **/sw/p2p_host
 **/sw/sdv_host
+**/sw/mxq_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -53,6 +54,7 @@ __pycache__/
 **/tb/vectors/kds_const.vh
 **/tb/vectors/p2p_const.vh
 **/tb/vectors/sdv_const.vh
+**/tb/vectors/mxq_const.vh
 **/tb/vectors/batches.txt
 **/tb/vectors/searches.txt
 **/tb/vectors/descs.txt
