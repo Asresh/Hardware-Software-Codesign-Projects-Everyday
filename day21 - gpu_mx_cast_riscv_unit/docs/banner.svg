@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 260" width="1200" height="260">
+  <rect x="0" y="0" width="1200" height="260" fill="#2b3440"/>
+  <rect x="0" y="0" width="1200" height="6" fill="#4c9aff"/>
+  <rect x="0" y="254" width="1200" height="6" fill="#7fd1b9"/>
+
+  <!-- day badge -->
+  <rect x="48" y="70" width="132" height="120" rx="10" fill="#3b4a5e" stroke="#4c9aff" stroke-width="2"/>
+  <text x="114" y="118" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#9fb3c8" text-anchor="middle">DAY</text>
+  <text x="114" y="168" font-family="Helvetica,Arial,sans-serif" font-size="58" font-weight="bold" fill="#e8eef5" text-anchor="middle">21</text>
+
+  <text x="222" y="112" font-family="Helvetica,Arial,sans-serif" font-size="40" font-weight="bold" fill="#e8eef5">MX-Cast Custom Functional Unit</text>
+  <text x="222" y="152" font-family="Helvetica,Arial,sans-serif" font-size="21" fill="#9fb3c8">Five custom-0 instructions on an RV32I pipeline: bf16 &#8596; MXFP4 for quantised inference</text>
+
+  <!-- the five instructions -->
+  <rect x="222" y="176" width="122" height="34" rx="6" fill="#33415a" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="283" y="199" font-family="Courier,monospace" font-size="15" fill="#7fd1b9" text-anchor="middle">MXAMAX</text>
+  <rect x="356" y="176" width="122" height="34" rx="6" fill="#33415a" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="417" y="199" font-family="Courier,monospace" font-size="15" fill="#7fd1b9" text-anchor="middle">MXSCALE</text>
+  <rect x="490" y="176" width="106" height="34" rx="6" fill="#33415a" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="543" y="199" font-family="Courier,monospace" font-size="15" fill="#7fd1b9" text-anchor="middle">MXQ4</text>
+  <rect x="608" y="176" width="106" height="34" rx="6" fill="#33415a" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="661" y="199" font-family="Courier,monospace" font-size="15" fill="#7fd1b9" text-anchor="middle">MXDQ</text>
+  <rect x="726" y="176" width="106" height="34" rx="6" fill="#33415a" stroke="#7fd1b9" stroke-width="1.5"/>
+  <text x="779" y="199" font-family="Courier,monospace" font-size="15" fill="#7fd1b9" text-anchor="middle">MXPK</text>
+
+  <!-- measured headline -->
+  <rect x="884" y="70" width="268" height="120" rx="10" fill="#3b4a5e" stroke="#f0b862" stroke-width="2"/>
+  <text x="1018" y="104" font-family="Helvetica,Arial,sans-serif" font-size="16" fill="#9fb3c8" text-anchor="middle">measured, same core, same data</text>
+  <text x="1018" y="150" font-family="Helvetica,Arial,sans-serif" font-size="40" font-weight="bold" fill="#f0b862" text-anchor="middle">11.96x</text>
+  <text x="1018" y="176" font-family="Helvetica,Arial,sans-serif" font-size="15" fill="#9fb3c8" text-anchor="middle">cycles, quantise vs base RV32I</text>
+</svg>
