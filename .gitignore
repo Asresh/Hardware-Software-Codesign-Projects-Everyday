@@ -36,6 +36,7 @@ __pycache__/
 **/sw/p2p_host
 **/sw/sdv_host
 **/sw/mxq_host
+**/sw/hid_fusion_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
@@ -62,6 +63,7 @@ __pycache__/
 **/tb/vectors/runs.txt
 **/tb/vectors/golden.txt
 **/tb/vectors/totals.txt
+**/tb/vectors/vectors.txt
 exp_lut.hex
 
 # --- OS / editor cruft ---

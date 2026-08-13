@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="title desc">
+  <title id="title">Day 22 HID Touch Fusion Engine</title>
+  <desc id="desc">Title card for the SPI-controlled touch sensor fusion accelerator.</desc>
+  <rect width="1200" height="300" fill="#334155"/>
+  <circle cx="1020" cy="150" r="104" fill="#475569" stroke="#67e8f9" stroke-width="5"/>
+  <circle cx="985" cy="115" r="18" fill="#fbbf24"/>
+  <circle cx="1055" cy="115" r="18" fill="#fbbf24"/>
+  <circle cx="985" cy="185" r="18" fill="#fbbf24"/>
+  <circle cx="1055" cy="185" r="18" fill="#fbbf24"/>
+  <path d="M985 115 L1020 150 L1055 115 M985 185 L1020 150 L1055 185" fill="none" stroke="#67e8f9" stroke-width="5"/>
+  <text x="70" y="94" fill="#67e8f9" font-family="monospace" font-size="30" font-weight="700">DAY 22 · HARDWARE/SOFTWARE CO-DESIGN</text>
+  <text x="70" y="166" fill="#f8fafc" font-family="sans-serif" font-size="56" font-weight="700">HID Touch Fusion Engine</text>
+  <text x="72" y="222" fill="#cbd5e1" font-family="sans-serif" font-size="25">SPI transport · baseline removal · dual centroid divider · completion IRQ</text>
+</svg>
