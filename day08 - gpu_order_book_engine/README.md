@@ -187,7 +187,7 @@ equivalents, dominated by the two 5-deep BBO reduction trees.
 ## Files
 
 ```
-day8 - gpu_order_book_engine/
+day08 - gpu_order_book_engine/
 ├── README.md
 ├── Makefile
 ├── rtl/    ob_msg_decode.v  ob_cam.v  ob_bbo_reduce.v  ob_regfile.v  order_book_engine.v

@@ -212,7 +212,7 @@ six functions.
 ## Layout
 
 ```
-day7 - gpu_cordic_sfu_engine/
+day07 - gpu_cordic_sfu_engine/
 ├── README.md
 ├── Makefile
 ├── docs/         banner.svg, block_diagram.svg
