@@ -220,6 +220,18 @@
       "software_layer": "portable C transport driver for configuration, big-endian frame movement, polling/IRQ completion and result reads; bit-exact reference model, scalar embedded-CPU cost baseline, and deterministic vector generator",
       "verification": "Icarus Verilog pin-level SPI differential testbench against the C golden model over 304 frames including zero, baseline, saturated, quadrant and random full-range cases; completion IRQ and result consumption checked; ASan/UBSan vector regeneration clean",
       "summary": "SPI-controlled HID sensor-fusion accelerator for two four-quadrant touch/force tiles: hardware clamps calibrated baselines, reduces eight channels into pressure and centroid numerators, and runs two 32-bit restoring dividers concurrently. Measured 33.12-cycle mean launch-to-IRQ latency, 0.03019 non-overlapped frames/clock and 4.47x over the 148-cycle scalar baseline; 304 frames, 0 mismatches."
+    },
+    {
+      "day": 23,
+      "dir": "day23-ddr_ras_scrub_engine",
+      "name": "ddr_ras_scrub_engine",
+      "domain": "error-correcting codes / DDR memory reliability and RAS patrol scrubbing",
+      "architecture": "tree reduction",
+      "microarchitecture": "six parallel Hamming parity XOR reductions feeding a SECDED classifier/correction stage and a parameterized correction FIFO that decouples descriptor-DMA reads from repaired-word writeback",
+      "interface": "selected/ready MMIO registers for descriptor launch and telemetry plus independent 64-bit DMA read-response and write-request channels with a sticky completion interrupt",
+      "software_layer": "bare-metal C MMIO driver for descriptor setup, timeout, completion and W1C acknowledgement; bit-exact SECDED reference, scalar baseline, and deterministic fault-injection vector generator",
+      "verification": "Icarus Verilog differential testbench over 304 ECC words under randomized DMA backpressure, covering clean, overall-parity, single-bit and double-bit faults; full memory image and telemetry counters checked; ASan/UBSan vector regeneration clean",
+      "summary": "Descriptor-DMA DDR patrol scrubber repairs single-bit SECDED faults in place and reports double-bit faults without writeback. Measured 734-cycle descriptor latency, 0.414169 words/cycle and 38.128x over a 27986-cycle scalar baseline; 304 differential words, 152 repairs, 76 uncorrectable detections, 0 mismatches."
     }
   ]
 }

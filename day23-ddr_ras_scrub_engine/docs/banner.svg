@@ -1,0 +1,5 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+<rect width="1200" height="300" fill="#334155"/><path d="M0 230L330 70l270 160L900 65l300 165v70H0z" fill="#475569"/>
+<rect x="70" y="70" width="12" height="160" fill="#22d3ee"/><text x="110" y="135" fill="#f8fafc" font-family="sans-serif" font-size="54" font-weight="700">DDR RAS Scrub Engine</text>
+<text x="112" y="190" fill="#bae6fd" font-family="monospace" font-size="29">DAY 23 · SECDED · DESCRIPTOR DMA</text><text x="112" y="232" fill="#e2e8f0" font-family="sans-serif" font-size="21">Detect · Correct · Write back · Interrupt</text></svg>
