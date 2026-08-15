@@ -232,6 +232,18 @@
       "software_layer": "bare-metal C MMIO driver for descriptor setup, timeout, completion and W1C acknowledgement; bit-exact SECDED reference, scalar baseline, and deterministic fault-injection vector generator",
       "verification": "Icarus Verilog differential testbench over 304 ECC words under randomized DMA backpressure, covering clean, overall-parity, single-bit and double-bit faults; full memory image and telemetry counters checked; ASan/UBSan vector regeneration clean",
       "summary": "Descriptor-DMA DDR patrol scrubber repairs single-bit SECDED faults in place and reports double-bit faults without writeback. Measured 734-cycle descriptor latency, 0.414169 words/cycle and 38.128x over a 27986-cycle scalar baseline; 304 differential words, 152 repairs, 76 uncorrectable detections, 0 mismatches."
+    },
+    {
+      "day": 24,
+      "dir": "day24-usb_audio_rate_matcher",
+      "name": "usb_audio_rate_matcher",
+      "domain": "audio / USB isochronous endpoint clock-domain rate matching",
+      "architecture": "pipelined datapath",
+      "microarchitecture": "three-stage elastic datapath: signed FIFO fill-error measurement, proportional Q8 rate correction with clamp, and PCM16 linear interpolation with saturation; the whole pipeline freezes losslessly under output backpressure",
+      "interface": "selected/ready MMIO control and telemetry registers plus ready/valid PCM sample ingress and egress streams with frame-last and a sticky completion interrupt",
+      "software_layer": "portable C MMIO driver for target-fill/gain configuration, endpoint enable, timeout polling, completion ISR and W1C acknowledgement; independent fixed-width reference model, scalar baseline, and deterministic vector generator",
+      "verification": "Icarus Verilog differential testbench over 320 vectors with randomized source gaps and output backpressure, including PCM extrema, zero crossings, target-fill boundaries and random full-range samples; frame-last, sample count and IRQ checked; ASan/UBSan vector regeneration clean",
+      "summary": "USB isochronous audio rate matcher converts endpoint FIFO occupancy error into a bounded fractional phase correction and interpolates PCM16 samples in a three-stage elastic pipeline. Measured 740 cycles for 320 vectors, 0.432432 samples/cycle sustained under randomized gaps/backpressure, 3-cycle latency and 7.8x over a 5772-cycle scalar baseline; 0 mismatches."
     }
   ]
 }

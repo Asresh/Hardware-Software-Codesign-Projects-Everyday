@@ -1,0 +1,9 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+<rect width="1200" height="300" fill="#334155"/>
+<path d="M0 220 C120 90 220 270 350 140 S590 80 720 170 S960 260 1200 80" fill="none" stroke="#38bdf8" stroke-width="12"/>
+<path d="M0 245 C150 155 250 280 410 185 S700 130 850 205 S1060 235 1200 145" fill="none" stroke="#f59e0b" stroke-width="5"/>
+<text x="70" y="105" fill="#f8fafc" font-family="sans-serif" font-size="30" letter-spacing="5">DAY 24 · USB AUDIO</text>
+<text x="70" y="175" fill="#ffffff" font-family="sans-serif" font-size="58" font-weight="700">Rate Matcher</text>
+<text x="74" y="215" fill="#cbd5e1" font-family="sans-serif" font-size="22">Clock drift in · click-free PCM out</text>
+</svg>
