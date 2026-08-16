@@ -244,6 +244,18 @@
       "software_layer": "portable C MMIO driver for target-fill/gain configuration, endpoint enable, timeout polling, completion ISR and W1C acknowledgement; independent fixed-width reference model, scalar baseline, and deterministic vector generator",
       "verification": "Icarus Verilog differential testbench over 320 vectors with randomized source gaps and output backpressure, including PCM extrema, zero crossings, target-fill boundaries and random full-range samples; frame-last, sample count and IRQ checked; ASan/UBSan vector regeneration clean",
       "summary": "USB isochronous audio rate matcher converts endpoint FIFO occupancy error into a bounded fractional phase correction and interpolates PCM16 samples in a three-stage elastic pipeline. Measured 740 cycles for 320 vectors, 0.432432 samples/cycle sustained under randomized gaps/backpressure, 3-cycle latency and 7.8x over a 5772-cycle scalar baseline; 0 mismatches."
+    },
+    {
+      "day": 25,
+      "dir": "day25-motor_current_loop",
+      "name": "motor_current_loop",
+      "domain": "motor control / hard-real-time phase-current regulation",
+      "architecture": "bit-serial",
+      "microarchitecture": "four-entry command FIFO feeding an exact 17-bit signed current-error stage, an eight-cycle shift/add signed-error x unsigned-Q8 gain engine, a parallel widened-magnitude overcurrent guard, and a signed Q8-to-center-aligned-PWM saturator with fault-safe zero output",
+      "interface": "selected/ready MMIO mailbox for gain, trip threshold, reference/current samples, doorbell, PWM result and telemetry plus a sticky completion/fault interrupt cleared write-one-to-clear",
+      "software_layer": "portable bare-metal C MMIO driver for configuration, command submission, timeout polling, result movement, completion ISR and W1C acknowledgement; independent fixed-width reference model, scalar embedded-CPU baseline, and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level MMIO differential testbench over 320 vectors with randomized host-bus gaps, covering signed subtraction extremes, zero gain, exact trip boundaries, positive/negative overcurrent, external fault and both saturation directions; duty, flags, fixed latency, job telemetry and interrupt W1C checked; ASan/UBSan vector regeneration clean",
+      "summary": "Mailbox-controlled phase-current accelerator uses an eight-cycle bit-serial Q8 gain engine and independent overcurrent guard to produce a saturated 16-bit PWM command or fault-safe zero. Measured 13-cycle deterministic launch-to-interrupt latency, 0.076923 non-overlapped commands/cycle and 6.668510x over a 27741-cycle scalar baseline; 320 differential vectors, 0 mismatches."
     }
   ]
 }

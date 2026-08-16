@@ -1,0 +1,12 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-labelledby="title desc">
+  <title id="title">Day 25 Motor Current Loop</title><desc id="desc">A bit-serial motor current control accelerator title card.</desc>
+  <rect width="1200" height="320" fill="#34495e"/>
+  <path d="M0 245 C180 175 270 300 450 230 S740 160 920 235 S1100 280 1200 205 L1200 320 L0 320Z" fill="#2c3e50"/>
+  <circle cx="1030" cy="155" r="92" fill="#5d6d7e" stroke="#f4d03f" stroke-width="9"/>
+  <circle cx="1030" cy="155" r="36" fill="#34495e" stroke="#f4d03f" stroke-width="7"/>
+  <path d="M1030 63 V112 M1030 198 V247 M938 155 H987 M1073 155 H1122 M965 90 L1000 125 M1060 185 L1095 220 M965 220 L1000 185 M1060 125 L1095 90" stroke="#ecf0f1" stroke-width="12" stroke-linecap="round"/>
+  <text x="70" y="85" fill="#f4d03f" font-family="Arial, sans-serif" font-size="34" font-weight="700">DAY 25</text>
+  <text x="70" y="160" fill="#ffffff" font-family="Arial, sans-serif" font-size="58" font-weight="700">MOTOR CURRENT LOOP</text>
+  <text x="74" y="210" fill="#d6eaf8" font-family="Arial, sans-serif" font-size="26">Bit-serial Q8 control · mailbox firmware · fault-safe PWM</text>
+</svg>
