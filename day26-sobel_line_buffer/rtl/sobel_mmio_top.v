@@ -1,0 +1,7 @@
+// Author: Asresh
+// Synthesizable top level: MMIO control, pixel streams, and completion interrupt.
+module sobel_mmio_top #(parameter MAX_WIDTH=64)(input wire clk,input wire rst_n,input wire bus_valid_i,input wire bus_write_i,input wire [5:0] bus_addr_i,input wire [31:0] bus_wdata_i,output wire bus_ready_o,output wire [31:0] bus_rdata_o,input wire s_axis_tvalid,output wire s_axis_tready,input wire [7:0] s_axis_tdata,output wire m_axis_tvalid,input wire m_axis_tready,output wire [7:0] m_axis_tdata,output wire m_axis_tlast,output wire irq_o);
+ wire [15:0]width,height;wire start,running,done,error;wire [31:0]pixels_in,pixels_out;
+ sobel_csr #(.MAX_WIDTH(MAX_WIDTH))u_csr(.clk(clk),.rst_n(rst_n),.bus_valid_i(bus_valid_i),.bus_write_i(bus_write_i),.bus_addr_i(bus_addr_i),.bus_wdata_i(bus_wdata_i),.bus_ready_o(bus_ready_o),.bus_rdata_o(bus_rdata_o),.width_o(width),.height_o(height),.start_o(start),.running_i(running),.done_i(done),.error_i(error),.pixels_in_i(pixels_in),.pixels_out_i(pixels_out),.irq_o(irq_o));
+ sobel_stream_core #(.MAX_WIDTH(MAX_WIDTH))u_core(.clk(clk),.rst_n(rst_n),.start_i(start),.width_i(width),.height_i(height),.s_valid(s_axis_tvalid),.s_ready(s_axis_tready),.s_pixel(s_axis_tdata),.m_valid(m_axis_tvalid),.m_ready(m_axis_tready),.m_pixel(m_axis_tdata),.m_last(m_axis_tlast),.running(running),.done(done),.error(error),.pixels_in(pixels_in),.pixels_out(pixels_out));
+endmodule

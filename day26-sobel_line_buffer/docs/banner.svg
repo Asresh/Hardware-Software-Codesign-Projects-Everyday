@@ -1,0 +1,8 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+ <rect width="1200" height="300" fill="#334155"/><rect x="35" y="35" width="1130" height="230" rx="22" fill="#475569" stroke="#f59e0b" stroke-width="4"/>
+ <g fill="#94a3b8"><rect x="75" y="72" width="54" height="54"/><rect x="135" y="72" width="54" height="54"/><rect x="195" y="72" width="54" height="54"/><rect x="75" y="132" width="54" height="54"/><rect x="135" y="132" width="54" height="54" fill="#f59e0b"/><rect x="195" y="132" width="54" height="54"/><rect x="75" y="192" width="54" height="38"/><rect x="135" y="192" width="54" height="38"/><rect x="195" y="192" width="54" height="38"/></g>
+ <text x="300" y="125" font-family="Arial,sans-serif" font-size="34" fill="#fde68a">DAY 26 · IMAGE/VIDEO</text>
+ <text x="300" y="190" font-family="Arial,sans-serif" font-size="55" font-weight="700" fill="#f8fafc">SOBEL LINE-BUFFER ENGINE</text>
+ <text x="303" y="230" font-family="Arial,sans-serif" font-size="21" fill="#cbd5e1">MMIO · ready/valid streams · completion interrupt</text>
+</svg>

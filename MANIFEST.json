@@ -256,6 +256,18 @@
       "software_layer": "portable bare-metal C MMIO driver for configuration, command submission, timeout polling, result movement, completion ISR and W1C acknowledgement; independent fixed-width reference model, scalar embedded-CPU baseline, and deterministic vector generator",
       "verification": "Icarus Verilog pin-level MMIO differential testbench over 320 vectors with randomized host-bus gaps, covering signed subtraction extremes, zero gain, exact trip boundaries, positive/negative overcurrent, external fault and both saturation directions; duty, flags, fixed latency, job telemetry and interrupt W1C checked; ASan/UBSan vector regeneration clean",
       "summary": "Mailbox-controlled phase-current accelerator uses an eight-cycle bit-serial Q8 gain engine and independent overcurrent guard to produce a saturated 16-bit PWM command or fault-safe zero. Measured 13-cycle deterministic launch-to-interrupt latency, 0.076923 non-overlapped commands/cycle and 6.668510x over a 27741-cycle scalar baseline; 320 differential vectors, 0 mismatches."
+    },
+    {
+      "day": 26,
+      "dir": "day26-sobel_line_buffer",
+      "name": "sobel_line_buffer",
+      "domain": "image/video / streaming edge extraction for camera and GPU preprocessing",
+      "architecture": "line buffer",
+      "microarchitecture": "parameterized two-row pixel store with a three-column shift window, a four-entry elastic ingress FIFO, parallel widened signed Sobel Gx/Gy reductions, absolute-value sum and uint8 saturation; the full spatial state freezes losslessly under output backpressure",
+      "interface": "selected/ready MMIO registers for geometry, launch and telemetry plus 8-bit ready/valid input and output pixel streams, frame-last and a sticky completion/error interrupt cleared write-one-to-clear",
+      "software_layer": "portable C MMIO/stream driver for geometry validation, configuration, pixel movement, timeout, completion and W1C acknowledgement; independent fixed-width Sobel reference, scalar embedded-CPU baseline and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level differential testbench over a 320-pixel frame containing 304 seeded random and 16 directed extreme/checkerboard pixels, with randomized ingress gaps and output backpressure; 252 output magnitudes, final TLAST, telemetry counters, completion timeout and interrupt W1C checked; ASan/UBSan vector regeneration clean",
+      "summary": "Driver-managed Sobel edge accelerator retains overlapping 3x3 neighborhoods in a parameterized two-row line buffer and emits saturated uint8 magnitudes through a lossless ready/valid stream. Measured 461 launch-to-interrupt cycles, 0.546638 output pixels/cycle, 3-cycle complete-window latency and 17.960954x over an 8280-cycle scalar baseline; 320 input pixels, 252 differential outputs, 0 mismatches."
     }
   ]
 }
