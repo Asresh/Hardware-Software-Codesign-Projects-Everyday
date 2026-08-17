@@ -1,0 +1,9 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+  <rect width="1200" height="300" fill="#334155"/>
+  <circle cx="1020" cy="150" r="105" fill="#475569" stroke="#67e8f9" stroke-width="4"/>
+  <path d="M930 150 C955 75 980 225 1005 150 S1055 75 1080 150 S1130 225 1155 150" fill="none" stroke="#fbbf24" stroke-width="8"/>
+  <text x="70" y="105" fill="#67e8f9" font-family="sans-serif" font-size="32" font-weight="700">DAY 27</text>
+  <text x="70" y="175" fill="#f8fafc" font-family="sans-serif" font-size="54" font-weight="700">SDR Preamble Correlator</text>
+  <text x="73" y="225" fill="#cbd5e1" font-family="monospace" font-size="23">8 complex SIMD lanes · 1 candidate/clock · completion IRQ</text>
+</svg>

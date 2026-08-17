@@ -38,6 +38,7 @@ __pycache__/
 **/sw/mxq_host
 **/sw/hid_fusion_host
 **/sw/motor_current_host
+**/sw/correlator_host
 **/tb/vectors/*.hex
 **/tb/vectors/jobs.txt
 **/tb/vectors/sw_metrics.txt
