@@ -1,0 +1,61 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" width="1400" height="760">
+  <defs>
+    <marker id="data" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#67e8f9"/></marker>
+    <marker id="ctrl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#fbbf24"/></marker>
+  </defs>
+  <rect width="1400" height="760" fill="#475569"/>
+  <text x="700" y="48" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="30" font-weight="700">SDR Preamble Correlator — Hardware/Software Partition</text>
+  <rect x="50" y="105" width="250" height="170" rx="16" fill="#334155" stroke="#f8fafc" stroke-width="3"/>
+  <text x="175" y="145" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="700">CPU / Driver</text>
+  <text x="175" y="182" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="16">corr_configure()</text>
+  <text x="175" y="212" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="16">corr_submit()</text>
+  <text x="175" y="242" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="16">corr_handle_irq()</text>
+  <rect x="385" y="90" width="265" height="200" rx="14" fill="#334155" stroke="#fbbf24" stroke-width="3"/>
+  <text x="517" y="130" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="700">correlator_csr</text>
+  <text x="517" y="166" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="15">bus_valid/write/addr</text>
+  <text x="517" y="194" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="15">bus_wdata/rdata/ready</text>
+  <text x="517" y="225" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">8 × complex tap registers</text>
+  <text x="517" y="252" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">threshold · counters · sticky IRQ</text>
+  <path d="M300 165 H385" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#ctrl)"/>
+  <text x="342" y="150" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="14">AXI4-Lite</text>
+
+  <rect x="50" y="390" width="250" height="135" rx="16" fill="#334155" stroke="#67e8f9" stroke-width="3"/>
+  <text x="175" y="430" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="700">SDR / DMA Buffer</text>
+  <text x="175" y="465" text-anchor="middle" fill="#bae6fd" font-family="monospace" font-size="15">s_axis_tdata[127:0]</text>
+  <text x="175" y="493" text-anchor="middle" fill="#bae6fd" font-family="monospace" font-size="15">tvalid/tready/tlast/tuser</text>
+  <rect x="385" y="370" width="230" height="175" rx="14" fill="#334155" stroke="#67e8f9" stroke-width="3"/>
+  <text x="500" y="410" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="21" font-weight="700">complex_mac_lane ×8</text>
+  <text x="500" y="448" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">sample × conj(tap)</text>
+  <text x="500" y="478" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">4 signed multiplies/lane</text>
+  <text x="500" y="508" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">8 lanes in parallel</text>
+  <path d="M300 457 H385" fill="none" stroke="#67e8f9" stroke-width="6" marker-end="url(#data)"/>
+
+  <rect x="700" y="370" width="210" height="175" rx="14" fill="#334155" stroke="#67e8f9" stroke-width="3"/>
+  <text x="805" y="410" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="21" font-weight="700">correlation_reduce</text>
+  <text x="805" y="450" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">balanced 8→4→2→1</text>
+  <text x="805" y="480" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">I and Q adder trees</text>
+  <text x="805" y="510" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">20-bit signed sums</text>
+  <path d="M615 457 H700" fill="none" stroke="#67e8f9" stroke-width="6" marker-end="url(#data)"/>
+
+  <rect x="995" y="370" width="215" height="175" rx="14" fill="#334155" stroke="#67e8f9" stroke-width="3"/>
+  <text x="1102" y="410" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="21" font-weight="700">magnitude_square</text>
+  <text x="1102" y="450" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="17">I² + Q²</text>
+  <text x="1102" y="480" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">41-bit power</text>
+  <text x="1102" y="510" text-anchor="middle" fill="#cbd5e1" font-family="sans-serif" font-size="16">threshold compare</text>
+  <path d="M910 457 H995" fill="none" stroke="#67e8f9" stroke-width="6" marker-end="url(#data)"/>
+
+  <rect x="995" y="610" width="300" height="95" rx="14" fill="#334155" stroke="#67e8f9" stroke-width="3"/>
+  <text x="1145" y="647" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="20" font-weight="700">Result Stream</text>
+  <text x="1145" y="677" text-anchor="middle" fill="#bae6fd" font-family="monospace" font-size="15">m_axis_tdata/tag/detect/tlast</text>
+  <path d="M1102 545 V610" fill="none" stroke="#67e8f9" stroke-width="6" marker-end="url(#data)"/>
+  <path d="M650 210 H1102 V370" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#ctrl)"/>
+  <text x="865" y="195" text-anchor="middle" fill="#fde68a" font-family="sans-serif" font-size="15">tap coefficients + 41-bit threshold</text>
+  <path d="M995 655 H650 V265" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#ctrl)"/>
+  <text x="810" y="640" text-anchor="middle" fill="#fde68a" font-family="sans-serif" font-size="15">result_fire / frame_last</text>
+  <path d="M385 245 H335 V255 H300" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#ctrl)"/>
+  <text x="342" y="292" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="15">irq</text>
+  <text x="60" y="715" fill="#bae6fd" font-family="sans-serif" font-size="16">Solid cyan: 128-bit sample / 64-bit result datapath</text>
+  <text x="60" y="742" fill="#fde68a" font-family="sans-serif" font-size="16">Dashed amber: configuration, telemetry, completion and interrupt control</text>
+  <text x="995" y="580" fill="#e2e8f0" font-family="sans-serif" font-size="15">Elastic capacity: 3 in-flight candidates; external stream FIFO depth: 0</text>
+</svg>

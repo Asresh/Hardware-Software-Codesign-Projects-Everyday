@@ -268,6 +268,18 @@
       "software_layer": "portable C MMIO/stream driver for geometry validation, configuration, pixel movement, timeout, completion and W1C acknowledgement; independent fixed-width Sobel reference, scalar embedded-CPU baseline and deterministic vector generator",
       "verification": "Icarus Verilog pin-level differential testbench over a 320-pixel frame containing 304 seeded random and 16 directed extreme/checkerboard pixels, with randomized ingress gaps and output backpressure; 252 output magnitudes, final TLAST, telemetry counters, completion timeout and interrupt W1C checked; ASan/UBSan vector regeneration clean",
       "summary": "Driver-managed Sobel edge accelerator retains overlapping 3x3 neighborhoods in a parameterized two-row line buffer and emits saturated uint8 magnitudes through a lossless ready/valid stream. Measured 461 launch-to-interrupt cycles, 0.546638 output pixels/cycle, 3-cycle complete-window latency and 17.960954x over an 8280-cycle scalar baseline; 320 input pixels, 252 differential outputs, 0 mismatches."
+    },
+    {
+      "day": 27,
+      "dir": "day27-sdr_preamble_correlator",
+      "name": "sdr_preamble_correlator",
+      "domain": "SDR / burst preamble detection and synchronization",
+      "architecture": "SIMD lanes",
+      "microarchitecture": "eight parallel signed complex-multiply lanes feeding balanced I/Q reduction trees and a magnitude-square threshold stage; a three-stage globally stalled elastic pipeline preserves tag and frame ordering under output backpressure",
+      "interface": "selected/ready MMIO control and telemetry with eight programmable complex taps and a 41-bit threshold, plus 128-bit AXI4-Stream candidate ingress, 64-bit result egress, TLAST/TUSER and a sticky completion interrupt",
+      "software_layer": "portable C MMIO/stream driver for clear, tap and threshold configuration, buffer movement, bounded completion polling and W1C interrupt handling; independent fixed-width reference model, scalar embedded-CPU cost baseline and deterministic vector generator",
+      "verification": "Icarus Verilog differential testbench over 320 candidates run under randomized source gaps/output backpressure and again at full rate; 640 bit-exact power/tag/detection/TLAST checks, completion status and interrupt acknowledgement checked; ASan/UBSan vector regeneration clean",
+      "summary": "Programmable SDR matched-filter accelerator evaluates eight complex IQ products in parallel, reduces them through balanced trees and emits 41-bit correlation power plus a threshold decision. Measured 320 full-rate candidates in 323 cycles, 0.991 candidates/clock, 3-cycle latency and 48.54x over a 15680-cycle scalar baseline; 640 checks, 0 mismatches."
     }
   ]
 }
