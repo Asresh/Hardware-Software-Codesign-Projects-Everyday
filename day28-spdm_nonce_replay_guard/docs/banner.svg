@@ -1,0 +1,11 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+ <rect width="1200" height="300" fill="#334155"/>
+ <rect x="38" y="38" width="1124" height="224" rx="24" fill="#475569" stroke="#cbd5e1" stroke-width="3"/>
+ <path d="M145 195v-55a55 55 0 0 1 110 0v55" fill="none" stroke="#67e8f9" stroke-width="18"/>
+ <rect x="122" y="174" width="156" height="74" rx="14" fill="#0f172a" stroke="#67e8f9" stroke-width="5"/>
+ <circle cx="200" cy="209" r="13" fill="#fbbf24"/><path d="M200 222v14" stroke="#fbbf24" stroke-width="7"/>
+ <text x="330" y="125" fill="#f8fafc" font-family="Arial,sans-serif" font-size="55" font-weight="700">SPDM Nonce Replay Guard</text>
+ <text x="334" y="190" fill="#a5f3fc" font-family="monospace" font-size="31">associative freshness enforcement</text>
+ <text x="1015" y="235" fill="#fbbf24" font-family="Arial,sans-serif" font-size="34" font-weight="700">DAY 28</text>
+</svg>

@@ -280,6 +280,18 @@
       "software_layer": "portable C MMIO/stream driver for clear, tap and threshold configuration, buffer movement, bounded completion polling and W1C interrupt handling; independent fixed-width reference model, scalar embedded-CPU cost baseline and deterministic vector generator",
       "verification": "Icarus Verilog differential testbench over 320 candidates run under randomized source gaps/output backpressure and again at full rate; 640 bit-exact power/tag/detection/TLAST checks, completion status and interrupt acknowledgement checked; ASan/UBSan vector regeneration clean",
       "summary": "Programmable SDR matched-filter accelerator evaluates eight complex IQ products in parallel, reduces them through balanced trees and emits 41-bit correlation power plus a threshold decision. Measured 320 full-rate candidates in 323 cycles, 0.991 candidates/clock, 3-cycle latency and 48.54x over a 15680-cycle scalar baseline; 640 checks, 0 mismatches."
+    },
+    {
+      "day": 28,
+      "dir": "day28-spdm_nonce_replay_guard",
+      "name": "spdm_nonce_replay_guard",
+      "domain": "cryptography / SPDM authenticated-management nonce freshness and anti-replay",
+      "architecture": "associative memory",
+      "microarchitecture": "parameterized 32-entry content-addressable nonce table comparing context, epoch and 128-bit nonce in parallel; dual lowest-index priority encoders select an exact match or free slot, while per-context epoch floors and round-robin replacement implement re-key and full-table policy",
+      "interface": "selected/ready MMIO mailbox carrying context, epoch and four nonce words, a doorbell operation field, result/telemetry registers, and a sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C mailbox driver for request movement, bounded completion polling, result consumption and W1C handling; independent stateful reference model, scalar table-scan baseline and deterministic request generator",
+      "verification": "Icarus Verilog pin-level mailbox differential testbench over 320 stateful requests with randomized host gaps, covering zero nonce, exact replay, epoch advance, stale rejection, per-context/all flush, table replacement and random multi-context traffic; accept/reason/slot and all telemetry counters checked; ASan/UBSan vector regeneration clean",
+      "summary": "SPDM nonce replay guard moves freshness enforcement out of branch-heavy BMC firmware: 32 CAM entries compare each authenticated request in parallel, with firmware-controlled epochs and interrupt completion. Measured 7870 end-to-end cycles, 0.040661 requests/clock including mailbox traffic and randomized host gaps, 4.709375-cycle average doorbell-to-interrupt latency and 8.418806x over a 66256-cycle scalar baseline; 320 differential requests, 0 mismatches."
     }
   ]
 }
