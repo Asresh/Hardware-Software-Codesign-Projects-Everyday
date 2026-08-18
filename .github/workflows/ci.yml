@@ -1,42 +1,121 @@
-name: ci
+# Author: Asresh
+name: codesign-ci
 
 on:
-  push:
-    branches: [main]
   pull_request:
+    paths:
+      - "day*/**"
+      - ".github/workflows/ci.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: codesign-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  simulate:
+  validate:
+    name: Validate changed projects
     runs-on: ubuntu-latest
+    timeout-minutes: 35
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install toolchain
+      - name: Select project directories
+        id: targets
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y iverilog verilator build-essential python3
+          set -euo pipefail
 
-      - name: Report versions
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            mapfile -t dirs < <(find . -maxdepth 1 -type d -name 'day*' -printf '%f\n' | sort -V)
+          else
+            mapfile -t dirs < <(
+              git diff --name-only "$BASE_SHA" "$HEAD_SHA" |
+                awk -F/ '$1 ~ /^day[0-9]+/ { print $1 }' |
+                sort -uV
+            )
+          fi
+
+          # A workflow-only PR still validates the newest project as a smoke test.
+          if (( ${#dirs[@]} == 0 )); then
+            mapfile -t dirs < <(find . -maxdepth 1 -type d -name 'day*' -printf '%f\n' | sort -V | tail -1)
+          fi
+
+          if (( ${#dirs[@]} == 0 )); then
+            echo "No project directories found" >&2
+            exit 1
+          fi
+
+          printf 'Selected projects:\n'
+          printf '  %s\n' "${dirs[@]}"
+          {
+            echo 'directories<<EOF'
+            printf '%s\n' "${dirs[@]}"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install Icarus Verilog
+        shell: bash
+        run: |
+          set -euo pipefail
+          if command -v iverilog >/dev/null 2>&1; then
+            exit 0
+          fi
+
+          for attempt in 1 2 3; do
+            if sudo timeout 180s apt-get update -qq &&
+               sudo timeout 180s apt-get install -y --no-install-recommends iverilog; then
+              break
+            fi
+            if (( attempt == 3 )); then
+              echo "Unable to install Icarus Verilog after three bounded attempts" >&2
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
+
+      - name: Report tool versions
         run: |
           iverilog -V | head -1
           cc --version | head -1
           python3 --version
 
-      - name: Build and simulate every day
+      - name: Sanitize and simulate changed projects
         shell: bash
+        env:
+          PROJECT_DIRS: ${{ steps.targets.outputs.directories }}
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          fail=0
-          for d in day*/; do
-            [ -f "$d/Makefile" ] || continue
-            echo "==================== $d ===================="
-            if make -C "$d" sim; then
-              echo "PASS: $d"
-            else
-              echo "FAIL: $d"
-              fail=1
+          failures=0
+
+          while IFS= read -r dir; do
+            [[ -n "$dir" ]] || continue
+            if [[ ! -f "$dir/Makefile" ]]; then
+              echo "Missing Makefile: $dir" >&2
+              failures=1
+              continue
             fi
-          done
-          exit $fail
+
+            echo "==================== $dir ===================="
+            if make -C "$dir" check &&
+               make -C "$dir" clean &&
+               make -C "$dir" sim; then
+              echo "PASS: $dir"
+            else
+              echo "FAIL: $dir" >&2
+              failures=1
+            fi
+          done <<< "$PROJECT_DIRS"
+
+          exit "$failures"
