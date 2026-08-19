@@ -292,6 +292,18 @@
       "software_layer": "portable C mailbox driver for request movement, bounded completion polling, result consumption and W1C handling; independent stateful reference model, scalar table-scan baseline and deterministic request generator",
       "verification": "Icarus Verilog pin-level mailbox differential testbench over 320 stateful requests with randomized host gaps, covering zero nonce, exact replay, epoch advance, stale rejection, per-context/all flush, table replacement and random multi-context traffic; accept/reason/slot and all telemetry counters checked; ASan/UBSan vector regeneration clean",
       "summary": "SPDM nonce replay guard moves freshness enforcement out of branch-heavy BMC firmware: 32 CAM entries compare each authenticated request in parallel, with firmware-controlled epochs and interrupt completion. Measured 7870 end-to-end cycles, 0.040661 requests/clock including mailbox traffic and randomized host gaps, 4.709375-cycle average doorbell-to-interrupt latency and 8.418806x over a 66256-cycle scalar baseline; 320 differential requests, 0 mismatches."
+    },
+    {
+      "day": 29,
+      "dir": "day29-ras_fault_graph_engine",
+      "name": "ras_fault_graph_engine",
+      "domain": "graph analytics / datacenter RAS fault isolation and telemetry",
+      "architecture": "systolic array",
+      "microarchitecture": "four-lane Boolean propagation array evaluates four destination nodes per lane against all active frontier sources in parallel; a registered frontier/reached feedback loop advances one graph level per clock until a fixed point",
+      "interface": "selected/ready MMIO mailbox carrying a 16-row adjacency matrix and seed mask, result and telemetry registers, plus a sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C mailbox driver for graph configuration, data movement, bounded completion polling and interrupt acknowledgement; independent reachability reference, scalar nested-loop baseline and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level differential testbench over 320 graphs with randomized host gaps, covering isolated nodes, a full chain, all-to-all fanout, self-loops, cycles, multi-seed and random topologies; closure, iteration count, population count, request counter and interrupt W1C checked; ASan/UBSan vector regeneration clean",
+      "summary": "Datacenter RAS fault-graph engine moves repeated dependency scans out of BMC firmware: four Boolean lanes expand a 16-node frontier to fixed point and return the full blast-radius mask. Measured 35380 end-to-end cycles, 0.009045 graphs/clock including graph loading and randomized mailbox gaps, 7.887500-cycle average doorbell-to-interrupt latency and 14.638779x over a 517920-cycle scalar baseline; 320 differential graphs, 0 mismatches."
     }
   ]
 }
