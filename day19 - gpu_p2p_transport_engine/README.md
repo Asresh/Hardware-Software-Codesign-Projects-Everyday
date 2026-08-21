@@ -1,6 +1,56 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 19 — GPU-to-GPU Peer Transport Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This transport moves payloads directly between devices under credit-based flow control. Software posts work descriptors; hardware divides messages into packets, tracks sequence numbers and receive space, and optionally reduces data as it arrives.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACCUM** [Accumulate]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **BUFS** [Buffers]
+- **CAPS** [Capabilities]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **EN** [Enable]
+- **ERR** [Error]
+- **FIFO** [First-In, First-Out]
+- **GPU** [Graphics Processing Unit]
+- **H0** [Header Word 0]
+- **H1** [Header Word 1]
+- **IRQ** [Interrupt Request]
+- **LEN** [Length]
+- **MAX** [Maximum]
+- **MEM** [Memory]
+- **MIN** [Minimum]
+- **MTU** [Maximum Transmission Unit]
+- **OKAY** [Successful Bus Response]
+- **QP** [Queue Pair]
+- **RDMA** [Remote Direct Memory Access]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **RW1C** [Read/Write One to Clear]
+- **RX** [Receive]
+- **SEQ** [Sequence]
+- **SLVERR** [Slave Error]
+- **STAT** [Status]
+- **SW** [Software]
+- **TLAST** [Transfer Last]
+- **TUSER** [Transfer User Sideband]
+- **TX** [Transmit]
+- **W1C** [Write One to Clear]
+- **WQ** [Work Queue]
+<!-- readability-guide:end -->
 
 The interconnect half of a multi-GPU inference node, in hardware: a peer
 transport engine that takes a ring of RDMA-style work-queue entries out of

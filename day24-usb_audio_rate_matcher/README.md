@@ -3,6 +3,34 @@
 
 # Day 24: USB Audio Rate Matcher
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+Two audio clocks rarely run at exactly the same rate, so a buffer can slowly overflow or empty. Software sets the target fill level; hardware measures drift and interpolates samples to keep playback continuous.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **COUNT** [Count]
+- **CTRL** [Control]
+- **EN** [Enable]
+- **FIFO** [First-In, First-Out]
+- **FPGA** [Field-Programmable Gate Array]
+- **I2S** [Inter-Integrated Circuit Sound]
+- **IP** [Internet Protocol]
+- **IRQ** [Interrupt Request]
+- **MIT** [Massachusetts Institute of Technology]
+- **MMIO** [Memory-Mapped Input/Output]
+- **PCM** [Pulse-Code Modulation]
+- **PCM16** [16-bit Pulse-Code Modulation]
+- **Q0** [Fixed-Point Format with 0 Fractional Bits]
+- **Q8** [Fixed-Point Format with 8 Fractional Bits]
+- **TDM** [Time-Division Multiplexing]
+- **USB** [Universal Serial Bus]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
+
 USB isochronous audio moves a nominal number of PCM samples every microframe, but the USB host and audio codec run from independent crystals. Their small frequency error slowly fills or drains the endpoint FIFO. Waiting for overflow or underflow produces an audible click; continuously adjusting the resampling phase keeps latency bounded without dropping or duplicating a whole sample.
 
 This project reflects [Apple’s current Software Device Driver Engineer role for Core I/O](https://jobs.apple.com/en-us/details/200660074/software-device-driver-engineer-core-i-o-core-os), which emphasizes USB architecture, driver bring-up, and I/O performance characterization. It implements the hardware contract such a driver needs: explicit FIFO-target policy, a streaming data path that tolerates backpressure, measured latency/throughput, MMIO telemetry, and a completion interrupt.

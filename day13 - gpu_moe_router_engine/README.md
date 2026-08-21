@@ -1,6 +1,37 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 13 — GPU MoE Router Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+A mixture-of-experts model must choose which expert networks process each token. Software configures capacities and moves token scores; hardware selects the best experts, computes routing weights, and enforces capacity without a serial scan.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **argmax** [Argument of the Maximum]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **CAP** [Capacity]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **EN** [Enable]
+- **GPU** [Graphics Processing Unit]
+- **IRQ** [Interrupt Request]
+- **LUT** [Lookup Table]
+- **MoE** [Mixture of Experts]
+- **Q8** [Fixed-Point Format with 8 Fractional Bits]
+- **RMW** [Read-Modify-Write]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SW** [Software]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A line-rate **Mixture-of-Experts (MoE) top-k routing / gating engine** — the primitive
 that sits in front of every expert layer in a sparse transformer. For each token it takes

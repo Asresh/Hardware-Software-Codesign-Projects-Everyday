@@ -3,6 +3,35 @@
 
 # Day 23: DDR RAS Scrub Engine
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This scrubber continuously checks protected memory words, repairs single-bit errors, and reports errors that cannot be repaired safely. Software chooses memory regions and handles alarms; hardware calculates syndrome bits and performs correction at memory-stream speed.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **BMC** [Baseboard Management Controller]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **DDR** [Double Data Rate]
+- **DMA** [Direct Memory Access]
+- **DRAM** [Dynamic Random-Access Memory]
+- **ECC** [Error-Correcting Code]
+- **FIFO** [First-In, First-Out]
+- **FPGA** [Field-Programmable Gate Array]
+- **IRQ** [Interrupt Request]
+- **LPDDR** [Low-Power Double Data Rate]
+- **MIT** [Massachusetts Institute of Technology]
+- **MMIO** [Memory-Mapped Input/Output]
+- **RAS** [Reliability, Availability, and Serviceability]
+- **RTL** [Register-Transfer Level]
+- **SECDED** [Single-Error Correction, Double-Error Detection]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
+
 Soft errors in DRAM accumulate silently unless the platform periodically reads ECC words, corrects single-bit faults, writes repaired words back, and reports double-bit faults before redundancy is lost. This project implements that patrol-scrub path as a descriptor-driven DMA engine using a shortened 39-bit Hamming SECDED code for each 32-bit payload.
 
 The project is based on current hardware/software-boundary roles: NVIDIA's recent memory-subsystem firmware opening calls for DDR/LPDDR firmware, RAS, telemetry, C models, and pre/post-silicon validation, while its senior firmware roles emphasize MMIO, DMA, interrupts, and low-level diagnostics. The design demonstrates those same contracts without pretending policy belongs in RTL.

@@ -1,6 +1,55 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 7 — GPU CORDIC Special Function Unit (SFU) Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This unit evaluates functions such as sine, cosine, magnitude, logarithm, and square root using shift-and-add iterations. Software submits function requests; hardware shares a compact mathematical datapath across parallel lanes.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ADDR** [Address]
+- **ALU** [Arithmetic Logic Unit]
+- **ATAN2** [Two-Argument Arctangent]
+- **CAP** [Capacity]
+- **CDF** [Cumulative Distribution Function]
+- **CLR** [Clear]
+- **CORDIC** [Coordinate Rotation Digital Computer]
+- **COSHSINH** [Hyperbolic Cosine and Hyperbolic Sine]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **DSP** [Digital Signal Processing]
+- **EN** [Enable]
+- **EXP** [Exponential Function]
+- **GPU** [Graphics Processing Unit]
+- **HFT** [High-Frequency Trading]
+- **IDENT** [Identifier]
+- **IEEE** [Institute of Electrical and Electronics Engineers]
+- **IRQ** [Interrupt Request]
+- **libm** [Standard Mathematics Library]
+- **LN** [Natural Logarithm]
+- **MIT** [Massachusetts Institute of Technology]
+- **MMIO** [Memory-Mapped Input/Output]
+- **NC** [Number of Circular Iterations]
+- **NH** [Number of Hyperbolic Iterations]
+- **Q4** [Fixed-Point Format with 4 Fractional Bits]
+- **REQ** [Request]
+- **RO** [Read-Only]
+- **ROM** [Read-Only Memory]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SFU** [Special Function Unit]
+- **SIMD** [Single Instruction, Multiple Data]
+- **SINCOS** [Sine and Cosine]
+- **SQRT** [Square Root]
+- **WO** [Write-Only]
+<!-- readability-guide:end -->
 
 A fixed-function **Special Function Unit**: a SIMD array of iterative CORDIC
 lanes that evaluate `sin`, `cos`, `exp`, `cosh`, `sinh`, `atan2`, `hypot`, `ln`

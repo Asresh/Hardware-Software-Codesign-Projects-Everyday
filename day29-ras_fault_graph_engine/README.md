@@ -3,6 +3,34 @@
 
 # Day 29: RAS Fault Graph Engine
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+One physical server fault can trigger many downstream symptoms, so firmware needs to find the full affected set quickly. Software builds a dependency graph; hardware expands the active fault frontier in parallel until no new component is reached.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **BMC** [Baseboard Management Controller]
+- **CAPS** [Capabilities]
+- **COUNT** [Count]
+- **CSP** [Cloud Service Provider]
+- **CTRL** [Control]
+- **EN** [Enable]
+- **GPU** [Graphics Processing Unit]
+- **IRQ** [Interrupt Request]
+- **MCTP** [Management Component Transport Protocol]
+- **MMIO** [Memory-Mapped Input/Output]
+- **PCIe** [Peripheral Component Interconnect Express]
+- **PLDM** [Platform Level Data Model]
+- **RA** [Reliability Accelerator Signature]
+- **RAS** [Reliability, Availability, and Serviceability]
+- **RTL** [Register-Transfer Level]
+- **US** [United States]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
+
 Datacenter firmware receives telemetry from GPUs, retimers, memory controllers, power rails, and links. A single physical fault can fan out into many symptoms. Walking a dependency graph in scalar BMC firmware adds branch-heavy latency precisely when the platform is already degraded. This project accelerates the repeated Boolean graph expansion used to identify every component reachable from one or more injected fault sources.
 
 Software owns platform policy: it builds the directed dependency graph, writes all 16 adjacency rows, chooses the seed mask, rings the doorbell, services the completion interrupt, and compares the result with an independent reference. Hardware owns the regular operation: four parallel lanes evaluate four destinations each against every active frontier source, then feed a frontier register until the reachable set reaches a fixed point.

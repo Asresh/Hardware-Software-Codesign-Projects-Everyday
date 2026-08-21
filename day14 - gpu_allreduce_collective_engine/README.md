@@ -1,6 +1,39 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 14 — GPU All-Reduce Collective Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+All-reduce combines arrays from several devices and returns the combined result to every participant. Software builds transfer descriptors; hardware gathers aligned words, reduces them across a systolic pipeline, and writes the result back.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ARR** [Array]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **DMA** [Direct Memory Access]
+- **DW** [Data Width]
+- **ERRCODE** [Error Code]
+- **GPU** [Graphics Processing Unit]
+- **int32** [Signed 32-bit Integer]
+- **IRQ** [Interrupt Request]
+- **MAX** [Maximum]
+- **MEM** [Memory]
+- **MIN** [Minimum]
+- **MMIO** [Memory-Mapped Input/Output]
+- **REG** [Register]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **W1** [Write One]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A line-rate **multi-GPU all-reduce collective engine** — the hardware behind the
 `ncclAllReduce` primitive that fuses gradients and activations across GPUs in

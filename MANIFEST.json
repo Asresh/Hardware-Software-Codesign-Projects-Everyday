@@ -304,6 +304,18 @@
       "software_layer": "portable C mailbox driver for graph configuration, data movement, bounded completion polling and interrupt acknowledgement; independent reachability reference, scalar nested-loop baseline and deterministic vector generator",
       "verification": "Icarus Verilog pin-level differential testbench over 320 graphs with randomized host gaps, covering isolated nodes, a full chain, all-to-all fanout, self-loops, cycles, multi-seed and random topologies; closure, iteration count, population count, request counter and interrupt W1C checked; ASan/UBSan vector regeneration clean",
       "summary": "Datacenter RAS fault-graph engine moves repeated dependency scans out of BMC firmware: four Boolean lanes expand a 16-node frontier to fixed point and return the full blast-radius mask. Measured 35380 end-to-end cycles, 0.009045 graphs/clock including graph loading and randomized mailbox gaps, 7.887500-cycle average doorbell-to-interrupt latency and 14.638779x over a 517920-cycle scalar baseline; 320 differential graphs, 0 mismatches."
+    },
+    {
+      "day": 30,
+      "dir": "day30-serdes_eye_margin_engine",
+      "name": "serdes_eye_margin_engine",
+      "domain": "networking / high-speed SerDes PHY link-margin validation",
+      "architecture": "streaming dataflow with FIFOs",
+      "microarchitecture": "parameterized eight-entry ready/valid FIFO decouples the PHY sampler from firmware timing; a threshold classifier and one-pass contiguous-run tracker select the earliest widest passing phase interval and complete on the last marker",
+      "interface": "APB control/status register file for launch, error limit, results and telemetry plus a 24-bit ready/valid phase/error/last stream and a sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C APB/stream driver for device probing, threshold configuration, sample movement, bounded completion polling, result collection and interrupt acknowledgement; independent one-pass reference, scalar firmware baseline and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level APB and ready/valid differential testbench over 320 samples in four scans with deterministic randomized source bubbles; 288 full-range pseudo-random error counts plus 32 directed points cover bounded openings, exact threshold, alternating pass/fail and equal-length tie behavior; best start, best length, count and interrupt checked; ASan/UBSan vector regeneration clean",
+      "summary": "SerDes eye-margin accelerator moves BER thresholding and widest-open-phase selection out of PHY firmware while an eight-entry FIFO absorbs service jitter. Measured 426 end-to-end cycles, 0.751174 samples/clock, 106.250-cycle mean first-sample-to-interrupt latency and 8.431925x over a 3592-cycle scalar baseline; 320 differential samples, 0 mismatches."
     }
   ]
 }

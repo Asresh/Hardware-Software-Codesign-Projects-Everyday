@@ -1,6 +1,56 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 11 — Feed-Integrity Engine (line-rate CRC-32 + per-channel sequence-gap checker)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine checks whether market-data packets arrived intact and in order. Hardware calculates the cyclic redundancy check while bytes stream through and compares sequence numbers, while software handles alarms and recovery policy.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **AXI** [Advanced eXtensible Interface]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **CHW** [Channel-Index Width]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CRC** [Cyclic Redundancy Check]
+- **CRC-32** [32-bit Cyclic Redundancy Check]
+- **CRC32** [32-bit Cyclic Redundancy Check]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **EN** [Enable]
+- **ERR** [Error]
+- **EXP** [Exponential Function]
+- **FCS** [Frame Check Sequence]
+- **FPGA** [Field-Programmable Gate Array]
+- **FSM** [Finite-State Machine]
+- **GF** [Galois Field]
+- **HDR0** [Header Word 0]
+- **HDR1** [Header Word 1]
+- **HFT** [High-Frequency Trading]
+- **IRQ** [Interrupt Request]
+- **KB** [Kilobyte]
+- **LFSR** [Linear-Feedback Shift Register]
+- **LUT** [Lookup Table]
+- **MMIO** [Memory-Mapped Input/Output]
+- **NCH** [Number of Channels]
+- **RAM** [Random-Access Memory]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SEQ** [Sequence]
+- **SW** [Software]
+- **TLAST** [Transfer Last]
+- **W1C** [Write One to Clear]
+- **XOR** [Exclusive OR]
+<!-- readability-guide:end -->
 
 A line-rate market-data **feed-integrity accelerator**: the two checks every HFT
 feed handler runs on the critical path before a message is allowed to touch the

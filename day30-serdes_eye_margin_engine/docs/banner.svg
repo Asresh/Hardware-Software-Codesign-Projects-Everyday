@@ -1,0 +1,10 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="title desc">
+  <title id="title">Day 30 SerDes Eye Margin Engine</title><desc id="desc">A title card showing an open serial-link eye.</desc>
+  <rect width="1200" height="300" fill="#334155"/>
+  <path d="M40 150 C210 15 390 15 560 150 C730 285 910 285 1160 150" fill="none" stroke="#67e8f9" stroke-width="8"/>
+  <path d="M40 150 C210 285 390 285 560 150 C730 15 910 15 1160 150" fill="none" stroke="#fbbf24" stroke-width="8"/>
+  <rect x="245" y="61" width="710" height="178" rx="22" fill="#475569" stroke="#e2e8f0" stroke-width="3"/>
+  <text x="600" y="132" text-anchor="middle" font-family="sans-serif" font-size="50" font-weight="700" fill="#f8fafc">SERDES EYE MARGIN ENGINE</text>
+  <text x="600" y="193" text-anchor="middle" font-family="sans-serif" font-size="30" fill="#bae6fd">DAY 30 · STREAMING PHY VALIDATION</text>
+</svg>

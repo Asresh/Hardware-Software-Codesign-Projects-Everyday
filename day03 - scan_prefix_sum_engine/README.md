@@ -1,4 +1,33 @@
+<!-- Author: Asresh -->
 # Day 3 — Parallel Prefix-Sum (Scan) Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+A prefix sum replaces every input with the sum of that input and everything before it. Software describes the buffers; hardware uses a parallel tree so many partial sums are formed together instead of one after another.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **APB** [Advanced Peripheral Bus]
+- **BFS** [Breadth-First Search]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **CUB** [CUDA Unbound Primitives Library]
+- **DMA** [Direct Memory Access]
+- **DST** [Destination]
+- **EN** [Enable]
+- **GPU** [Graphics Processing Unit]
+- **IDENT** [Identifier]
+- **IRQ** [Interrupt Request]
+- **LEN** [Length]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SRC** [Source]
+<!-- readability-guide:end -->
 
 ![banner](docs/banner.svg)
 

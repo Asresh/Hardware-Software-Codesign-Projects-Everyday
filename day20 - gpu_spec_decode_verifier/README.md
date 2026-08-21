@@ -1,6 +1,49 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 20 - Speculative-Decoding Draft-Tree Verifier
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+Speculative decoding lets a smaller model propose a tree of future tokens for a larger model to verify. Software streams that tree; hardware checks all children of the current node together and returns the longest accepted path.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **APB3** [Advanced Peripheral Bus version 3]
+- **argmax** [Argument of the Maximum]
+- **ARR** [Array]
+- **CAPS** [Capabilities]
+- **CI** [Continuous Integration]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **EAGLE** [Extrapolation Algorithm for Greater Language-Model Efficiency]
+- **EN** [Enable]
+- **ERRCODE** [Error Code]
+- **FIFO** [First-In, First-Out]
+- **FSM** [Finite-State Machine]
+- **HIST** [Histogram]
+- **IRQ** [Interrupt Request]
+- **KV** [Key-Value]
+- **MAX** [Maximum]
+- **NNODES** [Number of Nodes]
+- **PREADY** [Peripheral Ready]
+- **PSLVERR** [Peripheral Slave Error]
+- **Q0** [Fixed-Point Format with 0 Fractional Bits]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **RW1C** [Read/Write One to Clear]
+- **STAT** [Status]
+- **SW** [Software]
+- **TLAST** [Transfer Last]
+- **TVALID** [Transfer Valid]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A hardware verifier for the acceptance step of tree-based speculative decoding.
 Give it a draft tree - a small model's proposed continuations, plus what the

@@ -1,6 +1,48 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 16 — KV-Cache Paging Engine (paged-attention block-table accelerator)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+Large language model serving stores attention history in fixed-size memory blocks that move as requests grow and finish. Software manages policy and batches; hardware translates logical blocks, caches recent translations, and allocates physical blocks when needed.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **B4** [Wishbone Revision B4]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **CYC** [Cycle]
+- **DUT** [Device Under Test]
+- **EBADOP** [Error: Bad Operation]
+- **EINVAL** [Error: Invalid Argument]
+- **EN** [Enable]
+- **EOOM** [Error: Out of Memory]
+- **ERR** [Error]
+- **FIFO** [First-In, First-Out]
+- **GPU** [Graphics Processing Unit]
+- **IRQ** [Interrupt Request]
+- **KV** [Key-Value]
+- **LIFO** [Last-In, First-Out]
+- **LLM** [Large Language Model]
+- **LRU** [Least Recently Used]
+- **MMIO** [Memory-Mapped Input/Output]
+- **OOM** [Out of Memory]
+- **REQ** [Request]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SEL** [Select]
+- **STAT** [Status]
+- **vLLM** [Virtualized Large Language Model Serving Engine]
+- **W1C** [Write One to Clear]
+- **XL** [Translate]
+- **XLATE** [Translate]
+<!-- readability-guide:end -->
 
 A hardware address-translation front end for a **paged KV cache** — the vLLM
 *PagedAttention* data structure that every modern LLM serving stack is built on.

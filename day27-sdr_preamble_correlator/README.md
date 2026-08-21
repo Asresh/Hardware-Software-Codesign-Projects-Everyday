@@ -3,6 +3,38 @@
 
 # Day 27: SDR Preamble Correlator
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+A receiver finds the start of a radio burst by comparing incoming samples with a known preamble. Software loads the reference pattern and threshold; hardware performs parallel complex correlations and reports the strongest matches.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **AXI** [Advanced eXtensible Interface]
+- **CAPS** [Capabilities]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **DMA** [Direct Memory Access]
+- **FFT** [Fast Fourier Transform]
+- **FPGA** [Field-Programmable Gate Array]
+- **IQ** [In-Phase and Quadrature]
+- **IRQ** [Interrupt Request]
+- **LTE** [Long-Term Evolution]
+- **MIT** [Massachusetts Institute of Technology]
+- **PCIe** [Peripheral Component Interconnect Express]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SDR** [Software-Defined Radio]
+- **TLAST** [Transfer Last]
+- **US** [United States]
+- **W1C** [Write One to Clear]
+- **WO** [Write-Only]
+<!-- readability-guide:end -->
+
 An eight-lane complex matched-filter accelerator that identifies known burst preambles in an SDR receive path. This project follows the hardware/software boundary emphasized by NVIDIA's current [Dataflow Development Engineer](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Dataflow-Development-Engineer_JR2014148) role: RTL streaming dataflow, host-side configuration, backpressure, deterministic latency and measured throughput.
 
 ## Problem and partition

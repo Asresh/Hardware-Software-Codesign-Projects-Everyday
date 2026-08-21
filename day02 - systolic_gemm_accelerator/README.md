@@ -1,6 +1,48 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 2 — Systolic GEMM Accelerator
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This accelerator multiplies matrices using a grid of small processing elements. Software prepares tiles and reads the result, while hardware reuses each value across the grid so many multiply-and-accumulate operations happen at the same time.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACCUM** [Accumulate]
+- **ACK** [Acknowledge]
+- **AR** [Accumulator Array]
+- **B4** [Wishbone Revision B4]
+- **C11** [C Programming Language 2011 Standard]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **CYC** [Cycle]
+- **DIM** [Dimension]
+- **DSP** [Digital Signal Processing]
+- **EN** [Enable]
+- **FD** [Feeder]
+- **FF** [Flip-Flop]
+- **FSM** [Finite-State Machine]
+- **GEMM** [General Matrix Multiplication]
+- **IRQ** [Interrupt Request]
+- **KLEN** [Inner-Dimension Length]
+- **KMAX** [Maximum Inner Dimension]
+- **LUT** [Lookup Table]
+- **MAC** [Multiply-Accumulate]
+- **ML** [Machine Learning]
+- **PE** [Processing Element]
+- **RTL** [Register-Transfer Level]
+- **SEL** [Select]
+- **STB** [Strobe]
+- **SW** [Software]
+- **TC** [Total Compute Cycles]
+- **TPU** [Tensor Processing Unit]
+- **WB** [Wishbone Bus]
+<!-- readability-guide:end -->
 
 A parameterized, output-stationary systolic array that multiplies signed 8-bit
 matrices, with a Wishbone B4 control plane, a K-accumulate mode that lets
