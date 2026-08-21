@@ -1,6 +1,24 @@
+<!-- Author: Asresh -->
 ![Day 22 HID Touch Fusion Engine](docs/banner.svg)
 
 # Day 22: HID Touch Fusion Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine combines touch and force sensor readings into pressure and a two-dimensional contact location. Software configures calibration and moves frames over the serial link; hardware removes baselines, sums channels, and divides the weighted totals.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **CPU** [Central Processing Unit]
+- **HID** [Human Interface Device]
+- **IRQ** [Interrupt Request]
+- **MIT** [Massachusetts Institute of Technology]
+- **RTL** [Register-Transfer Level]
+- **SPI** [Serial Peripheral Interface]
+<!-- readability-guide:end -->
 
 This project accelerates the low-latency path behind a multi-touch or force-sensing input device. Two four-quadrant sensor tiles produce eight unsigned samples per frame. Hardware removes the calibrated baseline, fuses both tiles, calculates pressure and a two-dimensional centroid, and raises a completion interrupt. A small C driver owns configuration, SPI framing, completion polling, result movement, and the bit-exact software reference.
 

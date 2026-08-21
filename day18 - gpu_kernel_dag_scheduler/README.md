@@ -1,6 +1,47 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 18 — Multi-GPU Kernel-DAG Scheduler (hardware command processor)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This command processor schedules a graph of dependent kernels across several devices. Software describes dependencies and allowed devices; hardware finds ready work in parallel, launches it, and records completion times.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **BRESP** [Write Response]
+- **CAM** [Content-Addressable Memory]
+- **CAPS** [Capabilities]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **CUDA** [Compute Unified Device Architecture]
+- **DAG** [Directed Acyclic Graph]
+- **DEP** [Dependency]
+- **DEPW** [Dependency Width]
+- **DEV** [Device]
+- **DUR** [Duration]
+- **ERR** [Error]
+- **FSM** [Finite-State Machine]
+- **GPU** [Graphics Processing Unit]
+- **IRQ** [Interrupt Request]
+- **LEN** [Length]
+- **MAX** [Maximum]
+- **OKAY** [Successful Bus Response]
+- **RAM** [Random-Access Memory]
+- **RRESP** [Read Response]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SLVERR** [Slave Error]
+- **W1C** [Write One to Clear]
+- **WB** [Wishbone Bus]
+- **XLA** [Accelerated Linear Algebra]
+<!-- readability-guide:end -->
 
 A hardware **command processor** for a multi-GPU node: give it a graph of
 kernels with their dependencies and their device affinities, and it schedules

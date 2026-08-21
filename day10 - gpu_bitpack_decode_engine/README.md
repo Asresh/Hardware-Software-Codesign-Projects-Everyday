@@ -1,6 +1,41 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 10 — Bit-Pack Decode Engine (line-rate columnar market-data decompression)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This decoder expands tightly packed integer columns into ordinary values. Software describes each compressed block; hardware extracts several fields in parallel, reverses zig-zag coding, and rebuilds delta-coded values.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **AXI** [Advanced eXtensible Interface]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **EN** [Enable]
+- **ERR** [Error]
+- **ERRCODE** [Error Code]
+- **FIFO** [First-In, First-Out]
+- **FOR** [Frame of Reference]
+- **FSM** [Finite-State Machine]
+- **HW** [Hardware]
+- **ID** [Identifier]
+- **IRQ** [Interrupt Request]
+- **LSB** [Least Significant Bit]
+- **MAX** [Maximum]
+- **MIN** [Minimum]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SW** [Software]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A streaming accelerator that decompresses columnar integer data at up to **four
 values per clock**. Recorded and live market-data feeds don't ship raw 32-bit

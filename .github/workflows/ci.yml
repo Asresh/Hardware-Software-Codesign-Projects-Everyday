@@ -42,7 +42,7 @@ jobs:
           else
             mapfile -t dirs < <(
               git diff --name-only "$BASE_SHA" "$HEAD_SHA" |
-                awk -F/ '$1 ~ /^day[0-9]+/ { print $1 }' |
+                awk -F/ '$1 ~ /^day[0-9]+/ && !(NF == 2 && $2 == "README.md") { print $1 }' |
                 sort -uV
             )
           fi

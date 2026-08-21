@@ -1,6 +1,47 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 12 — Pre-Trade Risk Engine (line-rate market-access gateway)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This gateway checks every order against limits such as price, size, position, and kill-switch state before the order can leave the system. Software programs policy; hardware evaluates the independent rules in parallel and returns one clear accept-or-reject reason.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **APB** [Advanced Peripheral Bus]
+- **APB3** [Advanced Peripheral Bus version 3]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **AXIS** [Advanced eXtensible Interface Stream]
+- **C11** [C Programming Language 2011 Standard]
+- **CI** [Continuous Integration]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **DMA** [Direct Memory Access]
+- **FPGA** [Field-Programmable Gate Array]
+- **FSM** [Finite-State Machine]
+- **HFT** [High-Frequency Trading]
+- **IPC** [Instructions Per Cycle]
+- **IRQ** [Interrupt Request]
+- **LUT** [Lookup Table]
+- **MMIO** [Memory-Mapped Input/Output]
+- **MSGCOUNT** [Message Count]
+- **POSLIMIT** [Position Limit]
+- **PRICEBAND** [Price Band]
+- **RAM** [Random-Access Memory]
+- **REJ** [Rejection Count]
+- **RMW** [Read-Modify-Write]
+- **RTL** [Register-Transfer Level]
+- **SEC** [Single-Error Correction]
+- **SIMD** [Single Instruction, Multiple Data]
+- **W1** [Write One]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A hardware **pre-trade risk firewall**: the checks a broker/HFT market-access
 gateway must run on *every* outbound order — in the critical path, before the

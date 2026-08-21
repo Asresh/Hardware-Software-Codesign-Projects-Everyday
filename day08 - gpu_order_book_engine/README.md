@@ -1,6 +1,38 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 8 — CAM-Based Limit Order-Book / BBO Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine maintains price levels for a limit order book and reports the best buy and sell prices. Software streams market updates; hardware matches prices in parallel and updates the top of book with deterministic latency.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **AXI** [Advanced eXtensible Interface]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **BBO** [Best Bid and Offer]
+- **CAM** [Content-Addressable Memory]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **FPGA** [Field-Programmable Gate Array]
+- **HFT** [High-Frequency Trading]
+- **HW** [Hardware]
+- **IRQACK** [Interrupt Request Acknowledge]
+- **MAX** [Maximum]
+- **MIN** [Minimum]
+- **MMIO** [Memory-Mapped Input/Output]
+- **MSGCOUNT** [Message Count]
+- **PW** [Price Width]
+- **QW** [Quantity Width]
+- **RTL** [Register-Transfer Level]
+- **SW** [Software]
+<!-- readability-guide:end -->
 
 An **ultra-low-latency limit order-book accelerator**: a content-addressable
 price-level map (a hardware CAM) ingests a normalised market-data feed over

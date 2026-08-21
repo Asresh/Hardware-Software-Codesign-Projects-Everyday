@@ -1,6 +1,43 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 9 — Alpha-Signal Engine (real-time HFT streaming signals)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine turns incoming market ticks into moving-average, volatility, and momentum signals. Software configures thresholds and consumes alerts; hardware updates per-symbol state and performs the long arithmetic pipeline for every tick.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **ALERTCNT** [Alert Count]
+- **ALU** [Arithmetic Logic Unit]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **CTRL** [Control]
+- **EWMA** [Exponentially Weighted Moving Average]
+- **FPGA** [Field-Programmable Gate Array]
+- **FSM** [Finite-State Machine]
+- **HFT** [High-Frequency Trading]
+- **HW** [Hardware]
+- **IRQ** [Interrupt Request]
+- **libm** [Standard Mathematics Library]
+- **Q0** [Fixed-Point Format with 0 Fractional Bits]
+- **Q16** [Fixed-Point Format with 16 Fractional Bits]
+- **RAM** [Random-Access Memory]
+- **RECCNT** [Record Count]
+- **RMW** [Read-Modify-Write]
+- **RTL** [Register-Transfer Level]
+- **SW** [Software]
+- **TDATA** [Transfer Data]
+- **TICKCNT** [Tick Count]
+- **TLAST** [Transfer Last]
+- **ZTHRESH** [Z-Score Threshold]
+<!-- readability-guide:end -->
 
 A streaming accelerator that turns a raw market-tick feed into per-symbol
 trading signals in the wire. For every incoming `(symbol, price)` tick it keeps

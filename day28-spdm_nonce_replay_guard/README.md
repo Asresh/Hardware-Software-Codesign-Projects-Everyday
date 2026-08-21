@@ -3,6 +3,33 @@
 
 # Day 28: SPDM Nonce Replay Guard
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+Authenticated management traffic still needs replay protection so an old valid command cannot be accepted again. Software controls security epochs and flush policy; hardware compares each nonce with all stored entries at once and returns a precise decision.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **BMC** [Baseboard Management Controller]
+- **CAM** [Content-Addressable Memory]
+- **CSP** [Cloud Service Provider]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **FW** [Firmware]
+- **IRQ** [Interrupt Request]
+- **MCTP** [Management Component Transport Protocol]
+- **MIT** [Massachusetts Institute of Technology]
+- **PCIe** [Peripheral Component Interconnect Express]
+- **RAS** [Reliability, Availability, and Serviceability]
+- **RPG1** [Replay Guard Version 1 Signature]
+- **RTL** [Register-Transfer Level]
+- **SPDM** [Security Protocol and Data Model]
+- **US** [United States]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
+
 SPDM authenticates management traffic, but authentication alone does not make a previously valid request fresh. A BMC or security processor must remember recently accepted nonces per session and reject duplicates before a replayed command reaches privileged firmware. A scalar implementation scans a table with data-dependent branches; the 32-entry associative table here compares every `{context, epoch, nonce}` in parallel and returns a decision in one hardware cycle.
 
 This project is motivated by current datacenter firmware roles that combine hardware bring-up, device drivers, RAS, and secure management protocols including SPDM and MCTP, such as NVIDIA's [Senior Firmware Engineer — CSP Engagements](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Senior-Firmware-Engineer---CSP-Engagements_JR1999599). It is a portfolio-scale model of the boundary such a driver owns: firmware establishes session epochs and handles completion; hardware makes the repetitive, timing-sensitive replay decision.

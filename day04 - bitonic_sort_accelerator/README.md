@@ -1,4 +1,34 @@
+<!-- Author: Asresh -->
 # Day 4 — Tiled Bitonic Sort Accelerator
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine sorts fixed-size tiles with a predetermined compare-and-swap network. Software divides a larger list into tiles, while hardware executes the regular comparison pattern with predictable latency.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **CAE** [Compare-and-Exchange]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **DMA** [Direct Memory Access]
+- **DST** [Destination]
+- **EN** [Enable]
+- **GPU** [Graphics Processing Unit]
+- **IDENT** [Identifier]
+- **IRQ** [Interrupt Request]
+- **LOGN** [Base-2 Logarithm of N]
+- **MMIO** [Memory-Mapped Input/Output]
+- **NTILES** [Number of Tiles]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SIMD** [Single Instruction, Multiple Data]
+- **SRC** [Source]
+<!-- readability-guide:end -->
 
 ![banner](docs/banner.svg)
 

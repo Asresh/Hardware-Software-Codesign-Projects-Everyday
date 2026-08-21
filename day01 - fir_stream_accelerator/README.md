@@ -1,6 +1,48 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 1 — Streaming FIR Accelerator
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This block applies a finite impulse response filter to a continuous stream of samples. Software loads the coefficients and starts the job; hardware performs the repeated multiply-and-add work while preserving sample order when either side pauses.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ADC** [Analog-to-Digital Converter]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Lite** [Advanced eXtensible Interface 4 Lite]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **AXIS** [Advanced eXtensible Interface Stream]
+- **CLR** [Clear]
+- **COEF** [Coefficient]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **DSP** [Digital Signal Processing]
+- **EN** [Enable]
+- **FIFO** [First-In, First-Out]
+- **FIR** [Finite Impulse Response]
+- **FSM** [Finite-State Machine]
+- **IRQ** [Interrupt Request]
+- **LUT** [Lookup Table]
+- **MAC** [Multiply-Accumulate]
+- **MIT** [Massachusetts Institute of Technology]
+- **MSB** [Most Significant Bit]
+- **OKAY** [Successful Bus Response]
+- **RTL** [Register-Transfer Level]
+- **SLVERR** [Slave Error]
+- **SW** [Software]
+- **TDATA** [Transfer Data]
+- **TLAST** [Transfer Last]
+- **TREADY** [Transfer Ready]
+- **TVALID** [Transfer Valid]
+- **WSTRB** [Write Strobe]
+<!-- readability-guide:end -->
 
 A parameterized, transposed-form FIR filter accelerator with an AXI4-Lite control plane and AXI4-Stream data plane, driven by C firmware and verified bit-exactly against a software golden model with a self-checking Icarus Verilog testbench.
 

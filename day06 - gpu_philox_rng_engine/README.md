@@ -1,6 +1,53 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 6 — GPU-Style Philox Counter-Based Parallel RNG Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine produces independent random-number blocks from counters, which makes parallel streams reproducible without sharing mutable state. Software assigns counters and keys; hardware runs the Philox mixing rounds across several lanes.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ADDR** [Address]
+- **AXI** [Advanced eXtensible Interface]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CTR0** [Counter Word 0]
+- **CTR1** [Counter Word 1]
+- **CTR2** [Counter Word 2]
+- **CTR3** [Counter Word 3]
+- **CTRL** [Control]
+- **cuRAND** [Compute Unified Device Architecture Random Number Generation Library]
+- **DST** [Destination]
+- **EN** [Enable]
+- **GPU** [Graphics Processing Unit]
+- **HFT** [High-Frequency Trading]
+- **HW** [Hardware]
+- **IDENT** [Identifier]
+- **IRQ** [Interrupt Request]
+- **KAT** [Known-Answer Test]
+- **LSW** [Least Significant Word]
+- **M0** [Philox Multiplier 0]
+- **M1** [Philox Multiplier 1]
+- **MMIO** [Memory-Mapped Input/Output]
+- **MSW** [Most Significant Word]
+- **NDRAWS** [Number of Draws]
+- **PRNG** [Pseudo-Random Number Generator]
+- **RNG** [Random Number Generator]
+- **RO** [Read-Only]
+- **RTL** [Register-Transfer Level]
+- **RW** [Read/Write]
+- **SC** [Supercomputing Conference]
+- **SIMD** [Single Instruction, Multiple Data]
+- **SW** [Software]
+- **TB** [Testbench]
+- **WO** [Write-Only]
+- **XOR** [Exclusive OR]
+<!-- readability-guide:end -->
 
 A fixed-function **random-number generator** — the block a GPU leans on for
 Monte-Carlo. It implements **Philox-4x32-10**, the counter-based PRNG from

@@ -1,6 +1,71 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 21 - MX-Cast Custom Functional Unit on an RV32I Core
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This project adds five instructions to a small processor for converting ordinary floating-point values to compact microscaling values and back. Software runs normal loops; the custom execution unit performs the difficult bit selection, rounding, scaling, and packing in one instruction each.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ALU** [Arithmetic Logic Unit]
+- **amax** [Absolute Maximum]
+- **AUIPC** [Add Upper Immediate to Program Counter]
+- **AWQ** [Activation-Aware Weight Quantization]
+- **bf16** [Brain Floating-Point 16-bit]
+- **BLK** [Block]
+- **CAPS** [Capabilities]
+- **CI** [Continuous Integration]
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **DMEM** [Data Memory]
+- **E8M0** [8-bit Exponent, 0-bit Mantissa]
+- **ECALL** [Environment Call]
+- **EN** [Enable]
+- **ERRCODE** [Error Code]
+- **GPTQ** [Generative Pre-trained Transformer Quantization]
+- **IMEM** [Instruction Memory]
+- **Inf** [Infinity]
+- **INSTRET** [Instructions Retired]
+- **IRQ** [Interrupt Request]
+- **ISA** [Instruction Set Architecture]
+- **JAL** [Jump and Link]
+- **LB** [Load Byte]
+- **LBU** [Load Byte Unsigned]
+- **LH** [Load Halfword]
+- **LHU** [Load Halfword Unsigned]
+- **MX** [Microscaling]
+- **MXAMAX** [Microscaling Absolute Maximum]
+- **MXDQ** [Microscaling Dequantize]
+- **MXFP4** [Microscaling 4-bit Floating-Point]
+- **MXFP6** [Microscaling 6-bit Floating-Point]
+- **MXFP8** [Microscaling 8-bit Floating-Point]
+- **MXPK** [Microscaling Pack]
+- **MXQ4** [Microscaling Quantize to 4-bit]
+- **MXSCALE** [Microscaling Scale]
+- **NaN** [Not a Number]
+- **OCP** [Open Compute Project]
+- **PC** [Program Counter]
+- **Q4** [Fixed-Point Format with 4 Fractional Bits]
+- **RETVAL** [Return Value]
+- **RISC** [Reduced Instruction Set Computer]
+- **RISC-V** [Reduced Instruction Set Computer Five]
+- **RTL** [Register-Transfer Level]
+- **RV32I** [32-bit RISC-V Base Integer Instruction Set]
+- **RW** [Read/Write]
+- **SB** [Store Byte]
+- **SLTU** [Set Less Than Unsigned]
+- **SRA** [Shift Right Arithmetic]
+- **SRAM** [Static Random-Access Memory]
+- **STAT** [Status]
+- **W1C** [Write One to Clear]
+- **WDOG** [Watchdog]
+<!-- readability-guide:end -->
 
 Five custom instructions bolted into the execute stage of a three-stage RISC-V
 pipeline, and the whole thing built around them: the core, its memories, its

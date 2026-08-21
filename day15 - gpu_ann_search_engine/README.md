@@ -1,6 +1,50 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 15 — GPU Vector-Search (ANN) Top-K Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This search engine compares a query vector with many stored vectors and keeps the closest matches. Software loads the query and reads the winners; hardware evaluates several dimensions per clock and maintains the running top results.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ACK** [Acknowledge]
+- **ANN** [Approximate Nearest Neighbor]
+- **argmax** [Argument of the Maximum]
+- **AXI** [Advanced eXtensible Interface]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **AXI4-Stream** [Advanced eXtensible Interface 4 Stream]
+- **CPU** [Central Processing Unit]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **CYC** [Cycle]
+- **ERR** [Error]
+- **ERRCODE** [Error Code]
+- **FAISS** [Facebook Artificial Intelligence Similarity Search]
+- **FAISS-GPU** [Facebook Artificial Intelligence Similarity Search on Graphics Processing Units]
+- **FSM** [Finite-State Machine]
+- **GPU** [Graphics Processing Unit]
+- **ID** [Identifier]
+- **int8** [Signed 8-bit Integer]
+- **IP** [Inner Product]
+- **IRQ** [Interrupt Request]
+- **IRQEN** [Interrupt Request Enable]
+- **L2** [Squared Euclidean Distance]
+- **MMIO** [Memory-Mapped Input/Output]
+- **NDB** [Number of Database Vectors]
+- **RAG** [Retrieval-Augmented Generation]
+- **RAM** [Random-Access Memory]
+- **RTL** [Register-Transfer Level]
+- **SIMD** [Single Instruction, Multiple Data]
+- **SRESET** [Soft Reset]
+- **STAT** [Status]
+- **TLAST** [Transfer Last]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A hardware accelerator for **approximate-nearest-neighbour (ANN) vector search** —
 the retrieval primitive that sits in front of every embedding-based inference

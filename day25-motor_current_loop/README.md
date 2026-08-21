@@ -3,6 +3,34 @@
 
 # Day 25: Bit-Serial Motor Current Loop
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+A motor current loop repeatedly compares requested and measured current and turns the error into a pulse-width command. Software sets gains and safety limits; hardware performs the time-critical scaling, saturation, and overcurrent shutdown.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **ADC** [Analog-to-Digital Converter]
+- **CNC** [Computer Numerical Control]
+- **CTRL** [Control]
+- **FIFO** [First-In, First-Out]
+- **int32** [Signed 32-bit Integer]
+- **IRQ** [Interrupt Request]
+- **ISR** [Interrupt Service Routine]
+- **MAX** [Maximum]
+- **MCU** [Microcontroller Unit]
+- **MIN** [Minimum]
+- **MIT** [Massachusetts Institute of Technology]
+- **MMIO** [Memory-Mapped Input/Output]
+- **PWM** [Pulse-Width Modulation]
+- **Q8** [Fixed-Point Format with 8 Fractional Bits]
+- **RTL** [Register-Transfer Level]
+- **RTOS** [Real-Time Operating System]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
+
 A field-oriented motor controller must turn phase-current error into a bounded PWM command at a fixed cadence. Running that inner loop entirely in firmware spends variable instruction time on signed multiplication, scaling, clamping, register traffic, and safety checks. Jitter becomes torque ripple; a delayed overcurrent response can damage the inverter.
 
 This project follows the requirements in Apple’s current [Application & System Firmware Engineer](https://jobs.apple.com/en-us/details/200663414-3956/application-system-firmware-engineer) opening: production C/C++ firmware and device drivers, hard real-time embedded systems, motor/motion control, safety-critical design, and optimization for constrained compute. It implements the hardware contract behind that work rather than only a control equation: an MMIO mailbox, command buffering, deterministic arithmetic, fault shutdown, telemetry, completion interrupt, portable driver, independent model, and randomized pre-silicon verification.

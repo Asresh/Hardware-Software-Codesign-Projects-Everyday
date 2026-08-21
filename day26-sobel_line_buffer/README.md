@@ -3,6 +3,35 @@
 
 # Day 26: Sobel Line-Buffer Engine
 
+<!-- readability-guide:start -->
+## Plain-language overview
+
+The Sobel operator finds image edges from each pixel's three-by-three neighborhood. Software supplies frame dimensions and pixels; hardware retains the two previous rows so it can produce one edge result without rereading the image.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **CAPS** [Capabilities]
+- **CI** [Continuous Integration]
+- **CSR** [Control and Status Register]
+- **CTRL** [Control]
+- **CUDA** [Compute Unified Device Architecture]
+- **EN** [Enable]
+- **FIFO** [First-In, First-Out]
+- **FPGA** [Field-Programmable Gate Array]
+- **GPU** [Graphics Processing Unit]
+- **IRQ** [Interrupt Request]
+- **ISP** [Image Signal Processor]
+- **macOS** [Mac Operating System]
+- **MIT** [Massachusetts Institute of Technology]
+- **MMIO** [Memory-Mapped Input/Output]
+- **OS** [Operating System]
+- **RTL** [Register-Transfer Level]
+- **US** [United States]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
+
 Edge extraction is a basic stage in camera pipelines, machine vision, robotics, video preprocessing, and feature detection. A scalar processor repeatedly reloads overlapping 3×3 neighborhoods; eight of nine bytes are reused by the next output but still travel through the memory hierarchy. This accelerator retains that locality in two parameterized row stores and three small shift banks, accepting the image once and producing a saturated Sobel edge map through a backpressure-safe stream.
 
 The project is motivated by NVIDIA's current [Senior Software Engineer — CUDA Driver](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Senior-Software-Engineer---CUDA-Driver_JR2014725) role, which calls out hardware/software co-design, performance modeling, programming-model exposure, memory hierarchy, interrupts, and MMIO. The project turns those requirements into a compact pre-silicon portfolio example: a real device contract, portable C driver, independent golden model, measured performance, interrupt completion, and randomized stream timing.

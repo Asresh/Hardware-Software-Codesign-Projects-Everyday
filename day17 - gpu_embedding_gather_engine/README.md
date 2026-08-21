@@ -1,6 +1,43 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 17 — Sharded Embedding Gather-Reduce Engine (multi-GPU EmbeddingBag)
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+Recommendation models gather many embedding rows and combine them into one vector per feature bag. Software builds descriptors and owns sharding policy; hardware overlaps memory fetches with sum, mean, maximum, or minimum reduction.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **AR** [Address Read]
+- **AW** [Address Write]
+- **AXI** [Advanced eXtensible Interface]
+- **AXI4** [Advanced eXtensible Interface 4]
+- **CLR** [Clear]
+- **COUNT** [Count]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **DIM** [Dimension]
+- **EN** [Enable]
+- **ERR** [Error]
+- **FIFO** [First-In, First-Out]
+- **GEMM** [General Matrix Multiplication]
+- **GPU** [Graphics Processing Unit]
+- **ID** [Identifier]
+- **INCR** [Incrementing Burst]
+- **IRQ** [Interrupt Request]
+- **MAX** [Maximum]
+- **MIN** [Minimum]
+- **MMIO** [Memory-Mapped Input/Output]
+- **RLAST** [Read Last]
+- **RTL** [Register-Transfer Level]
+- **SIMD** [Single Instruction, Multiple Data]
+- **SLVERR** [Slave Error]
+- **W1C** [Write One to Clear]
+<!-- readability-guide:end -->
 
 A hardware **embedding-table gather and pooling engine** — the first layer of every
 deep-learning recommendation model, and the one part of the network that does not

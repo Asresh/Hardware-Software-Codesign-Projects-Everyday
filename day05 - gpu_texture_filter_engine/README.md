@@ -1,6 +1,33 @@
+<!-- Author: Asresh -->
 ![banner](docs/banner.svg)
 
 # Day 5 — GPU-Style Bilinear Texture-Filter / Image-Resampler Engine
+
+<!-- readability-guide:start -->
+## Plain-language overview
+
+This engine resizes or samples an image by blending the four nearest texture pixels. Software supplies coordinates and image data; hardware performs the repeated address, interpolation, and rounding work at streaming speed.
+
+## Abbreviation guide
+
+Every shortened technical term used in this README is expanded below for quick reference:
+
+- **CLR** [Clear]
+- **CPU** [Central Processing Unit]
+- **CTRL** [Control]
+- **DST** [Destination]
+- **EN** [Enable]
+- **GPU** [Graphics Processing Unit]
+- **HW** [Hardware]
+- **IDENT** [Identifier]
+- **IRQ** [Interrupt Request]
+- **MMIO** [Memory-Mapped Input/Output]
+- **Q16** [Fixed-Point Format with 16 Fractional Bits]
+- **RTL** [Register-Transfer Level]
+- **SRC** [Source]
+- **SW** [Software]
+- **WMAX** [Maximum Image Width]
+<!-- readability-guide:end -->
 
 A fixed-function **texture-sampling unit**: the block a GPU uses to magnify, minify
 and warp images. It resamples an 8-bit source image to an arbitrary destination
