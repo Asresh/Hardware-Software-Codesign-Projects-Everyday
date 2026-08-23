@@ -1,4 +1,5 @@
 {
+  "author": "Asresh",
   "projects": [
     {
       "day": 1,
@@ -328,6 +329,18 @@
       "software_layer": "portable C SPI driver for bounded configuration, joint transfer, interrupt completion, tagged result collection and acknowledgement; bit-exact fixed-point reference, independent floating-point scalar implementation and deterministic vector generator",
       "verification": "Icarus Verilog pin-level SPI differential testbench over 320 kinematic chains and 1744 joints, including 16 directed fixed-point/angle/length corners plus 304 deterministic full-range random chains; X/Y pose, retired count, response tag, timeout and interrupt completion checked; ASan/UBSan vector regeneration clean; 4/8/16-joint elaborations pass",
       "summary": "SPI-controlled forward-kinematics engine moves serial trigonometry out of robot/exoskeleton firmware: a queued 16-iteration CORDIC computes each absolute joint heading and accumulates the Q24.8 end-effector pose. Measured 1065360 SPI end-to-end cycles, 0.052632 joints/clock in the compute path, 103.550-cycle mean START-to-interrupt latency and 9.942x over a 10592000-cycle scalar baseline; 320 chains, 1744 joints, 0 mismatches."
+    },
+    {
+      "day": 32,
+      "dir": "day32-firmware_trace_compressor",
+      "name": "firmware_trace_compressor",
+      "domain": "compression / resource-constrained boot, power, clock and fault telemetry",
+      "architecture": "double buffering",
+      "microarchitecture": "parameterized 512-entry host-producer trace ring feeding alternating eight-record ping-pong banks; prefetch of the idle bank overlaps drain of the active bank into a stateful event/payload run encoder, whose fixed 64-bit packets enter a separate host-consumer ring",
+      "interface": "selected/ready MMIO control, status and cycle counters plus shared 32-bit input-ring and split-read 64-bit output-ring windows with a sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable bounded C MMIO driver for ring loading, configuration, timeout polling, completion handling, packet movement and W1C acknowledgement; independent bit-exact reference, scalar firmware baseline, mock-register integration test and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level MMIO differential testbench over 320 records containing 315 seeded-random and five directed timestamp/data extremes; all 88 output packets, count, exact busy cycles, sticky interrupt and acknowledgement checked; ASan/UBSan vector regeneration clean; 256/4 and 512/16 alternate ring/bank geometries elaborate",
+      "summary": "Trace compressor removes the branch-heavy repeated-event scan from control firmware: ping-pong banks sustain overlapped prefetch/encode while shared rings keep firmware in control of capture and consumption. Measured 320 records to 88 packets (45 percent fewer bytes), 329 busy cycles, 0.972644 records/clock, 331-cycle START-to-interrupt latency and 22.580060x over a 7474-cycle scalar baseline; 0 mismatches."
     }
   ]
 }

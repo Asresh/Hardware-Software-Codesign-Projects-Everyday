@@ -1,0 +1,15 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="title desc">
+  <title id="title">Day 32 Firmware Trace Compressor</title>
+  <desc id="desc">Title card showing trace events entering alternating hardware buffers and compact packets leaving.</desc>
+  <rect width="1200" height="300" fill="#334155"/>
+  <rect x="42" y="42" width="1116" height="216" rx="24" fill="#475569" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="82" y="112" fill="#f8fafc" font-family="Arial, sans-serif" font-size="34" font-weight="700">DAY 32 · HARDWARE / SOFTWARE CO-DESIGN</text>
+  <text x="82" y="177" fill="#67e8f9" font-family="Arial, sans-serif" font-size="54" font-weight="700">Firmware Trace Compressor</text>
+  <text x="84" y="222" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="24">Ping-pong capture · run encoding · shared rings · completion IRQ</text>
+  <g fill="none" stroke="#fbbf24" stroke-width="8" stroke-linecap="round">
+    <path d="M930 92h42l18 28h36l18-28h58"/>
+    <path d="M930 150h64l18 28h36l18-28h36"/>
+    <path d="M930 208h26l18-28h36l18 28h74"/>
+  </g>
+</svg>
