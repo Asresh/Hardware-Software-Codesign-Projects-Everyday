@@ -1,0 +1,47 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <defs>
+    <marker id="data" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#22d3ee"/></marker>
+    <marker id="ctrl" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/></marker>
+  </defs>
+  <rect width="1400" height="760" fill="#475569"/>
+  <text x="52" y="58" fill="#ffffff" font-family="Arial" font-size="30" font-weight="700">Day 31 — Robot Arm Kinematics Engine</text>
+  <rect x="55" y="120" width="245" height="170" rx="14" fill="#1e293b" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="177" y="165" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="24" font-weight="700">MCU / RTOS</text>
+  <text x="177" y="204" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="18">kinematics_driver.c</text>
+  <text x="177" y="236" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="17">policy + calibration</text>
+  <text x="177" y="265" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="17">interrupt service</text>
+  <rect x="375" y="105" width="235" height="205" rx="14" fill="#0f766e" stroke="#99f6e4" stroke-width="3"/>
+  <text x="492" y="148" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="22" font-weight="700">spi_packet_slave</text>
+  <text x="492" y="184" text-anchor="middle" fill="#ccfbf1" font-family="Arial" font-size="17">40-bit frame</text>
+  <text x="492" y="214" text-anchor="middle" fill="#ccfbf1" font-family="Arial" font-size="17">{opcode[7:0], data[31:0]}</text>
+  <text x="492" y="252" text-anchor="middle" fill="#ccfbf1" font-family="Arial" font-size="16">SPI_SCLK · SPI_CS_N</text>
+  <text x="492" y="279" text-anchor="middle" fill="#ccfbf1" font-family="Arial" font-size="16">SPI_MOSI · SPI_MISO</text>
+  <rect x="685" y="105" width="260" height="205" rx="14" fill="#7c3aed" stroke="#ddd6fe" stroke-width="3"/>
+  <text x="815" y="148" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="22" font-weight="700">kinematics_command</text>
+  <text x="815" y="184" text-anchor="middle" fill="#ede9fe" font-family="Arial" font-size="17">CONFIG · PUSH · START</text>
+  <text x="815" y="216" text-anchor="middle" fill="#ede9fe" font-family="Arial" font-size="17">STATUS · X · Y · CYCLES</text>
+  <text x="815" y="252" text-anchor="middle" fill="#ede9fe" font-family="Arial" font-size="17">bounds + protocol checks</text>
+  <text x="815" y="282" text-anchor="middle" fill="#fde68a" font-family="Arial" font-size="17">sticky IRQ, ACK clears</text>
+  <rect x="685" y="405" width="260" height="145" rx="14" fill="#0369a1" stroke="#bae6fd" stroke-width="3"/>
+  <text x="815" y="448" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="22" font-weight="700">joint_fifo</text>
+  <text x="815" y="485" text-anchor="middle" fill="#e0f2fe" font-family="Arial" font-size="18">depth = MAX_JOINTS = 8</text>
+  <text x="815" y="518" text-anchor="middle" fill="#e0f2fe" font-family="Arial" font-size="17">{length Q8.8, angle Q3.13}</text>
+  <rect x="1020" y="350" width="315" height="250" rx="14" fill="#9a3412" stroke="#fed7aa" stroke-width="3"/>
+  <text x="1177" y="395" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="22" font-weight="700">kinematics_engine</text>
+  <text x="1177" y="432" text-anchor="middle" fill="#ffedd5" font-family="Arial" font-size="17">absolute-angle wrap</text>
+  <text x="1177" y="462" text-anchor="middle" fill="#ffedd5" font-family="Arial" font-size="17">x += length × cos</text>
+  <text x="1177" y="491" text-anchor="middle" fill="#ffedd5" font-family="Arial" font-size="17">y += length × sin</text>
+  <rect x="1060" y="520" width="235" height="58" rx="10" fill="#7f1d1d" stroke="#fecaca" stroke-width="2"/>
+  <text x="1177" y="556" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="18" font-weight="700">cordic_rotator · 16 iterations</text>
+  <line x1="300" y1="172" x2="375" y2="172" stroke="#22d3ee" stroke-width="6" marker-end="url(#data)"/>
+  <line x1="375" y1="250" x2="300" y2="250" stroke="#22d3ee" stroke-width="6" marker-end="url(#data)"/>
+  <line x1="610" y1="205" x2="685" y2="205" stroke="#22d3ee" stroke-width="6" marker-end="url(#data)"/>
+  <line x1="815" y1="310" x2="815" y2="405" stroke="#22d3ee" stroke-width="6" marker-end="url(#data)"/>
+  <line x1="945" y1="477" x2="1020" y2="477" stroke="#22d3ee" stroke-width="6" marker-end="url(#data)"/>
+  <path d="M1020 395 C970 350 940 320 900 305" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#ctrl)"/>
+  <path d="M685 150 C560 70 310 70 260 120" fill="none" stroke="#fbbf24" stroke-width="5" stroke-dasharray="10 8" marker-end="url(#ctrl)"/>
+  <text x="430" y="77" fill="#fde68a" font-family="Arial" font-size="18" font-weight="700">IRQ</text>
+  <text x="62" y="680" fill="#67e8f9" font-family="Arial" font-size="18" font-weight="700">solid cyan = joint/result datapath</text>
+  <text x="62" y="716" fill="#fde68a" font-family="Arial" font-size="18" font-weight="700">dashed amber = start/done/interrupt control</text>
+</svg>
