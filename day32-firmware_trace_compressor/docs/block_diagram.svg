@@ -1,0 +1,69 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 760" width="1500" height="760" role="img" aria-labelledby="title desc">
+  <title id="title">Firmware Trace Compressor block diagram</title>
+  <desc id="desc">CPU accesses input and output shared rings through selected ready MMIO. Hardware prefetches into two eight-record banks, run-length encodes records, writes compressed packets, and raises an interrupt.</desc>
+  <defs>
+    <marker id="data" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#67e8f9"/></marker>
+    <marker id="ctrl" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#fbbf24"/></marker>
+  </defs>
+  <rect width="1500" height="760" fill="#475569"/>
+  <text x="50" y="55" fill="#f8fafc" font-family="Arial, sans-serif" font-size="31" font-weight="700">Day 32 · Firmware Trace Compressor · Actual HW/SW paths</text>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="55" y="285" width="220" height="150" rx="15" fill="#334155" stroke="#f8fafc" stroke-width="3"/>
+    <text x="165" y="335" fill="#f8fafc" font-size="25" font-weight="700">CPU / firmware</text>
+    <text x="165" y="373" fill="#cbd5e1" font-size="18">C driver + decoder</text>
+    <text x="165" y="405" fill="#cbd5e1" font-size="18">producer / consumer</text>
+
+    <rect x="340" y="125" width="1110" height="510" rx="20" fill="#3f4d61" stroke="#94a3b8" stroke-width="3"/>
+    <text x="895" y="164" fill="#f8fafc" font-size="24" font-weight="700">firmware_trace_compressor_top</text>
+    <rect x="385" y="210" width="230" height="150" rx="12" fill="#155e75" stroke="#a5f3fc" stroke-width="3"/>
+    <text x="500" y="252" fill="#f8fafc" font-size="22" font-weight="700">trace_input_ring</text>
+    <text x="500" y="287" fill="#cffafe" font-size="17">512 × 32-bit shared ring</text>
+    <text x="500" y="318" fill="#cffafe" font-size="17">host writes / DMA-like fetch</text>
+
+    <rect x="690" y="190" width="245" height="190" rx="12" fill="#0f766e" stroke="#99f6e4" stroke-width="3"/>
+    <text x="812" y="232" fill="#f8fafc" font-size="22" font-weight="700">trace_pingpong_buffer</text>
+    <rect x="720" y="262" width="78" height="72" fill="#115e59" stroke="#ccfbf1" stroke-width="2"/>
+    <rect x="827" y="262" width="78" height="72" fill="#115e59" stroke="#ccfbf1" stroke-width="2"/>
+    <text x="759" y="291" fill="#f8fafc" font-size="16">bank 0</text>
+    <text x="759" y="316" fill="#ccfbf1" font-size="14">8 × 32</text>
+    <text x="866" y="291" fill="#f8fafc" font-size="16">bank 1</text>
+    <text x="866" y="316" fill="#ccfbf1" font-size="14">8 × 32</text>
+    <text x="812" y="361" fill="#ccfbf1" font-size="15">fill overlaps drain</text>
+
+    <rect x="1010" y="210" width="210" height="150" rx="12" fill="#7c3aed" stroke="#ddd6fe" stroke-width="3"/>
+    <text x="1115" y="252" fill="#f8fafc" font-size="22" font-weight="700">trace_run_encoder</text>
+    <text x="1115" y="289" fill="#ede9fe" font-size="17">event + payload compare</text>
+    <text x="1115" y="320" fill="#ede9fe" font-size="17">64-bit run packet</text>
+
+    <rect x="1010" y="440" width="245" height="135" rx="12" fill="#155e75" stroke="#a5f3fc" stroke-width="3"/>
+    <text x="1132" y="482" fill="#f8fafc" font-size="22" font-weight="700">trace_output_ring</text>
+    <text x="1132" y="518" fill="#cffafe" font-size="17">512 × 64-bit shared ring</text>
+    <text x="1132" y="547" fill="#cffafe" font-size="17">host drains 32-bit halves</text>
+
+    <rect x="475" y="460" width="300" height="110" rx="12" fill="#92400e" stroke="#fde68a" stroke-width="3"/>
+    <text x="625" y="500" fill="#f8fafc" font-size="21" font-weight="700">control / status / counters</text>
+    <text x="625" y="536" fill="#fef3c7" font-size="16">START · COUNT · DONE · CYCLES</text>
+  </g>
+  <g fill="none" stroke="#67e8f9" stroke-width="7" marker-end="url(#data)">
+    <path d="M275 320H385"/>
+    <path d="M615 285H690"/>
+    <path d="M935 285H1010"/>
+    <path d="M1115 360V440"/>
+    <path d="M1010 530H300V410H275"/>
+  </g>
+  <g fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="12 8" marker-end="url(#ctrl)">
+    <path d="M275 385H475"/>
+    <path d="M775 495H940V375H1115V360"/>
+    <path d="M625 570V665H165V435"/>
+  </g>
+  <g font-family="monospace" font-size="15">
+    <text x="292" y="302" fill="#cffafe">bus_valid/write/addr[12:0]/wdata[31:0]</text>
+    <text x="320" y="430" fill="#cffafe">bus_ready/rdata[31:0]</text>
+    <text x="340" y="680" fill="#fde68a">irq</text>
+  </g>
+  <line x1="75" y1="710" x2="145" y2="710" stroke="#67e8f9" stroke-width="7"/>
+  <text x="160" y="717" fill="#f8fafc" font-family="Arial, sans-serif" font-size="17">trace datapath</text>
+  <line x1="315" y1="710" x2="385" y2="710" stroke="#fbbf24" stroke-width="4" stroke-dasharray="12 8"/>
+  <text x="400" y="717" fill="#f8fafc" font-family="Arial, sans-serif" font-size="17">control / completion path</text>
+</svg>
