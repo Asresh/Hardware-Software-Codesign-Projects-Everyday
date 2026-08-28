@@ -1,0 +1,16 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="title desc">
+  <title id="title">Day 33 Power Telemetry Fusion Engine</title>
+  <desc id="desc">A title card showing voltage, current, and temperature telemetry converging into a hardware risk score.</desc>
+  <rect width="1200" height="300" fill="#334155"/>
+  <path d="M0 242 C150 180 260 274 410 212 S690 154 825 222 S1060 270 1200 196 L1200 300 L0 300 Z" fill="#475569"/>
+  <g fill="none" stroke-width="8" stroke-linecap="round">
+    <path d="M82 100 H158 L178 58 L212 150 L244 92 H322" stroke="#38bdf8"/>
+    <path d="M82 174 H140 L164 132 L202 218 L238 174 H322" stroke="#fbbf24"/>
+    <path d="M302 74 L372 150 L302 226" stroke="#a7f3d0"/>
+  </g>
+  <circle cx="383" cy="150" r="22" fill="#10b981"/>
+  <text x="430" y="104" fill="#f8fafc" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4">DAY 33</text>
+  <text x="430" y="158" fill="#ffffff" font-family="Arial, sans-serif" font-size="48" font-weight="700">Power Telemetry Fusion</text>
+  <text x="432" y="204" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="24">Descriptor-driven DMA · 3-stage pipeline · completion interrupt</text>
+</svg>

@@ -331,6 +331,18 @@
       "summary": "SPI-controlled forward-kinematics engine moves serial trigonometry out of robot/exoskeleton firmware: a queued 16-iteration CORDIC computes each absolute joint heading and accumulates the Q24.8 end-effector pose. Measured 1065360 SPI end-to-end cycles, 0.052632 joints/clock in the compute path, 103.550-cycle mean START-to-interrupt latency and 9.942x over a 10592000-cycle scalar baseline; 320 chains, 1744 joints, 0 mismatches."
     },
     {
+      "day": 33,
+      "dir": "day33-power_telemetry_fusion",
+      "name": "power_telemetry_fusion",
+      "domain": "sensor fusion / platform power and thermal telemetry",
+      "architecture": "pipelined datapath",
+      "microarchitecture": "descriptor fetch front end feeding a globally stalled three-stage elastic pipeline: voltage-droop and over-temperature feature extraction, three parallel unsigned weighted products, then widened reduction and threshold packing; one record per stage with lossless write-backpressure handling",
+      "interface": "selected/ready MMIO configuration and telemetry registers plus descriptor-driven 32-bit DMA read/write channels and a sticky completion/error interrupt cleared write-one-to-clear",
+      "software_layer": "portable C MMIO driver for policy configuration, descriptor submission, bounded completion polling and W1C acknowledgement; independent bit-exact reference model, scalar embedded-CPU baseline, mock device integration test and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level MMIO and DMA differential testbench over 320 samples with randomized read/write readiness; eight directed voltage/current/signed-temperature/threshold corners plus 312 seeded random samples, every destination word, counter, three-cycle latency, timeout, invalid descriptor, sticky completion and interrupt acknowledgement checked; ASan/UBSan vector regeneration clean",
+      "summary": "Power telemetry fusion engine moves per-sample voltage-droop, current and thermal policy arithmetic out of management firmware while a descriptor-driven DMA pipeline preserves software ownership of buffers and thresholds. Measured 554 START-to-interrupt cycles, 0.578662 samples/clock under randomized DMA stalls, three-cycle pipeline latency and 27.180505x over a 15058-cycle scalar baseline; 320 differential samples, 0 mismatches."
+    },
+    {
       "day": 32,
       "dir": "day32-firmware_trace_compressor",
       "name": "firmware_trace_compressor",
