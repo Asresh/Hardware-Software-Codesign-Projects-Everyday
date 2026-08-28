@@ -1,0 +1,71 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" width="1500" height="820" role="img" aria-labelledby="title desc">
+  <title id="title">Power telemetry fusion block diagram</title>
+  <desc id="desc">Firmware configures a top-level controller over MMIO. A descriptor reader fetches a DMA descriptor, a three-stage elastic pipeline fuses samples, a DMA write path stores results, and an interrupt latch signals completion.</desc>
+  <defs>
+    <marker id="dataArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/></marker>
+    <marker id="ctrlArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/></marker>
+  </defs>
+  <rect width="1500" height="820" fill="#475569"/>
+  <text x="750" y="48" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="30" font-weight="700">Day 33 — Power Telemetry Fusion Engine</text>
+
+  <rect x="55" y="120" width="250" height="180" rx="16" fill="#1e293b" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="180" y="162" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="25" font-weight="700">CPU / Firmware</text>
+  <text x="180" y="200" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="18">builds descriptor</text>
+  <text x="180" y="230" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="18">programs thresholds</text>
+  <text x="180" y="260" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="18">handles completion</text>
+
+  <rect x="400" y="85" width="1035" height="650" rx="20" fill="#334155" stroke="#94a3b8" stroke-width="3"/>
+  <text x="918" y="122" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="22" font-weight="700">power_telemetry_fusion_top.v — register file, DMA routing, job controller</text>
+
+  <rect x="465" y="175" width="265" height="145" rx="12" fill="#0f766e" stroke="#99f6e4" stroke-width="3"/>
+  <text x="598" y="215" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="21" font-weight="700">ptf_descriptor_reader.v</text>
+  <text x="598" y="250" text-anchor="middle" fill="#ccfbf1" font-family="Arial, sans-serif" font-size="17">4 × 32-bit descriptor words</text>
+  <text x="598" y="280" text-anchor="middle" fill="#ccfbf1" font-family="Arial, sans-serif" font-size="17">source · destination · count · flags</text>
+
+  <rect x="810" y="175" width="360" height="260" rx="12" fill="#1d4ed8" stroke="#bfdbfe" stroke-width="3"/>
+  <text x="990" y="215" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="21" font-weight="700">ptf_pipeline.v</text>
+  <rect x="842" y="246" width="92" height="110" rx="8" fill="#1e40af" stroke="#93c5fd" stroke-width="2"/>
+  <rect x="944" y="246" width="92" height="110" rx="8" fill="#1e40af" stroke="#93c5fd" stroke-width="2"/>
+  <rect x="1046" y="246" width="92" height="110" rx="8" fill="#1e40af" stroke="#93c5fd" stroke-width="2"/>
+  <text x="888" y="278" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16">Stage 1</text>
+  <text x="888" y="307" text-anchor="middle" fill="#dbeafe" font-family="Arial, sans-serif" font-size="14">features</text>
+  <text x="990" y="278" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16">Stage 2</text>
+  <text x="990" y="307" text-anchor="middle" fill="#dbeafe" font-family="Arial, sans-serif" font-size="14">3 products</text>
+  <text x="1092" y="278" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16">Stage 3</text>
+  <text x="1092" y="307" text-anchor="middle" fill="#dbeafe" font-family="Arial, sans-serif" font-size="14">sum + alert</text>
+  <text x="990" y="395" text-anchor="middle" fill="#dbeafe" font-family="Arial, sans-serif" font-size="15">elastic storage: 1 entry/stage; no standalone FIFO</text>
+
+  <rect x="1215" y="175" width="170" height="145" rx="12" fill="#7c3aed" stroke="#ddd6fe" stroke-width="3"/>
+  <text x="1300" y="215" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="700">ptf_irq_latch.v</text>
+  <text x="1300" y="252" text-anchor="middle" fill="#ede9fe" font-family="Arial, sans-serif" font-size="16">sticky pending</text>
+  <text x="1300" y="280" text-anchor="middle" fill="#ede9fe" font-family="Arial, sans-serif" font-size="16">W1C acknowledge</text>
+
+  <rect x="465" y="520" width="300" height="145" rx="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="615" y="562" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="700">Shared System Memory</text>
+  <text x="615" y="598" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">descriptor + packed samples</text>
+  <text x="615" y="627" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="16">risk-score output buffer</text>
+
+  <path d="M305 175 H400" stroke="#fbbf24" stroke-width="5" fill="none" marker-end="url(#ctrlArrow)"/>
+  <text x="352" y="152" text-anchor="middle" fill="#fde68a" font-family="Arial, sans-serif" font-size="14">mmio_valid/write</text>
+  <text x="352" y="207" text-anchor="middle" fill="#fde68a" font-family="Arial, sans-serif" font-size="14">addr/wdata/rdata/ready</text>
+
+  <path d="M730 247 H810" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#dataArrow)"/>
+  <text x="770" y="229" text-anchor="middle" fill="#bae6fd" font-family="Arial, sans-serif" font-size="14">src/dst/count</text>
+  <path d="M990 435 V500 H765" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#dataArrow)"/>
+  <text x="885" y="486" text-anchor="middle" fill="#bae6fd" font-family="Arial, sans-serif" font-size="14">mem_wr_valid/addr/data/ready</text>
+  <path d="M615 520 V355 H598 V320" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#dataArrow)"/>
+  <text x="625" y="414" fill="#bae6fd" font-family="Arial, sans-serif" font-size="14">mem_rd_valid/addr/data/ready</text>
+  <path d="M765 585 H785 V400 H810" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#dataArrow)"/>
+  <text x="792" y="505" fill="#bae6fd" font-family="Arial, sans-serif" font-size="14">sample DMA reads</text>
+
+  <path d="M1170 205 H1215" stroke="#fbbf24" stroke-width="5" fill="none" marker-end="url(#ctrlArrow)"/>
+  <text x="1192" y="187" text-anchor="middle" fill="#fde68a" font-family="Arial, sans-serif" font-size="14">done</text>
+  <path d="M1300 175 V145 H305 V220" stroke="#fbbf24" stroke-width="5" fill="none" marker-end="url(#ctrlArrow)"/>
+  <text x="825" y="139" text-anchor="middle" fill="#fde68a" font-family="Arial, sans-serif" font-size="15">irq</text>
+
+  <line x1="900" y1="690" x2="975" y2="690" stroke="#38bdf8" stroke-width="5" marker-end="url(#dataArrow)"/>
+  <text x="990" y="696" fill="#bae6fd" font-family="Arial, sans-serif" font-size="15">datapath / DMA</text>
+  <line x1="1160" y1="690" x2="1235" y2="690" stroke="#fbbf24" stroke-width="5" marker-end="url(#ctrlArrow)"/>
+  <text x="1250" y="696" fill="#fde68a" font-family="Arial, sans-serif" font-size="15">control / interrupt</text>
+</svg>
