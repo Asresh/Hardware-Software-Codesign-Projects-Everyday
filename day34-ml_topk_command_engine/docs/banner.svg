@@ -1,0 +1,9 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+ <rect width="1200" height="300" fill="#30475e"/>
+ <path d="M70 222 L180 105 L270 188 L378 68 L490 190" fill="none" stroke="#64dfdf" stroke-width="12"/>
+ <circle cx="378" cy="68" r="18" fill="#ffd166"/>
+ <text x="545" y="125" fill="#ffffff" font-family="Arial,sans-serif" font-size="53" font-weight="700">ML TOP-K COMMAND ENGINE</text>
+ <text x="548" y="190" fill="#ffd166" font-family="Arial,sans-serif" font-size="34">DAY 34 · DMA + BALANCED REDUCTION TREE</text>
+ <text x="548" y="235" fill="#d9f0ff" font-family="Arial,sans-serif" font-size="22">Deterministic INT16 class selection for inference runtimes</text>
+</svg>

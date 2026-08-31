@@ -353,6 +353,18 @@
       "software_layer": "portable bounded C MMIO driver for ring loading, configuration, timeout polling, completion handling, packet movement and W1C acknowledgement; independent bit-exact reference, scalar firmware baseline, mock-register integration test and deterministic vector generator",
       "verification": "Icarus Verilog pin-level MMIO differential testbench over 320 records containing 315 seeded-random and five directed timestamp/data extremes; all 88 output packets, count, exact busy cycles, sticky interrupt and acknowledgement checked; ASan/UBSan vector regeneration clean; 256/4 and 512/16 alternate ring/bank geometries elaborate",
       "summary": "Trace compressor removes the branch-heavy repeated-event scan from control firmware: ping-pong banks sustain overlapped prefetch/encode while shared rings keep firmware in control of capture and consumption. Measured 320 records to 88 packets (45 percent fewer bytes), 329 busy cycles, 0.972644 records/clock, 331-cycle START-to-interrupt latency and 22.580060x over a 7474-cycle scalar baseline; 0 mismatches."
+    },
+    {
+      "day": 34,
+      "dir": "day34-ml_topk_command_engine",
+      "name": "ml_topk_command_engine",
+      "domain": "ML inference / deterministic class, expert and beam selection",
+      "architecture": "tree reduction",
+      "microarchitecture": "balanced signed top-two reduction tree with four deterministic leaf comparators, two intermediate four-candidate merge networks, one root merge and a registered output; a command sequencer gathers four 32-bit DMA words and writes two ordered result words per vector",
+      "interface": "selected/ready MMIO command, status and telemetry registers plus 32-bit DMA read/write channels and a sticky completion/error interrupt cleared write-one-to-clear",
+      "software_layer": "portable C MMIO/DMA driver for buffer movement, command configuration, bounded completion polling and W1C acknowledgement; independent top-two reference, insertion-sort scalar baseline, mock backend integration test and deterministic vector generator",
+      "verification": "Icarus Verilog pin-level MMIO and DMA differential testbench over 320 vectors with randomized read/write readiness; eight directed signed-extreme, tie, duplicate-maximum and ordering cases plus 312 seeded random vectors, both result words, progress, invalid zero count, sticky completion and interrupt acknowledgement checked; ASan/UBSan vector regeneration clean",
+      "summary": "ML top-k command engine moves branch-heavy class selection out of inference-runtime firmware while software retains buffer ownership and timeout policy. Measured 3464 START-to-IRQ cycles, 0.092379 vectors/clock under randomized DMA stalls, four-clock final-read-to-result latency and 14.894630x over a 51595-cycle scalar baseline; 320 differential vectors, 0 mismatches."
     }
   ]
 }
