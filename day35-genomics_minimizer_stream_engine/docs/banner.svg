@@ -1,0 +1,9 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+ <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#071b33"/><stop offset="1" stop-color="#136f63"/></linearGradient></defs>
+ <rect width="1200" height="300" rx="24" fill="url(#g)"/>
+ <g fill="none" stroke="#63e6be" stroke-width="5" opacity=".8"><path d="M80 45 C210 90 80 210 210 255"/><path d="M210 45 C80 90 210 210 80 255"/></g>
+ <g stroke="#d8f5ee" stroke-width="3"><path d="M105 67h80M93 105h104M91 145h108M94 185h102M105 228h80"/></g>
+ <text x="275" y="130" fill="white" font-family="system-ui,sans-serif" font-size="54" font-weight="700">Genomics Minimizer</text>
+ <text x="278" y="195" fill="#9ff3db" font-family="system-ui,sans-serif" font-size="34">canonical k-mers • rolling window • Avalon streaming</text>
+</svg>

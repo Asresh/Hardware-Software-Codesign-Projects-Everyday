@@ -365,6 +365,18 @@
       "software_layer": "portable C MMIO/DMA driver for buffer movement, command configuration, bounded completion polling and W1C acknowledgement; independent top-two reference, insertion-sort scalar baseline, mock backend integration test and deterministic vector generator",
       "verification": "Icarus Verilog pin-level MMIO and DMA differential testbench over 320 vectors with randomized read/write readiness; eight directed signed-extreme, tie, duplicate-maximum and ordering cases plus 312 seeded random vectors, both result words, progress, invalid zero count, sticky completion and interrupt acknowledgement checked; ASan/UBSan vector regeneration clean",
       "summary": "ML top-k command engine moves branch-heavy class selection out of inference-runtime firmware while software retains buffer ownership and timeout policy. Measured 3464 START-to-IRQ cycles, 0.092379 vectors/clock under randomized DMA stalls, four-clock final-read-to-result latency and 14.894630x over a 51595-cycle scalar baseline; 320 differential vectors, 0 mismatches."
+    },
+    {
+      "day": 35,
+      "dir": "day35-genomics_minimizer_stream_engine",
+      "name": "genomics_minimizer_stream_engine",
+      "domain": "genomics / read-mapping sequence indexing",
+      "architecture": "rolling canonical-hash pipeline with parallel window reduction",
+      "microarchitecture": "parameterized reverse-complement wiring and canonical selector feeding a 32-bit hash mixer, an eight-entry rolling hash store, a parallel minimum reduction with earliest-position tie breaking, and a backpressure-coupled result register",
+      "interface": "Avalon-ST packed-k-mer ingress and minimizer-result egress plus Avalon-MM seed, control and telemetry registers with a sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C Avalon-MM configuration driver and independent canonical k-mer, hash and sliding-window reference implementation",
+      "verification": "Icarus Verilog pin-level differential testbench over 320 k-mers with randomized ingress gaps and output backpressure; four directed DNA encoding/reverse-complement corners plus 316 seeded random vectors, 313 results and completion interrupt checked; ASan/UBSan software check clean",
+      "summary": "Genomics minimizer engine moves strand canonicalization, hashing and overlapping window selection out of read-mapping software. Measured 795 randomized-stall clocks for 320 k-mers and 313 minimizers, 0.402516 accepted k-mers/clock and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
     }
   ]
 }
