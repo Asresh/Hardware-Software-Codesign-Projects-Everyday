@@ -1,0 +1,9 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#071522"/><stop offset="1" stop-color="#123b4b"/></linearGradient></defs>
+  <rect width="1200" height="300" rx="24" fill="url(#g)"/>
+  <path d="M40 180h90l25-90 42 155 42-125 35 60h95l28-80 42 145 36-100 25 35h110" fill="none" stroke="#54e0c7" stroke-width="8"/>
+  <text x="650" y="125" fill="#f3fbff" font-family="sans-serif" font-size="48" font-weight="700">Vibration Goertzel Monitor</text>
+  <text x="654" y="180" fill="#9bcbd7" font-family="sans-serif" font-size="25">Day 36 · predictive maintenance in hardware</text>
+  <text x="654" y="222" fill="#f4c95d" font-family="monospace" font-size="19">AXI4-Stream → resonator bank → peak IRQ</text>
+</svg>

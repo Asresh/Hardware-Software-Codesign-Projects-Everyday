@@ -377,6 +377,18 @@
       "software_layer": "portable C Avalon-MM configuration driver and independent canonical k-mer, hash and sliding-window reference implementation",
       "verification": "Icarus Verilog pin-level differential testbench over 320 k-mers with randomized ingress gaps and output backpressure; four directed DNA encoding/reverse-complement corners plus 316 seeded random vectors, 313 results and completion interrupt checked; ASan/UBSan software check clean",
       "summary": "Genomics minimizer engine moves strand canonicalization, hashing and overlapping window selection out of read-mapping software. Measured 795 randomized-stall clocks for 320 k-mers and 313 minimizers, 0.402516 accepted k-mers/clock and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
+    },
+    {
+      "day": 36,
+      "dir": "day36-vibration_goertzel_monitor",
+      "name": "vibration_goertzel_monitor",
+      "domain": "predictive maintenance / rotating-machine vibration condition monitoring",
+      "architecture": "parallel programmable Goertzel resonator bank with combinational peak reduction",
+      "microarchitecture": "one-entry ready/valid skid buffer feeding four parallel parameterized signed fixed-point second-order recurrences; TLAST triggers widened power evaluation and a parallel unsigned maximum selector with lowest-index tie breaking",
+      "interface": "AXI4-Stream signed-sample ingress with TLAST framing plus Wishbone B4 coefficient, control, result and telemetry registers and a sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C Wishbone configuration/result driver and independent bit-exact Goertzel recurrence reference with deterministic corner and randomized frame generation",
+      "verification": "Icarus Verilog self-checking pin-level differential testbench over 260 frames and 16640 samples; four directed zero, impulse, alternating-full-scale and constant-full-scale corners plus 256 deterministic randomized frames, randomized source gaps, exact peak bin and 64-bit power, Wishbone handshake, counters, sticky interrupt and acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
+      "summary": "Vibration Goertzel monitor evaluates four firmware-selected rotating-machine fault bands without an FFT. Measured 48376 end-to-end clocks for 260 frames and 16640 samples, 0.343972 samples/clock including randomized gaps and firmware-style result service, 1570 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
     }
   ]
 }

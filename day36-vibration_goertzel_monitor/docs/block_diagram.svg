@@ -1,0 +1,13 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="420" viewBox="0 0 1100 420">
+  <rect width="1100" height="420" fill="#08131f"/>
+  <style>.b{fill:#12283b;stroke:#58d3ff;stroke-width:2}.t{fill:#e9f6ff;font:18px sans-serif}.s{fill:#91bad1;font:14px sans-serif}.a{stroke:#f4c95d;stroke-width:3;marker-end:url(#m)}</style>
+  <defs><marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#f4c95d"/></marker></defs>
+  <rect class="b" x="35" y="150" width="165" height="95" rx="12"/><text class="t" x="55" y="187">AXI4-Stream</text><text class="s" x="55" y="215">vibration samples</text>
+  <rect class="b" x="250" y="150" width="165" height="95" rx="12"/><text class="t" x="276" y="187">Skid buffer</text><text class="s" x="272" y="215">lossless stalls</text>
+  <rect class="b" x="470" y="55" width="210" height="285" rx="12"/><text class="t" x="500" y="90">Goertzel bank</text><text class="s" x="505" y="130">bin 0 resonator</text><text class="s" x="505" y="180">bin 1 resonator</text><text class="s" x="505" y="230">bin 2 resonator</text><text class="s" x="505" y="280">bin 3 resonator</text><path d="M490 145h170M490 195h170M490 245h170" stroke="#31566f"/>
+  <rect class="b" x="735" y="105" width="165" height="105" rx="12"/><text class="t" x="757" y="145">Peak selector</text><text class="s" x="757" y="175">power + bin</text>
+  <rect class="b" x="735" y="260" width="320" height="95" rx="12"/><text class="t" x="760" y="297">Wishbone B4 CSRs + IRQ</text><text class="s" x="760" y="326">coefficients, counters, result</text>
+  <path class="a" d="M200 198h50M415 198h55M680 158h55M817 210v50"/>
+  <path class="a" d="M735 307H610V340"/><text class="s" x="620" y="375">software programs Q8 coefficients</text>
+</svg>
