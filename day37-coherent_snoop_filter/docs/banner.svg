@@ -1,0 +1,12 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#081b33"/><stop offset="1" stop-color="#126e82"/></linearGradient></defs>
+  <rect width="1200" height="320" rx="24" fill="url(#g)"/>
+  <g fill="none" stroke="#62d9ff" stroke-width="5">
+    <rect x="70" y="84" width="150" height="150" rx="18"/><rect x="980" y="84" width="150" height="150" rx="18"/>
+    <path d="M220 120 H350 M220 160 H350 M220 200 H350 M850 120 H980 M850 160 H980 M850 200 H980"/>
+    <rect x="350" y="65" width="500" height="190" rx="22"/>
+    <path d="M400 115 H800 M400 160 H800 M400 205 H800" stroke-dasharray="14 10"/>
+  </g>
+  <g fill="#eafcff" font-family="Arial, sans-serif"><text x="600" y="145" text-anchor="middle" font-size="46" font-weight="700">COHERENT SNOOP FILTER</text><text x="600" y="197" text-anchor="middle" font-size="24">Directory-based routing • CHI-like channels • APB4 firmware control</text><text x="145" y="170" text-anchor="middle" font-size="26">CPU</text><text x="1055" y="170" text-anchor="middle" font-size="26">CPU</text></g>
+</svg>
