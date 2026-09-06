@@ -389,6 +389,18 @@
       "software_layer": "portable C Wishbone configuration/result driver and independent bit-exact Goertzel recurrence reference with deterministic corner and randomized frame generation",
       "verification": "Icarus Verilog self-checking pin-level differential testbench over 260 frames and 16640 samples; four directed zero, impulse, alternating-full-scale and constant-full-scale corners plus 256 deterministic randomized frames, randomized source gaps, exact peak bin and 64-bit power, Wishbone handshake, counters, sticky interrupt and acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
       "summary": "Vibration Goertzel monitor evaluates four firmware-selected rotating-machine fault bands without an FFT. Measured 48376 end-to-end clocks for 260 frames and 16640 samples, 0.343972 samples/clock including randomized gaps and firmware-style result service, 1570 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
+    },
+    {
+      "day": 37,
+      "dir": "day37-coherent_snoop_filter",
+      "name": "coherent_snoop_filter",
+      "domain": "multicore SoC cache coherency / coverage-driven design verification",
+      "architecture": "two-way set-associative directory-based snoop filter",
+      "microarchitecture": "one-entry elastic request buffer feeding a parameterized two-way set-associative directory; both tags compare in parallel, each line tracks valid, dirty and an N-node sharer vector, invalid ways precede per-set round-robin replacement, and a separate probe-mask stage suppresses self-snoops while preserving complete victim eviction masks",
+      "interface": "CHI-like ready/valid request and response channels carrying opcode, source, cache-line address, hit/error/evicted state, probe mask and new sharers plus APB4 enable, state clear, coverage-style counters and sticky completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C APB4 configuration and interrupt driver plus an independent stateful directory/reference model covering shared reads, unique ownership, writeback, eviction, flush and deterministic randomized traffic",
+      "verification": "Icarus Verilog pin-level differential testbench over 320 transactions with randomized request gaps and response backpressure; eight directed ownership, downgrade, writeback, repeated-eviction, replacement and flush corners plus 312 deterministic randomized transactions, five response fields per transaction, APB counters and sticky interrupt acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
+      "summary": "Coherent snoop filter maps current high-compensation Apple and NVIDIA SoC verification requirements into a firmware-visible directory block and golden-model verification environment. Measured 1399 end-to-end clocks for 320 transactions, 0.228735 transactions/clock, 19 hits, 301 misses, 90 routed probes, 126 intentionally detected protocol errors, 1607 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
     }
   ]
 }
