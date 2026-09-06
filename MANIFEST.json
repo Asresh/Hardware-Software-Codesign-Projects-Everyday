@@ -401,6 +401,18 @@
       "software_layer": "portable C APB4 configuration and interrupt driver plus an independent stateful directory/reference model covering shared reads, unique ownership, writeback, eviction, flush and deterministic randomized traffic",
       "verification": "Icarus Verilog pin-level differential testbench over 320 transactions with randomized request gaps and response backpressure; eight directed ownership, downgrade, writeback, repeated-eviction, replacement and flush corners plus 312 deterministic randomized transactions, five response fields per transaction, APB counters and sticky interrupt acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
       "summary": "Coherent snoop filter maps current high-compensation Apple and NVIDIA SoC verification requirements into a firmware-visible directory block and golden-model verification environment. Measured 1399 end-to-end clocks for 320 transactions, 0.228735 transactions/clock, 19 hits, 301 misses, 90 routed probes, 126 intentionally detected protocol errors, 1607 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
+    },
+    {
+      "day": 38,
+      "dir": "day38-gpu_tile_mask_compactor",
+      "name": "gpu_tile_mask_compactor",
+      "domain": "GPU rendering / tile-work scheduling and coverage-driven design verification",
+      "architecture": "eight-lane byte popcount with hierarchical reduction and priority scan",
+      "microarchitecture": "eight parallel 8-bit population-count lanes feed a widened total-count reduction and deterministic first/last active-bit scans; a firmware-selected threshold classifies sparse masks and a one-entry elastic output register preserves metadata and TLAST under arbitrary backpressure",
+      "interface": "AXI4-Stream 64-bit coverage-mask ingress and 32-bit scheduling-metadata egress plus AHB-Lite enable, threshold, coverage-style counters and sticky batch-completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C AHB-Lite configuration and interrupt driver plus an independent coverage-mask reference model and deterministic checksum workload",
+      "verification": "Icarus Verilog self-checking pin-level differential testbench over 320 masks with randomized source gaps and output backpressure; eight directed empty, full, endpoint, byte-lane and alternating-pattern corners plus 312 deterministic randomized masks, packed count/first/last/empty/sparse result, TLAST, AHB-Lite counters and sticky interrupt acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
+      "summary": "GPU tile mask compactor maps current high-compensation Apple GPU verification requirements into a firmware-observable work-distribution primitive and C golden model. Measured 783 end-to-end clocks for 320 masks, 0.408685 masks/clock, one-clock unstalled latency, 645 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
     }
   ]
 }

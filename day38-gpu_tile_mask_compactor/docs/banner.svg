@@ -1,0 +1,6 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+ <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#071526"/><stop offset="1" stop-color="#17375e"/></linearGradient></defs><rect width="1200" height="360" rx="24" fill="url(#g)"/>
+ <g transform="translate(65 65)"><rect width="230" height="230" rx="20" fill="#0c2037" stroke="#60a5fa" stroke-width="3"/><g fill="#38bdf8"> <rect x="25" y="25" width="20" height="20"/><rect x="75" y="25" width="20" height="20"/><rect x="125" y="25" width="20" height="20"/><rect x="175" y="25" width="20" height="20"/><rect x="50" y="75" width="20" height="20"/><rect x="100" y="75" width="20" height="20"/><rect x="150" y="75" width="20" height="20"/><rect x="25" y="125" width="20" height="20"/><rect x="50" y="175" width="20" height="20"/><rect x="100" y="175" width="20" height="20"/><rect x="175" y="175" width="20" height="20"/></g></g>
+ <g font-family="Arial,sans-serif" fill="#f0f9ff"><text x="350" y="135" font-size="25" fill="#7dd3fc" letter-spacing="3">DAY 38 · GPU DESIGN VERIFICATION</text><text x="350" y="195" font-size="49" font-weight="bold">Tile Mask Compactor</text><text x="352" y="240" font-size="20" fill="#bfdbfe">Eight parallel byte lanes · first/last reduction · firmware telemetry</text></g>
+</svg>
