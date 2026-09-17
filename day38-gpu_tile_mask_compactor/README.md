@@ -5,12 +5,6 @@
 
 Modern Graphics Processing Units (GPUs) divide a frame into tiles, but many tiles contain only a few covered samples after clipping, early depth testing, or visibility culling. Sending all 64 sample positions into later shading stages wastes queue entries and bandwidth. This project turns each 64-bit coverage mask into compact scheduling metadata: active count, first and last active position, empty status, and a firmware-programmable sparse-tile decision.
 
-## Job alignment
-
-The project is based on NVIDIA's current [Senior ASIC Verification Engineer - GPU](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Senior-ASIC-Verification-Engineer---GPU_JR2022633) role, posted in August 2026 with a listed US base-pay range up to $368,000. The role emphasizes GPU/SoC design verification, random stimulus, functional coverage, assertion-based methods, unit and system testbenches, SystemVerilog, C/C++, simulation, and debug. A companion [GPU process-scheduling and system-interface verification](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Senior-ASIC-Verification-Engineer---GPU_JR1996427) opening specifically centers on the scheduling and system-interface hardware that this block models.
-
-Day 38 maps those requirements into a small GPU work-distribution block with a C golden model, randomized pin-level flow control, directed coverage-mask corners, firmware-visible coverage counters, and repeatable build targets.
-
 ## Hardware/software partition
 
 Firmware clears counters, programs the sparse threshold, enables the block, and acknowledges the sticky batch-completion interrupt through an AHB-Lite [Advanced High-performance Bus Lite] register plane. The software library also implements an independent reference result for bring-up and diagnostics. Hardware evaluates eight mask bytes in parallel, combines their counts, selects the first and last active bit, classifies sparse tiles, and transports results through a backpressure-safe AXI4-Stream [Advanced eXtensible Interface Stream] channel.
