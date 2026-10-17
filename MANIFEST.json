@@ -413,6 +413,18 @@
       "software_layer": "portable C AHB-Lite configuration and interrupt driver plus an independent coverage-mask reference model and deterministic checksum workload",
       "verification": "Icarus Verilog self-checking pin-level differential testbench over 320 masks with randomized source gaps and output backpressure; eight directed empty, full, endpoint, byte-lane and alternating-pattern corners plus 312 deterministic randomized masks, packed count/first/last/empty/sparse result, TLAST, AHB-Lite counters and sticky interrupt acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
       "summary": "GPU tile mask compactor maps current high-compensation Apple GPU verification requirements into a firmware-observable work-distribution primitive and C golden model. Measured 783 end-to-end clocks for 320 masks, 0.408685 masks/clock, one-clock unstalled latency, 645 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
+    },
+    {
+      "day": 39,
+      "dir": "day39-pcie_completion_reorder_engine",
+      "name": "pcie_completion_reorder_engine",
+      "domain": "high-speed I/O / PCIe split-transaction completion ordering and firmware-visible validation",
+      "architecture": "tag-indexed completion reorder buffer with in-order retirement",
+      "microarchitecture": "parallel lowest-free-tag allocator feeding an eight-entry request-order FIFO and a separately indexed completion store; PCIe-style completions write status and data directly by tag in arbitrary order while only the completed FIFO head may retire, and tags return to the free pool only after downstream acceptance",
+      "interface": "PCIe-like ready/valid request issue, arbitrary-order tagged completion and ordered result channels plus TileLink-UL-style enable, target, occupancy, ordering/error telemetry registers and a sticky batch-completion interrupt cleared write-one-to-clear",
+      "software_layer": "portable C TileLink-UL register driver for target programming and interrupt acknowledgement plus an independent completion-result reference function and ordered checksum workload",
+      "verification": "Icarus Verilog self-checking pin-level differential testbench over 320 requests with randomized issue and output backpressure; eight directed payload corners plus 312 deterministic randomized vectors, a forced full eight-tag window, randomized live-tag completion order, 143 observed out-of-order completions, two deliberately invalid completions, four fields per retired result, all counters, unmapped-register error, target interrupt and W1C acknowledgement checked; warnings-as-errors and ASan/UBSan software gates clean",
+      "summary": "PCIe completion reorder engine maps current high-compensation Apple and NVIDIA platform, PCIe and SoC architecture requirements into a firmware-observable split-transaction ordering block and C correctness model. Measured 760 end-to-end clocks for 320 ordered results, 0.421053 requests/clock, full eight-request occupancy, 143 out-of-order completions restored, two protocol errors contained, 1289 checks and zero mismatches; Yosys unavailable, synthesis-oriented Icarus elaboration passed."
     }
   ]
 }

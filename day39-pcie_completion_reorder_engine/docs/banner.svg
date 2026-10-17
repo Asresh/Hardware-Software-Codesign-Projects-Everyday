@@ -1,0 +1,17 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#173d5d"/></linearGradient></defs>
+  <rect width="1200" height="360" rx="24" fill="url(#g)"/>
+  <g fill="none" stroke="#43d9bd" stroke-width="4">
+    <path d="M75 90h170v55h-85v70h85v55H75"/>
+    <path d="M270 118h95m-95 124h95" stroke-dasharray="10 8"/>
+    <rect x="365" y="72" width="355" height="216" rx="18"/>
+    <path d="M410 120h265M410 165h265M410 210h265M410 255h265" opacity=".45"/>
+    <path d="M720 180h110"/>
+  </g>
+  <g fill="#ffca58"><circle cx="430" cy="120" r="12"/><circle cx="625" cy="165" r="12"/><circle cx="500" cy="210" r="12"/><circle cx="575" cy="255" r="12"/></g>
+  <text x="860" y="145" fill="#eaf6ff" font-family="system-ui,sans-serif" font-size="40" font-weight="700">DAY 39</text>
+  <text x="860" y="198" fill="#43d9bd" font-family="system-ui,sans-serif" font-size="29">PCIe Completion</text>
+  <text x="860" y="236" fill="#43d9bd" font-family="system-ui,sans-serif" font-size="29">Reorder Engine</text>
+  <text x="75" y="325" fill="#a8bfd0" font-family="monospace" font-size="18">8 tags · arbitrary completion order · deterministic retirement</text>
+</svg>

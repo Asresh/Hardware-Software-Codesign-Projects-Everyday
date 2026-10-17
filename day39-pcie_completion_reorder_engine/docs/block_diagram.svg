@@ -1,0 +1,12 @@
+<!-- Author: Asresh -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#245a73"/></marker></defs>
+  <rect width="1200" height="540" fill="#f5f9fc"/>
+  <g font-family="system-ui,sans-serif" text-anchor="middle">
+    <g fill="#dff6ef" stroke="#187c67" stroke-width="2"><rect x="55" y="85" width="190" height="85" rx="12"/><rect x="310" y="70" width="210" height="115" rx="12"/><rect x="585" y="70" width="225" height="115" rx="12"/><rect x="875" y="85" width="250" height="85" rx="12"/></g>
+    <g fill="#e5efff" stroke="#345f9d" stroke-width="2"><rect x="310" y="260" width="210" height="105" rx="12"/><rect x="585" y="260" width="225" height="105" rx="12"/><rect x="875" y="260" width="250" height="105" rx="12"/></g>
+    <g fill="#fff3cf" stroke="#9d6c16" stroke-width="2"><rect x="420" y="430" width="360" height="70" rx="12"/></g>
+    <g fill="#102b3b" font-size="19" font-weight="700"><text x="150" y="120">Software request</text><text x="150" y="145">ID + opaque</text><text x="415" y="115">Tag allocator</text><text x="415" y="143">busy bitmap</text><text x="697" y="115">Request issue</text><text x="697" y="143">tag + metadata</text><text x="1000" y="120">PCIe-like fabric</text><text x="1000" y="145">arbitrary completion order</text><text x="415" y="305">Order FIFO</text><text x="415" y="333">retirement tags</text><text x="697" y="305">Completion store</text><text x="697" y="333">8 indexed slots</text><text x="1000" y="305">Ordered output</text><text x="1000" y="333">ID + result</text><text x="600" y="461">TileLink-UL CSRs · counters · target IRQ</text><text x="600" y="486">firmware configuration and recovery policy</text></g>
+    <g stroke="#245a73" stroke-width="3" fill="none" marker-end="url(#a)"><path d="M245 125h60"/><path d="M520 125h60"/><path d="M810 125h60"/><path d="M1000 175v55H700v25"/><path d="M585 312h-60"/><path d="M810 312h60"/><path d="M415 185v70"/><path d="M600 430V370"/></g>
+  </g>
+</svg>
